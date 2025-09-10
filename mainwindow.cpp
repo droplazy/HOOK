@@ -60,7 +60,7 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam)
                 endPos=releasePos;
                 isCpature =false;;
             }
-            //qDebug() << "Left mouse button released at:" << releasePos;
+            qDebug() << "Left mouse button released at:" << releasePos;
             break;
         }
         }
@@ -110,9 +110,10 @@ void MainWindow::updateWindowInfo()
                    "    "+QString("end Position: %1 x %2").arg(endPos.x()).arg(endPos.y());
 
 
-    qDebug() <<info;
+    //qDebug() <<info;
     ui->label_sysinfor->setText(info);  // 显示在QLabel中
-
+      if(streamOn)
+      ImageStream();
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -144,18 +145,10 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_capture_clicked()
 {
 
-    static bool isAcitive = false;
-    isAcitive = !isAcitive;
-    // 切换按钮状态
-    if (isAcitive) {
+
         isCpature = true;
         ui->pushButton_capture->setStyleSheet("background-color: rgb(255, 1, 1);");
-    } else {
 
-        ui->pushButton_capture->setStyleSheet("background-color: rgb(255, 255, 255);");
-        GetImage();
-    }
-    qDebug("debug");
 }
 
 
@@ -275,3 +268,72 @@ void MainWindow::GetImage()
     captureScreenAndSave(captureRect);
 
 }
+void MainWindow::captureScreenAndDisplay(const QRect &rect)
+{
+    // 获取主屏幕截图
+    QScreen *screen = QApplication::primaryScreen();
+    if (!screen) {
+        qWarning() << "无法获取屏幕";
+        return;
+    }
+
+    // 截取指定区域的截图
+    QPixmap pixmap = screen->grabWindow(0, rect.x(), rect.y(), rect.width(), rect.height());
+
+    // 将 QPixmap 转换为 QImage
+    QImage image = pixmap.toImage();
+    if (image.isNull()) {
+        qWarning() << "截图转换为QImage失败";
+        return;
+    }
+
+    // 如果需要将图像显示到 QLabel 上，直接设置 QPixmap
+    ui->label_gameinfo->setPixmap(pixmap.scaled(ui->label_gameinfo->size(), Qt::KeepAspectRatio));
+
+    // 如果你想使用 QImage 转换为 OpenCV Mat 然后处理，可以继续使用类似之前的代码
+    // cv::Mat mat(image.height(), image.width(), CV_8UC4, (void*)image.bits(), image.bytesPerLine());
+    // if (mat.empty()) {
+    //     qWarning() << "OpenCV Mat 转换失败";
+    //     return;
+    // }
+
+    // 将 Mat 转换为 BGR（如果需要进一步处理）
+    // cv::Mat matBGR;
+    // cv::cvtColor(mat, matBGR, cv::COLOR_BGRA2BGR);
+
+    // 你可以在此进行其他操作，若不需要保存至本地，只需显示即可
+}
+
+void MainWindow::ImageStream()
+{
+    // 截取屏幕的指定区域 (x, y, width, height)
+    qDebug() <<startPos.x() << startPos.y() << endPos.x()<< endPos.y();
+    QRect captureRect(startPos.x(), startPos.y(),endPos.x()-startPos.x(),endPos.y()- startPos.y());  // 设置需要截取的位置和宽高
+    //QString filePath = "E:/qtpro/ScreenCapture/测试/screenshot.png";      // 设置保存路径
+
+    captureScreenAndDisplay(captureRect);
+
+}
+
+void MainWindow::on_pushButton_imgtest_clicked()
+{
+    static bool isAcitive = false;
+    isAcitive = !isAcitive;
+    // 切换按钮状态
+    if (isAcitive) {
+        streamOn = true;
+        ui->pushButton_imgtest->setStyleSheet("background-color: rgb(255, 1, 1);");
+    } else {
+
+        ui->pushButton_imgtest->setStyleSheet("background-color: rgb(255, 255, 255);");
+        streamOn = false;
+    }
+}
+
+
+void MainWindow::on_pushButton_capture_2_clicked()
+{
+    ui->pushButton_capture->setStyleSheet("background-color: rgb(255, 255, 255);");
+    GetImage();
+}
+

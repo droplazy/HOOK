@@ -27,6 +27,8 @@ public:
     QLabel *label_gameinfo;
     QPushButton *pushButton_capture;
     QLabel *label_sysinfor;
+    QPushButton *pushButton_imgtest;
+    QPushButton *pushButton_capture_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -52,6 +54,16 @@ public:
         label_sysinfor->setGeometry(QRect(20, 50, 751, 31));
         label_sysinfor->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);\n"
 "color: rgb(170, 0, 0);"));
+        pushButton_imgtest = new QPushButton(centralwidget);
+        pushButton_imgtest->setObjectName("pushButton_imgtest");
+        pushButton_imgtest->setGeometry(QRect(200, 10, 80, 24));
+        pushButton_imgtest->setStyleSheet(QString::fromUtf8("\n"
+"background-color: rgb(156, 156, 156);"));
+        pushButton_capture_2 = new QPushButton(centralwidget);
+        pushButton_capture_2->setObjectName("pushButton_capture_2");
+        pushButton_capture_2->setGeometry(QRect(110, 10, 80, 24));
+        pushButton_capture_2->setStyleSheet(QString::fromUtf8("\n"
+"background-color: rgb(156, 156, 156);"));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -72,6 +84,8 @@ public:
         label_gameinfo->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         pushButton_capture->setText(QCoreApplication::translate("MainWindow", "\347\252\227\345\217\243\350\216\267\345\217\226", nullptr));
         label_sysinfor->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        pushButton_imgtest->setText(QCoreApplication::translate("MainWindow", "\346\230\276\347\244\272\346\265\213\350\257\225", nullptr));
+        pushButton_capture_2->setText(QCoreApplication::translate("MainWindow", "\346\210\221\350\216\267\345\217\226\344\272\206", nullptr));
     } // retranslateUi
 
 };

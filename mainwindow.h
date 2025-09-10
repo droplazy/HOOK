@@ -23,15 +23,21 @@ public:
     QImage captureScreen(int x, int y, int width, int height);
     void GetImage();
     void captureScreenAndSave(const QRect &rect);
+    void ImageStream();
+    void captureScreenAndDisplay(const QRect &rect);
 public slots:
     void updateWindowInfo();
 private slots:
 
     void on_pushButton_capture_clicked();
 
+    void on_pushButton_imgtest_clicked();
+
+    void on_pushButton_capture_2_clicked();
+
 private:
     Ui::MainWindow *ui;
-
+    bool streamOn = false;
    // QTimer
 };
 #endif // MAINWINDOW_H

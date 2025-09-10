@@ -70,6 +70,40 @@ color: rgb(170, 0, 0);</string>
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_imgtest">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>10</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+background-color: rgb(156, 156, 156);</string>
+    </property>
+    <property name="text">
+     <string>显示测试</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_capture_2">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>10</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+background-color: rgb(156, 156, 156);</string>
+    </property>
+    <property name="text">
+     <string>我获取了</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
