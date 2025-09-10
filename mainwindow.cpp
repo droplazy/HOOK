@@ -13,16 +13,17 @@
 #include <QDateTime>
 #include <QDir>
 #include <QStandardPaths>
+#include "opencv_thread.h"
 
-
-QPoint mousePos(0, 0);;
-QPoint startPos(0, 0);;
-QPoint endPos(0, 0);;
+QPoint mousePos(0, 0);
+QPoint startPos(0, 0);
+QPoint endPos(0, 0);
 bool isCpature = false;
 // 鼠标钩子
 HHOOK mouseHook;
 std::vector<QPoint> clickPositions; // 存储点击位置
 bool appExit = false; // 控制程序退出
+
 
 // 鼠标事件回调函数
 LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam)
@@ -118,6 +119,23 @@ void MainWindow::updateWindowInfo()
       ImageStream();
 }
 
+void MainWindow::showPostionlabel(QImage img)
+{
+    // QImage *img = new QImage; // 新建一个image对象
+    // img->load(":/pic/alignPic.png"); // 加载图片
+
+    // 获取label的大小
+    QSize labelSize = ui->label_gameinfo->size();
+
+    // 将图片缩放至与label相同的大小，并禁用保持纵横比
+    QPixmap pixmap = QPixmap::fromImage(img).scaled(labelSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+    // 将缩放后的pixmap设置到label上
+    ui->label_9->setPixmap(pixmap);
+    qDebug()<< "show positon pic ok.. ";
+    //delete img; // 删除QImage对象
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -133,9 +151,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 自动将鼠标移到指定位置 (例如：屏幕中心)
     moveMouseAndClick(422, 453);  // 可以根据需要修改目标位置
-    //paintEvent();
-    // debugPicture();
-    // LayoutAlign();
+    p_opencv = new opencv_thread();
+    connect(p_opencv, SIGNAL(getPic(QImage)), this, SLOT(showPostionlabel(QImage)), Qt::AutoConnection);
+    p_opencv ->start();
+
 }
 
 MainWindow::~MainWindow()
@@ -247,14 +266,14 @@ void MainWindow::captureScreenAndSave(const QRect &rect)
     }
 
     // 转换为 OpenCV Mat 进行进一步处理（可选）
-    cv::Mat mat(image.height(), image.width(), CV_8UC4, (void*)image.bits(), image.bytesPerLine());
-    if (mat.empty()) {
-        qWarning() << "OpenCV Mat 转换失败";
-        return;
-    }
+    // cv::Mat mat(image.height(), image.width(), CV_8UC4, (void*)image.bits(), image.bytesPerLine());
+    // if (mat.empty()) {
+    //     qWarning() << "OpenCV Mat 转换失败";
+    //     return;
+    // }
 
-    cv::Mat matBGR;
-    cv::cvtColor(mat, matBGR, cv::COLOR_BGRA2BGR);
+    // cv::Mat matBGR;
+    // cv::cvtColor(mat, matBGR, cv::COLOR_BGRA2BGR);
 
     // 这里可以进行其他 OpenCV 操作
 }
@@ -354,7 +373,7 @@ void MainWindow::debugPicture()
 void MainWindow::ImageStream()
 {
     // 截取屏幕的指定区域 (x, y, width, height)
-    qDebug() <<startPos.x() << startPos.y() << endPos.x()<< endPos.y();
+   // qDebug() <<startPos.x() << startPos.y() << endPos.x()<< endPos.y();
     QRect captureRect(startPos.x(), startPos.y(),endPos.x()-startPos.x(),endPos.y()- startPos.y());  // 设置需要截取的位置和宽高
     //QString filePath = "E:/qtpro/ScreenCapture/测试/screenshot.png";      // 设置保存路径
 
@@ -403,3 +422,20 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.drawRect(rect);  // 绘制矩形
 }
 #endif
+
+void MainWindow::on_pushButton_START_clicked()
+{
+    static bool isAcitive = false;
+    isAcitive = !isAcitive;
+    // 切换按钮状态
+    if (isAcitive) {
+        p_opencv->startDispose = true;
+        p_opencv->ZeroPos = startPos;
+        ui->pushButton_imgtest->setStyleSheet("background-color: rgb(1, 255, 1);");
+    } else {
+
+        ui->pushButton_imgtest->setStyleSheet("background-color: rgb(1, 1, 1);");
+        p_opencv->startDispose = false;
+    }
+}
+

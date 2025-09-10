@@ -35,6 +35,11 @@ public:
     QLabel *label_4;
     QLabel *label_5;
     QLabel *label_6;
+    QPushButton *pushButton_START;
+    QLabel *label_7;
+    QLabel *label_8;
+    QLabel *label_9;
+    QLabel *label_10;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -42,9 +47,9 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(800, 700);
+        MainWindow->resize(1200, 700);
         MainWindow->setMinimumSize(QSize(800, 700));
-        MainWindow->setMaximumSize(QSize(800, 700));
+        MainWindow->setMaximumSize(QSize(1200, 700));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         label_gameinfo = new QLabel(centralwidget);
@@ -76,7 +81,7 @@ public:
 "background-color: rgb(156, 156, 156);"));
         label = new QLabel(centralwidget);
         label->setObjectName("label");
-        label->setGeometry(QRect(20, 130, 91, 71));
+        label->setGeometry(QRect(20, 130, 90, 80));
         label->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName("label_2");
@@ -92,16 +97,36 @@ public:
         label_4->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
         label_5 = new QLabel(centralwidget);
         label_5->setObjectName("label_5");
-        label_5->setGeometry(QRect(20, 550, 311, 101));
+        label_5->setGeometry(QRect(730, 300, 311, 101));
         label_5->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
         label_6 = new QLabel(centralwidget);
         label_6->setObjectName("label_6");
         label_6->setGeometry(QRect(580, 210, 141, 231));
         label_6->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
+        pushButton_START = new QPushButton(centralwidget);
+        pushButton_START->setObjectName("pushButton_START");
+        pushButton_START->setGeometry(QRect(290, 10, 80, 24));
+        pushButton_START->setStyleSheet(QString::fromUtf8("background-color: rgb(1, 1, 1);"));
+        label_7 = new QLabel(centralwidget);
+        label_7->setObjectName("label_7");
+        label_7->setGeometry(QRect(730, 220, 90, 80));
+        label_7->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
+        label_8 = new QLabel(centralwidget);
+        label_8->setObjectName("label_8");
+        label_8->setGeometry(QRect(820, 260, 178, 35));
+        label_8->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
+        label_9 = new QLabel(centralwidget);
+        label_9->setObjectName("label_9");
+        label_9->setGeometry(QRect(730, 400, 421, 251));
+        label_9->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
+        label_10 = new QLabel(centralwidget);
+        label_10->setObjectName("label_10");
+        label_10->setGeometry(QRect(1040, 170, 141, 231));
+        label_10->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 1200, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -126,6 +151,11 @@ public:
         label_4->setText(QString());
         label_5->setText(QString());
         label_6->setText(QString());
+        pushButton_START->setText(QCoreApplication::translate("MainWindow", "KAISHI", nullptr));
+        label_7->setText(QString());
+        label_8->setText(QString());
+        label_9->setText(QString());
+        label_10->setText(QString());
     } // retranslateUi
 
 };

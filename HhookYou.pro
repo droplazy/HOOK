@@ -10,10 +10,12 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    opencv_thread.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    opencv_thread.h
 win32 {
         LIBS += -luser32
     }
