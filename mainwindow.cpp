@@ -10,7 +10,9 @@
 #include "mainwindow.h"
 #include <QPixmap>
 #include <opencv2/opencv.hpp>
-
+#include <QDateTime>
+#include <QDir>
+#include <QStandardPaths>
 
 
 QPoint mousePos(0, 0);;
@@ -131,6 +133,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 自动将鼠标移到指定位置 (例如：屏幕中心)
     moveMouseAndClick(422, 453);  // 可以根据需要修改目标位置
+    //paintEvent();
+    // debugPicture();
+    // LayoutAlign();
 }
 
 MainWindow::~MainWindow()
@@ -208,9 +213,6 @@ void MainWindow::saveImage(const QImage &image)
     image.save(savePath);
     //  qDebug() << "Image saved to: " << savePath;
 }
-#include <QDateTime>
-#include <QDir>
-#include <QStandardPaths>
 
 void MainWindow::captureScreenAndSave(const QRect &rect)
 {
@@ -304,6 +306,51 @@ void MainWindow::captureScreenAndDisplay(const QRect &rect)
     // 你可以在此进行其他操作，若不需要保存至本地，只需显示即可
 }
 
+void MainWindow::LayoutAlign()
+{
+    QLabel *label = new QLabel("Hello, QLabel!", this);  // 创建 QLabel
+    label->setAlignment(Qt::AlignCenter);  // 设置文本居中
+
+    // 设置 QLabel 的样式表，边框为红色，中间透明
+    label->setStyleSheet("QLabel { "
+                         "border: 3px solid red; "  // 红色边框，宽度为3px
+                         "background: transparent; "  // 背景透明
+                         "}");
+
+     label->raise();  // 将 QLabel 提升到最上层
+     label->setGeometry(24, 130, 85, 66);
+
+     QLabel *label_2 = new QLabel("Hello, QLabel!", this);  // 创建 QLabel
+     label_2->setAlignment(Qt::AlignCenter);  // 设置文本居中
+
+     // 设置 QLabel 的样式表，边框为红色，中间透明
+     label_2->setStyleSheet("QLabel { "
+                          "border: 3px solid red; "  // 红色边框，宽度为3px
+                          "background: transparent; "  // 背景透明
+                          "}");
+
+     label_2->raise();  // 将 QLabel 提升到最上层
+     label_2->setGeometry(537, 130, 180, 40);
+}
+
+void MainWindow::debugPicture()
+{
+    QImage *img = new QImage; // 新建一个image对象
+    img->load(":/pic/alignPic.png"); // 加载图片
+
+    // 获取label的大小
+    QSize labelSize = ui->label_gameinfo->size();
+
+    // 将图片缩放至与label相同的大小，并禁用保持纵横比
+    QPixmap pixmap = QPixmap::fromImage(*img).scaled(labelSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+    // 将缩放后的pixmap设置到label上
+    ui->label_gameinfo->setPixmap(pixmap);
+
+    delete img; // 删除QImage对象
+}
+
+
 void MainWindow::ImageStream()
 {
     // 截取屏幕的指定区域 (x, y, width, height)
@@ -336,4 +383,23 @@ void MainWindow::on_pushButton_capture_2_clicked()
     ui->pushButton_capture->setStyleSheet("background-color: rgb(255, 255, 255);");
     GetImage();
 }
+#if 0
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);  // 创建 QPainter 对象，指定绘图区域为当前 widget
+    painter.setRenderHint(QPainter::Antialiasing);  // 开启抗锯齿
 
+    // 绘制其他内容（比如背景或其他图形）
+    painter.setBrush(QBrush(Qt::lightGray)); // 背景颜色
+    painter.drawRect(0, 0, width(), height());  // 绘制背景
+
+    // 绘制矩形框（放置在最上层）
+    QPen pen;
+    pen.setColor(Qt::red);  // 设置矩形框的边框颜色为黑色
+    pen.setWidth(3);          // 设置边框宽度
+    painter.setPen(pen);
+
+    QRect rect(50, 50, 300, 200);  // 定义一个矩形区域（x, y, 宽, 高）
+    painter.drawRect(rect);  // 绘制矩形
+}
+#endif

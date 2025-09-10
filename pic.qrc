@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pic/alignPic.png</file>
+        <file>pic/3.png</file>
+    </qresource>
+</RCC>

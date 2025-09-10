@@ -313,6 +313,7 @@ Makefile: ../../HhookYou.pro ../../../../qt2025/6.9.2/mingw_64/mkspecs/win32-g++
 		../../../../qt2025/6.9.2/mingw_64/lib/Qt6Core.prl \
 		../../../../qt2025/6.9.2/mingw_64/lib/Qt6EntryPoint.prl \
 		../../../../qt2025/6.9.2/mingw_64/mkspecs/features/build_pass.prf \
+		../../pic.qrc \
 		debug/qmake_qmake_qm_files.qrc \
 		release/qmake_qmake_qm_files.qrc
 	$(QMAKE) -o Makefile ..\..\HhookYou.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -559,6 +560,7 @@ Makefile: ../../HhookYou.pro ../../../../qt2025/6.9.2/mingw_64/mkspecs/win32-g++
 ../../../../qt2025/6.9.2/mingw_64/lib/Qt6Core.prl:
 ../../../../qt2025/6.9.2/mingw_64/lib/Qt6EntryPoint.prl:
 ../../../../qt2025/6.9.2/mingw_64/mkspecs/features/build_pass.prf:
+../../pic.qrc:
 debug/qmake_qmake_qm_files.qrc:
 release/qmake_qmake_qm_files.qrc:
 qmake: FORCE
