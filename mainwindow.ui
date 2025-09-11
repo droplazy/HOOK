@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>700</height>
+    <width>1318</width>
+    <height>823</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -18,8 +18,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>1200</width>
-    <height>700</height>
+    <width>6000</width>
+    <height>6000</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -189,22 +189,6 @@ background-color: rgb(156, 156, 156);</string>
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>730</x>
-      <y>300</y>
-      <width>311</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border: 3px solid red;background: transparent;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
@@ -240,26 +224,10 @@ background-color: rgb(156, 156, 156);</string>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>220</y>
+      <x>740</x>
+      <y>10</y>
       <width>90</width>
       <height>80</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border: 3px solid red;background: transparent;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>820</x>
-      <y>260</y>
-      <width>178</width>
-      <height>35</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -273,25 +241,9 @@ background-color: rgb(156, 156, 156);</string>
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>400</y>
-      <width>421</width>
-      <height>251</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border: 3px solid red;background: transparent;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_10">
-    <property name="geometry">
-     <rect>
-      <x>1040</x>
-      <y>170</y>
-      <width>141</width>
-      <height>231</height>
+      <y>90</y>
+      <width>571</width>
+      <height>551</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -307,7 +259,7 @@ background-color: rgb(156, 156, 156);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1200</width>
+     <width>1318</width>
      <height>21</height>
     </rect>
    </property>

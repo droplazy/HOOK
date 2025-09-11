@@ -39,8 +39,9 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "MainWindow",
-        "updateWindowInfo",
+        "DebugPress",
         "",
+        "updateWindowInfo",
         "showPostionlabel",
         "img",
         "on_pushButton_capture_clicked",
@@ -50,20 +51,22 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
     };
 
     QtMocHelpers::UintData qt_methods {
+        // Signal 'DebugPress'
+        QtMocHelpers::SignalData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'updateWindowInfo'
-        QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(3, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'showPostionlabel'
-        QtMocHelpers::SlotData<void(QImage)>(3, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QImage, 4 },
+        QtMocHelpers::SlotData<void(QImage)>(4, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QImage, 5 },
         }}),
         // Slot 'on_pushButton_capture_clicked'
-        QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_pushButton_imgtest_clicked'
         QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_pushButton_capture_2_clicked'
+        // Slot 'on_pushButton_imgtest_clicked'
         QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_pushButton_START_clicked'
+        // Slot 'on_pushButton_capture_2_clicked'
         QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_pushButton_START_clicked'
+        QtMocHelpers::SlotData<void()>(9, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -87,14 +90,19 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<MainWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->updateWindowInfo(); break;
-        case 1: _t->showPostionlabel((*reinterpret_cast< std::add_pointer_t<QImage>>(_a[1]))); break;
-        case 2: _t->on_pushButton_capture_clicked(); break;
-        case 3: _t->on_pushButton_imgtest_clicked(); break;
-        case 4: _t->on_pushButton_capture_2_clicked(); break;
-        case 5: _t->on_pushButton_START_clicked(); break;
+        case 0: _t->DebugPress(); break;
+        case 1: _t->updateWindowInfo(); break;
+        case 2: _t->showPostionlabel((*reinterpret_cast< std::add_pointer_t<QImage>>(_a[1]))); break;
+        case 3: _t->on_pushButton_capture_clicked(); break;
+        case 4: _t->on_pushButton_imgtest_clicked(); break;
+        case 5: _t->on_pushButton_capture_2_clicked(); break;
+        case 6: _t->on_pushButton_START_clicked(); break;
         default: ;
         }
+    }
+    if (_c == QMetaObject::IndexOfMethod) {
+        if (QtMocHelpers::indexOfMethod<void (MainWindow::*)()>(_a, &MainWindow::DebugPress, 0))
+            return;
     }
 }
 
@@ -117,15 +125,21 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
+}
+
+// SIGNAL 0
+void MainWindow::DebugPress()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 QT_WARNING_POP

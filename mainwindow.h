@@ -34,6 +34,10 @@ public:
     void captureScreenAndDisplay(const QRect &rect);
     void LayoutAlign();
     void debugPicture();
+
+signals:
+    void DebugPress(void);
+
 public slots:
     void updateWindowInfo();
     void showPostionlabel(QImage img );
@@ -52,6 +56,6 @@ private:
     Ui::MainWindow *ui;
     bool streamOn = false;
     opencv_thread *p_opencv;
-   // QTimer
+
 };
 #endif // MAINWINDOW_H

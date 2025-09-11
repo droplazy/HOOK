@@ -22,6 +22,7 @@ win32 {
 
 
 
+
 INCLUDEPATH +=E:\OpenCV-4.10.0\build\include  \
               E:\OpenCV-4.10.0\build\include\opencv \
               E:\OpenCV-4.10.0\build\include\opencv2

@@ -597,8 +597,6 @@ debug/moc_opencv_thread.cpp: ../../opencv_thread.h \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video.hpp \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/tracking.hpp \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/background_segm.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/xfeatures2d.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/xfeatures2d/nonfree.hpp \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QImage \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qimage.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtguiglobal.h \
@@ -1297,7 +1295,10 @@ debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/blenders.hpp \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video.hpp \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/tracking.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/background_segm.hpp
+		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/background_segm.hpp \
+		../../opencv_thread.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QThread \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QGuiApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\..\mainwindow.cpp
 
 debug/opencv_thread.o: ../../opencv_thread.cpp ../../opencv_thread.h \
@@ -1539,8 +1540,6 @@ debug/opencv_thread.o: ../../opencv_thread.cpp ../../opencv_thread.h \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video.hpp \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/tracking.hpp \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/background_segm.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/xfeatures2d.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/xfeatures2d/nonfree.hpp \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QImage \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qimage.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtguiglobal.h \
@@ -1629,7 +1628,11 @@ debug/opencv_thread.o: ../../opencv_thread.cpp ../../opencv_thread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfiledevice.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfile.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfileinfo.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtimezone.h
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtimezone.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QApplication \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qapplication.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QStandardPaths \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstandardpaths.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\opencv_thread.o ..\..\opencv_thread.cpp
 
 debug/qrc_pic.o: debug/qrc_pic.cpp 

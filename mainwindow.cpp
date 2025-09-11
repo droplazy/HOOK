@@ -132,8 +132,9 @@ void MainWindow::showPostionlabel(QImage img)
 
     // 将缩放后的pixmap设置到label上
     ui->label_9->setPixmap(pixmap);
-    qDebug()<< "show positon pic ok.. ";
+  //  qDebug()<< "show positon pic ok.. ";
     //delete img; // 删除QImage对象
+
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -153,6 +154,8 @@ MainWindow::MainWindow(QWidget *parent)
     moveMouseAndClick(422, 453);  // 可以根据需要修改目标位置
     p_opencv = new opencv_thread();
     connect(p_opencv, SIGNAL(getPic(QImage)), this, SLOT(showPostionlabel(QImage)), Qt::AutoConnection);
+    connect(this, SIGNAL(DebugPress(void)), p_opencv, SLOT(testSLot(void)), Qt::AutoConnection);
+
     p_opencv ->start();
 
 }
@@ -425,17 +428,32 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
 void MainWindow::on_pushButton_START_clicked()
 {
-    static bool isAcitive = false;
+    p_opencv->startDispose = true;
+    p_opencv->ZeroPos = startPos;
+    p_opencv->EndPos = endPos;
+    emit DebugPress();
+    qDebug() <<"emit ";
+   /* static bool isAcitive = false;
     isAcitive = !isAcitive;
     // 切换按钮状态
     if (isAcitive) {
         p_opencv->startDispose = true;
         p_opencv->ZeroPos = startPos;
+        p_opencv->EndPos = endPos;
+        if(streamOn)
+        {
+        ui->pushButton_imgtest->setStyleSheet("background-color: rgb(255, 255, 255);");
+        ui->label_gameinfo->clear();
+
+        streamOn = false;
+        }
+
+
         ui->pushButton_imgtest->setStyleSheet("background-color: rgb(1, 255, 1);");
     } else {
 
         ui->pushButton_imgtest->setStyleSheet("background-color: rgb(1, 1, 1);");
         p_opencv->startDispose = false;
-    }
+    }*/
 }
 
