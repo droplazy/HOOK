@@ -22,6 +22,8 @@ using namespace std;
 
 
 #define SCALE_FLOAT 2.2f
+#define OCR_CHINESE_SIMPLE "chi_sim"
+#define OCR_ENGLISH "eng"
 
 
 
@@ -44,7 +46,13 @@ public:
     cv::Mat capturePosition();
     cv::Mat captureGameWindow();
     cv::Mat captureScreenAndSave(const QRect &rect, QString path);
+
+
+    void RectHignLight();
+    void GetCharacterPos();
     void FindPicTarget();
+    cv::Mat capturePositionForRect(QRect pos);
+    QString recognizeTextFromMat(const cv::Mat &inputMat ,QString language);
 public slots:
     void testSLot();
 signals:

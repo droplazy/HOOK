@@ -144,7 +144,7 @@ MainWindow::MainWindow(QWidget *parent)
     p_opencv ->start();
     w_displayTest = new Display_Widget(this);
     connect(p_opencv, SIGNAL(getPic(QImage)), w_displayTest, SLOT(displayInstace(QImage)), Qt::AutoConnection);//持续推流信号
-    connect(w_displayTest, SIGNAL(closeSig(void)), this, SLOT(displayInstace(QImage)), Qt::AutoConnection);//
+   // connect(w_displayTest, SIGNAL(closeSig(void)), this, SLOT(displayInstace(QImage)), Qt::AutoConnection);//
 
     w_displayTest->show();
 }

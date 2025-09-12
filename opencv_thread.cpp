@@ -2,6 +2,76 @@
 #include <QApplication>
 #include <QScreen>
 #include <QStandardPaths>
+#include <QProcess>
+
+#include <QTextStream>
+#include <cmath>
+#include <algorithm>
+
+
+
+QStringList dreamWorldLocations = {
+    "南瞻部洲", "东胜神洲", "西牛贺洲", "北俱芦洲",
+    "长安城", "傲来国", "长寿村", "朱紫国",
+    "凤巢", "龙窟", "地府迷宫", "海底迷宫",
+    "凌霄宝殿", "战神山", "两界山",
+    "大雁塔", "建邺城", "江南野外", "花果山", "女儿村",
+    "龙窟入口", "女娲神迹", "方寸山", "天宫", "无底洞",
+    "灵山雷音寺", "宝象国", "西梁女国", "大雪山", "金銮殿",
+    "麒麟山", "碗子山", "东海湾", "无名鬼城"
+};
+
+
+
+
+// 计算 Levenshtein Distance（编辑距离）
+int levenshteinDistance(const QString &str1, const QString &str2) {
+    int len1 = str1.length();
+    int len2 = str2.length();
+
+    // 创建距离矩阵
+    std::vector<std::vector<int>> dp(len1 + 1, std::vector<int>(len2 + 1));
+
+    for (int i = 0; i <= len1; ++i) dp[i][0] = i;
+    for (int j = 0; j <= len2; ++j) dp[0][j] = j;
+
+    for (int i = 1; i <= len1; ++i) {
+        for (int j = 1; j <= len2; ++j) {
+            int cost = (str1[i - 1] == str2[j - 1]) ? 0 : 1;
+            dp[i][j] = std::min({dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost});
+        }
+    }
+    return dp[len1][len2];
+}
+
+// 找到最相似的地名
+QString findMostSimilarLocation(const QString &input, const QStringList &locationList, int maxDistance = 3) {
+    // 如果输入为空，直接返回“未知”
+    if (input.isEmpty()) {
+        return "未知";
+    }
+
+    QString closestLocation;
+    int minDistance = std::numeric_limits<int>::max();
+
+    for (const QString &location : locationList) {
+        int distance = levenshteinDistance(input, location);
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestLocation = location;
+        }
+    }
+
+    // 如果最小距离大于阈值，返回“未知”
+    if (minDistance > maxDistance) {
+        return "未知";
+    }
+
+    return closestLocation;
+}
+
+
+
 opencv_thread::opencv_thread()
 {
     ZeroPos.setX(0);
@@ -15,6 +85,7 @@ void opencv_thread::run()
         if(startDispose)
         {
             disposeIMGformessage();
+            usleep(1000*1000);
         }
 
     }
@@ -43,16 +114,17 @@ cv::Mat opencv_thread::captureScreenAndSave(const QRect &rect ,QString path)
     // QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     // QString filePath = desktopPath + "/1.png";
     // static bool
-    // if (!image.save(path)) {
-    //     qWarning() << "保存截图失败:" << path;
-    // } else {
-    //     qDebug() << "截图已保存到:" << path;
-    // }
-    if(startDispose)
+    if(startDispose &&path== "STREAMBODY"  )
     {
         emit getPic(image);
     }
+    else if (path.isEmpty()||!image.save(path) ) {
+        //qWarning() << "保存截图失败(或者不需要):" << path;
+    } else {
+        qDebug() << "截图已保存到:" << path;
+    }
     // 将 QImage 转换为 cv::Mat
+
     cv::Mat mat(image.height(), image.width(), CV_8UC4, (void*)image.bits(), image.bytesPerLine());
     if (mat.empty()) {
         qWarning() << "OpenCV Mat 转换失败";
@@ -65,6 +137,16 @@ cv::Mat opencv_thread::captureScreenAndSave(const QRect &rect ,QString path)
 
     // 返回转换后的 BGR 图像
     return matBGR;
+}
+
+void opencv_thread::RectHignLight()
+{
+
+}
+
+void opencv_thread::GetCharacterPos()
+{
+
 }
 
 void opencv_thread::FindPicTarget()
@@ -146,8 +228,17 @@ cv::Mat opencv_thread::capturePosition()
                                                            ZeroPos.y()+(130-90)*SCALE_FLOAT-15,\
      90*SCALE_FLOAT,80*SCALE_FLOAT);
    // ret = captureScreenAndDisplay(rect);
-    ret = captureScreenAndSave(rect, "E:/qtpro/ScreenCapture/测试/1.png");    return ret;
+    ret = captureScreenAndSave(rect, "");    return ret;
 }
+cv::Mat opencv_thread::capturePositionForRect(QRect pos)
+{
+    QRect rect;
+    cv::Mat ret;
+    rect.setRect(ZeroPos.x()+pos.x(),ZeroPos.y()+pos.y(),pos.width(),pos.height());
+
+    ret = captureScreenAndSave(rect, "E:/qtpro/ScreenCapture/测试/2.png");    return ret;
+}
+
 cv::Mat opencv_thread::captureGameWindow()
 {
    // QRect rect;
@@ -157,7 +248,7 @@ cv::Mat opencv_thread::captureGameWindow()
     QRect captureRect(ZeroPos.x(), ZeroPos.y(),EndPos.x()-ZeroPos.x(),EndPos.y()- ZeroPos.y());  // 设置需要截取的位置和宽高
 
     // 90*SCALE_FLOAT,80*SCALE_FLOAT);
-ret = captureScreenAndSave(captureRect, "E:/qtpro/ScreenCapture/测试/2.png");    return ret;
+    ret = captureScreenAndSave(captureRect, "STREAMBODY");    return ret;
 }
 // QImage image3("E:/qtpro/ScreenCapture/测试/4.png");
 
@@ -175,7 +266,69 @@ void opencv_thread::disposeIMGformessage()
     qDebug() << "EndPos: (" << EndPos.x() << "," << EndPos.y() << ")";
 
     cv::Mat targetImg = captureGameWindow();
-    //cv::Mat templateImg =capturePosition();
+  //  cv::Mat templateImg =capturePosition();
+
+    qDebug() << "****************************************************";
+    QRect rect(+53,+207,138,20);
+    cv::Mat posText = capturePositionForRect(rect);
+    QString position=recognizeTextFromMat(posText,OCR_ENGLISH);
+
+    rect.setRect(+45,+120,115,30);
+    posText = capturePositionForRect(rect);
+    QString location =   recognizeTextFromMat(posText,OCR_CHINESE_SIMPLE);
+    QString result = findMostSimilarLocation(location, dreamWorldLocations);
+
+    qDebug()<< "最相似的地名是: " << result << "OCR:"<<position;
+    qDebug() << "****************************************************";
+}
+
+QString opencv_thread::recognizeTextFromMat(const cv::Mat &inputMat ,QString language) {
+    // 将 cv::Mat 转换为灰度图
+    cv::Mat grayMat;
+    cv::cvtColor(inputMat, grayMat, cv::COLOR_BGR2GRAY);
+
+    // 使用 Otsu 二值化方法进行二值化处理，自动选择最佳阈值
+    cv::Mat binaryMat;
+    cv::threshold(grayMat, binaryMat, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
+
+    // 反转二值化图像（黑白反转）
+    cv::Mat invertedMat;
+    cv::bitwise_not(binaryMat, invertedMat);
+
+    // 保存反转后的二值化图像
+    QString tempInvertedImagePath = "C:/Users/KANDAGAWA/Desktop/temp_inverted_image.png";
+    cv::imwrite(tempInvertedImagePath.toStdString(), invertedMat);
+
+    // 设置 Tesseract 执行路径和输出文件路径
+    QString tesseractPath = "C:/Program Files/Tesseract-OCR/tesseract.exe";
+    QString outputPath = "C:/Users/KANDAGAWA/Desktop/output";
+    //QString language = "eng";
+
+    // 创建 QProcess 调用 Tesseract 命令
+    QProcess process;
+    QStringList arguments;
+    arguments << tempInvertedImagePath << outputPath << "-l" << language << "--dpi" << "300" << "--psm" << "6";
+
+    // 启动进程并等待 Tesseract 处理
+    process.start(tesseractPath, arguments);
+    process.waitForFinished();
+
+    // 读取 Tesseract 输出的文本
+    QFile outputFile(outputPath + ".txt");
+    if (outputFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&outputFile);
+        QString recognizedText = in.readAll();
+        outputFile.close();
+
+        // 输出识别的文字
+        qDebug() << "识别的文字： " << recognizedText;
+        return recognizedText;
+    } else {
+        qDebug() << "无法读取 Tesseract 输出文件!";
+        return "";
+    }
+
+
 }
 
 
