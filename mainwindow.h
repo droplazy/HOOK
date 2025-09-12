@@ -8,6 +8,7 @@
 #include <QStandardPaths>
 #include <QVBoxLayout>
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -16,6 +17,8 @@ QT_END_NAMESPACE
 
 
 class opencv_thread;
+class Display_Widget;
+
 
 class MainWindow : public QMainWindow
 {
@@ -25,22 +28,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    QImage captureWindow(int x, int y, int width, int height);
-    void saveImage(const QImage &image);
-    QImage captureScreen(int x, int y, int width, int height);
-    void GetImage();
-    void captureScreenAndSave(const QRect &rect);
-    void ImageStream();
-    void captureScreenAndDisplay(const QRect &rect);
-    void LayoutAlign();
-    void debugPicture();
-
 signals:
     void DebugPress(void);
 
 public slots:
     void updateWindowInfo();
-    void showPostionlabel(QImage img );
 private slots:
 
     void on_pushButton_capture_clicked();
@@ -49,13 +41,13 @@ private slots:
 
     void on_pushButton_capture_2_clicked();
     void on_pushButton_START_clicked();
-
+    void ChindWidegtClosed();
 protected:
     //void paintEvent(QPaintEvent *event) override;
 private:
     Ui::MainWindow *ui;
     bool streamOn = false;
     opencv_thread *p_opencv;
-
+    Display_Widget *w_displayTest;
 };
 #endif // MAINWINDOW_H

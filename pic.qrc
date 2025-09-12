@@ -2,5 +2,39 @@
     <qresource prefix="/">
         <file>pic/alignPic.png</file>
         <file>pic/3.png</file>
+        <file>Element/QingLong/CNW.png</file>
+        <file>Element/QingLong/Completed.png</file>
+        <file>Element/QingLong/CSCCZ.png</file>
+        <file>Element/QingLong/CYW.png</file>
+        <file>Element/QingLong/DYLZ_O.png</file>
+        <file>Element/QingLong/FW_O.png</file>
+        <file>Element/QingLong/GetNPC.png</file>
+        <file>Element/QingLong/JM.png</file>
+        <file>Element/QingLong/KQH_O.png</file>
+        <file>Element/QingLong/LH.png</file>
+        <file>Element/QingLong/LLD.png</file>
+        <file>Element/QingLong/LR_O.png</file>
+        <file>Element/QingLong/LST.png</file>
+        <file>Element/QingLong/MQY.png</file>
+        <file>Element/QingLong/MRXS.png</file>
+        <file>Element/QingLong/Object.png</file>
+        <file>Element/QingLong/QingLongMenu.png</file>
+        <file>Element/QingLong/SH_O.png</file>
+        <file>Element/QingLong/WDS.png</file>
+        <file>Element/QingLong/WFR.png</file>
+        <file>Element/QingLong/WJR.png</file>
+        <file>Element/QingLong/XBLB.png</file>
+        <file>Element/QingLong/XH.png</file>
+        <file>Element/QingLong/XSCH.png</file>
+        <file>Element/QingLong/xsch_o.png</file>
+        <file>Element/QingLong/YKS.png</file>
+        <file>Element/QingLong/ZLF.png</file>
+        <file>Element/QingLong/ZYB.png</file>
+        <file>Element/QingLong/QF.png</file>
+        <file>Element/QingLong/DYLZ.png</file>
+        <file>Element/QingLong/FW.png</file>
+        <file>Element/QingLong/KQH.png</file>
+        <file>Element/QingLong/LR.png</file>
+        <file>Element/QingLong/SH.png</file>
     </qresource>
 </RCC>

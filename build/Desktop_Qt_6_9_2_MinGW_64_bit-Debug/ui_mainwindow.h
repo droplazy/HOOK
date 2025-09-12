@@ -16,6 +16,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -24,19 +25,13 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QLabel *label_gameinfo;
     QPushButton *pushButton_capture;
     QLabel *label_sysinfor;
     QPushButton *pushButton_imgtest;
     QPushButton *pushButton_capture_2;
-    QLabel *label;
-    QLabel *label_2;
-    QLabel *label_3;
-    QLabel *label_4;
-    QLabel *label_6;
     QPushButton *pushButton_START;
-    QLabel *label_7;
-    QLabel *label_9;
+    QPushButton *pushButton_START_2;
+    QTextEdit *textEdit;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -44,18 +39,11 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1318, 823);
-        MainWindow->setMinimumSize(QSize(800, 700));
-        MainWindow->setMaximumSize(QSize(6000, 6000));
+        MainWindow->resize(497, 449);
+        MainWindow->setMinimumSize(QSize(497, 449));
+        MainWindow->setMaximumSize(QSize(497, 449));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        label_gameinfo = new QLabel(centralwidget);
-        label_gameinfo->setObjectName("label_gameinfo");
-        label_gameinfo->setGeometry(QRect(20, 90, 700, 560));
-        label_gameinfo->setMinimumSize(QSize(700, 560));
-        label_gameinfo->setMaximumSize(QSize(700, 560));
-        label_gameinfo->setStyleSheet(QString::fromUtf8("background-image: url(:/pic/3.png);"));
-        label_gameinfo->setScaledContents(true);
         pushButton_capture = new QPushButton(centralwidget);
         pushButton_capture->setObjectName("pushButton_capture");
         pushButton_capture->setGeometry(QRect(21, 11, 80, 24));
@@ -63,9 +51,8 @@ public:
 "background-color: rgb(156, 156, 156);"));
         label_sysinfor = new QLabel(centralwidget);
         label_sysinfor->setObjectName("label_sysinfor");
-        label_sysinfor->setGeometry(QRect(20, 50, 701, 31));
-        label_sysinfor->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);\n"
-"color: rgb(170, 0, 0);"));
+        label_sysinfor->setGeometry(QRect(20, 50, 441, 31));
+        label_sysinfor->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         pushButton_imgtest = new QPushButton(centralwidget);
         pushButton_imgtest->setObjectName("pushButton_imgtest");
         pushButton_imgtest->setGeometry(QRect(200, 10, 80, 24));
@@ -76,42 +63,21 @@ public:
         pushButton_capture_2->setGeometry(QRect(110, 10, 80, 24));
         pushButton_capture_2->setStyleSheet(QString::fromUtf8("\n"
 "background-color: rgb(156, 156, 156);"));
-        label = new QLabel(centralwidget);
-        label->setObjectName("label");
-        label->setGeometry(QRect(20, 130, 90, 80));
-        label->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
-        label_2 = new QLabel(centralwidget);
-        label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(540, 130, 178, 35));
-        label_2->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
-        label_3 = new QLabel(centralwidget);
-        label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(150, 220, 421, 251));
-        label_3->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
-        label_4 = new QLabel(centralwidget);
-        label_4->setObjectName("label_4");
-        label_4->setGeometry(QRect(410, 620, 311, 31));
-        label_4->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
-        label_6 = new QLabel(centralwidget);
-        label_6->setObjectName("label_6");
-        label_6->setGeometry(QRect(580, 210, 141, 231));
-        label_6->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
         pushButton_START = new QPushButton(centralwidget);
         pushButton_START->setObjectName("pushButton_START");
         pushButton_START->setGeometry(QRect(290, 10, 80, 24));
         pushButton_START->setStyleSheet(QString::fromUtf8("background-color: rgb(1, 1, 1);"));
-        label_7 = new QLabel(centralwidget);
-        label_7->setObjectName("label_7");
-        label_7->setGeometry(QRect(740, 10, 90, 80));
-        label_7->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
-        label_9 = new QLabel(centralwidget);
-        label_9->setObjectName("label_9");
-        label_9->setGeometry(QRect(730, 90, 571, 551));
-        label_9->setStyleSheet(QString::fromUtf8("border: 3px solid red;background: transparent;"));
+        pushButton_START_2 = new QPushButton(centralwidget);
+        pushButton_START_2->setObjectName("pushButton_START_2");
+        pushButton_START_2->setGeometry(QRect(380, 10, 80, 24));
+        pushButton_START_2->setStyleSheet(QString::fromUtf8("background-color: rgb(1, 1, 1);"));
+        textEdit = new QTextEdit(centralwidget);
+        textEdit->setObjectName("textEdit");
+        textEdit->setGeometry(QRect(20, 80, 461, 331));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1318, 21));
+        menubar->setGeometry(QRect(0, 0, 497, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -125,19 +91,20 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        label_gameinfo->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         pushButton_capture->setText(QCoreApplication::translate("MainWindow", "\347\252\227\345\217\243\350\216\267\345\217\226", nullptr));
         label_sysinfor->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        pushButton_imgtest->setText(QCoreApplication::translate("MainWindow", "\346\230\276\347\244\272\346\265\213\350\257\225", nullptr));
+        pushButton_imgtest->setText(QCoreApplication::translate("MainWindow", "\345\274\200\345\247\213/\345\201\234\346\255\242\346\265\201", nullptr));
         pushButton_capture_2->setText(QCoreApplication::translate("MainWindow", "\346\210\221\350\216\267\345\217\226\344\272\206", nullptr));
-        label->setText(QString());
-        label_2->setText(QString());
-        label_3->setText(QString());
-        label_4->setText(QString());
-        label_6->setText(QString());
         pushButton_START->setText(QCoreApplication::translate("MainWindow", "KAISHI", nullptr));
-        label_7->setText(QString());
-        label_9->setText(QString());
+        pushButton_START_2->setText(QCoreApplication::translate("MainWindow", "KAISHI", nullptr));
+        textEdit->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\347\202\271\345\207\273</p></body></html>", nullptr));
     } // retranslateUi
 
 };
