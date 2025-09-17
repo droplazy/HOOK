@@ -5,7 +5,11 @@
 event_pthread::event_pthread(QObject *parent)
     : QThread(parent), currentState(Task_State::IDLE)  // 默认状态为 IDLE
 {
-        p_http = new HttpClient();
+
+    // QTimer *timer_orc = new QTimer(this);
+    // connect(timer_orc, &QTimer::timeout, this, &event_pthread::GetCharacterPostion);
+    // connect(timer_orc, &QTimer::timeout, this, &event_pthread::GetCharacterLocation);
+    // timer_orc->start(5000);
 
 }
 
@@ -40,16 +44,18 @@ void event_pthread::run()
         }
 
         // 模拟一些需要定时处理的任务，比如等待一段时间
-        //QThread::msleep(1);  // 让线程休眠一秒，防止占用过多CPU资源
+        QThread::msleep(350);  // 让线程休眠一秒，防止占用过多CPU资源
     }
 }
 #include <QElapsedTimer>
 
-void event_pthread::GetIdleImage()
+bool event_pthread::IsCorrectScreen()
 {
-    //opencv_utils::disposeIMGformessage();
+    return (std::abs(EndPos.x() - ZeroPos.x()) > 100 && std::abs(EndPos.y() - ZeroPos.y()) > 100);
+}
 
-    //获得IMG 格式的窗口
+void event_pthread::GetGameScreen()
+{
     QRect captureRect(ZeroPos.x(), ZeroPos.y(),EndPos.x()-ZeroPos.x(),EndPos.y()- ZeroPos.y());  // 设置需要截取的位置和宽高
     QImage img = opencv_utils::captureScreenQimage(captureRect);
     if (streamOn) {
@@ -57,17 +63,71 @@ void event_pthread::GetIdleImage()
         emit getPic(img.copy());
         qDebug() << "Sending image with dimensions: " << img.width() << "x" << img.height();
     }
+}
+
+void event_pthread::GetIdleImage()
+{
+    //opencv_utils::disposeIMGformessage();
+    if(!IsCorrectScreen())
+        return ;
+    //获得IMG 格式的窗口
+    GetGameScreen();
+    GetCharacterForTess();
+}
+void event_pthread::GetCharacterForTess()
+{
+    qDebug() << "ZeroPos: (" << ZeroPos.x() << "," << ZeroPos.y() << ")";
+    qDebug() << "EndPos: (" << EndPos.x() << "," << EndPos.y() << ")";
+
+    // cv::Mat targetImg = captureGameWindow();
+    //  cv::Mat templateImg =capturePosition();
+
+    qDebug() << "****************************************************";
+    QRect rect(+53,+207,138,20);
+    cv::Mat posText = opencv_utils::capturePositionForRect(rect);
+    QString position=opencv_utils::recognizeTextFromMat(posText,OCR_ENGLISH);
+
+    rect.setRect(+45,+120,115,30);
+    posText = opencv_utils::capturePositionForRect(rect);
+    QString location =   opencv_utils::recognizeTextFromMat(posText,OCR_CHINESE_SIMPLE);
+    QString result = findMostSimilarLocation(location, dreamWorldLocations);
+
+    qDebug()<< "最相似的地名是: " << result << "OCR:"<<position;
+    loaction = result;
+    position = position;
+ //   return ("location"+result+"pos:"+position);
+}
+
+
+void event_pthread::GetCharacterPostion()
+{
     QRect rect(+53,+207,138,20);
     cv::Mat posText = opencv_utils::capturePositionForRect(rect);
     //QString position=recognizeTextFromMat(posText,OCR_ENGLISH);
-   QString base64pic=  opencv_utils::recognizeTextFromMatBackBase(posText);
+    QString base64pic=  opencv_utils::recognizeTextFromMatBackBase(posText);
     qDebug() << "**************************************\n";
     qDebug() << base64pic;
     qDebug() << "**************************************\n";
-
-   // GetORCRegnizeToNetwork(base64pic);
+    emit regnize(base64pic);
 }
+void event_pthread::GetCharacterLocation()
+{
 
+    QRect rect(+45,+120,115,30);
+    cv::Mat posText = opencv_utils::capturePositionForRect(rect);
+    //QString position=recognizeTextFromMat(posText,OCR_ENGLISH);
+    QString base64pic=  opencv_utils::recognizeTextFromMatBackBase(posText);
+    qDebug() << "**************************************\n";
+    qDebug() << base64pic;
+    qDebug() << "**************************************\n";
+    emit regnize(base64pic);
+}
+void event_pthread::GetCharacterlocInfo()
+{
+
+    GetCharacterLocation();
+    GetCharacterPostion();
+}
 #if 0
     // 将 QImage 转换为 cv::Mat
     //opencv_utils::disposeIMGformessage();
@@ -111,23 +171,4 @@ Task_State event_pthread::getState() const
     return currentState;
 }
 
-#include <QUrlQuery>
 
-#define PIC_REGNIZE "http://vip.apihz.cn/api/yiyan/api.php"
-#define API_ID     "10001671"
-#define API_KEY    "HangZhoufogkniteleElectron950905"
-
-void event_pthread::GetORCRegnizeToNetwork(QString picBase64)
-{
-
-    QUrl url(PIC_REGNIZE);
-    QUrlQuery query;
-    query.addQueryItem("id", API_ID);
-    query.addQueryItem("key", API_KEY);
-    query.addQueryItem("type", "2");
-    query.addQueryItem("img", picBase64);
- //   query.addQueryItem("words", "心灵鸡汤");
-
-    url.setQuery(query); // 设置 URL 的查询部分
-    p_http->sendGetRequest(url);
-}

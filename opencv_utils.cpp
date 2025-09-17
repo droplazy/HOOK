@@ -18,7 +18,7 @@ QStringList dreamWorldLocations = {
     "大雁塔", "建邺城", "江南野外", "花果山", "女儿村",
     "龙窟入口", "女娲神迹", "方寸山", "天宫", "无底洞",
     "灵山雷音寺", "宝象国", "西梁女国", "大雪山", "金銮殿",
-    "麒麟山", "碗子山", "东海湾", "无名鬼城"
+    "麒麟山", "碗子山", "东海湾", "无名鬼城","长寿郊外"
 };
 
 
@@ -53,7 +53,7 @@ QString cleanOCRResult(const QString &input) {
 }
 
 
-QString findMostSimilarLocation(const QString &input, const QStringList &locationList, int maxDistance = 3) {
+QString findMostSimilarLocation(const QString &input, const QStringList &locationList, int maxDistance ) {
     // 如果输入为空，直接返回“未知”
     if (input.isEmpty()) {
         return "未知";

@@ -150,9 +150,11 @@ MainWindow::MainWindow(QWidget *parent)
     p_thread ->start();
     w_displayTest = new Display_Widget(this);
     connect(p_thread, SIGNAL(getPic(QImage)), w_displayTest, SLOT(displayInstace(QImage)), Qt::AutoConnection);//持续推流信号
-   // connect(w_displayTest, SIGNAL(closeSig(void)), this, SLOT(displayInstace(QImage)), Qt::AutoConnection);//
+    connect(p_thread, SIGNAL(regnize(QString)), this, SLOT(GetNeedRegnizePic(QString)), Qt::AutoConnection);//持续推流信号
 
     w_displayTest->show();
+
+    p_http = new HttpClient();
 }
 
 MainWindow::~MainWindow()
@@ -162,7 +164,31 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+#include <QUrlQuery>
 
+#define PIC_REGNIZE "https://cn.apihz.cn/api/ai/shituwen.php"
+#define API_ID     "10001671"
+#define API_KEY    "HangZhoufogkniteleElectron950905"
+
+void MainWindow::GetORCRegnizeToNetwork(QString picBase64)
+{
+
+    QUrl url(PIC_REGNIZE);
+    QUrlQuery query;
+    query.addQueryItem("id", API_ID);
+    query.addQueryItem("key", API_KEY);
+    query.addQueryItem("type", "2");
+    query.addQueryItem("img", picBase64);
+    //   query.addQueryItem("words", "心灵鸡汤");
+
+    url.setQuery(query); // 设置 URL 的查询部分
+    p_http->sendGetRequest(url);
+}
+
+void MainWindow::GetNeedRegnizePic(QString picBase64)
+{
+    GetORCRegnizeToNetwork(picBase64);
+}
 
 void MainWindow::on_pushButton_capture_clicked()//开始截屏的按钮
 {

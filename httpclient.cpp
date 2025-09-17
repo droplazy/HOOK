@@ -56,6 +56,10 @@ void HttpClient::printChache()
 
 void HttpClient::onFinished(QNetworkReply *reply)
 {
+    // 打印请求的 URL 和状态码
+    qDebug() << "URL:" << reply->url().toString();
+    qDebug() << "Status Code:" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
     // 检查是否有错误
     if (reply->error() == QNetworkReply::NoError)
     {
@@ -68,6 +72,8 @@ void HttpClient::onFinished(QNetworkReply *reply)
         // 请求失败，输出错误信息
         qDebug() << "Error:" << reply->errorString();
     }
+
+
 
     // 正确删除 QNetworkReply
     reply->deleteLater();

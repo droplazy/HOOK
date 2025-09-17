@@ -6,6 +6,8 @@
 
 extern QPoint ZeroPos;
 extern QPoint EndPos;
+extern QStringList dreamWorldLocations;
+
 // 枚举类型，表示四种状态
 enum class Task_State
 {
@@ -50,4 +52,6 @@ struct S_HTTP_RESPONE {
 
     }*/
 };
+
+QString findMostSimilarLocation(const QString &input, const QStringList &locationList, int maxDistance = 3);
 #endif // PRODEFINE_H
