@@ -45,7 +45,7 @@ public:
 
     static void RectHignLight();
     static void GetCharacterPos(cv::Mat targetImage,cv::Mat templateImage);
-    static QImage FindPicTarget(cv::Mat targetImage,cv::Mat templateImage);
+    static QImage FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, QPoint &point, QRect &rectoffset,QPoint ZeroPoint);
     static cv::Mat capturePositionForRect(QRect pos);
     static QString recognizeTextFromMat(const cv::Mat &inputMat, QString language);
     static QImage captureScreenQimage(const QRect &rect);

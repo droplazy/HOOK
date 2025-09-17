@@ -8,7 +8,8 @@
 #include <QStandardPaths>
 #include <QVBoxLayout>
 #include <httpclient.h>
-
+#include <QKeyEvent>
+#include <QCoreApplication>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -41,8 +42,15 @@ private slots:
     void on_pushButton_capture_2_clicked();
     void on_pushButton_START_clicked();
     void ChindWidegtClosed();
+    void MoveMouserToTarget();
 protected:
-    //void paintEvent(QPaintEvent *event) override;
+        void keyPressEvent(QKeyEvent *event) override {
+        if (event->key() == Qt::Key_F12) {
+            // 按下 F12 时退出应用
+            QCoreApplication::quit();
+        }
+        QMainWindow::keyPressEvent(event);  // 继续处理其他按键事件
+    }
 private:
     Ui::MainWindow *ui;
      HttpClient *p_http;

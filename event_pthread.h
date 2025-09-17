@@ -16,7 +16,9 @@ class event_pthread : public QThread
 
 public:
     bool streamOn = false;
-    Task_State currentState = Task_State::IDLE;  // 当前的状态
+    Task_State currentState = Task_State::MOUSER_OFFSET;  // 当前的状态
+    QINGLONG_Task QL_State= QINGLONG_Task::IDLE;
+
     QString t_loaction;
     QString t_position;
 
@@ -41,12 +43,23 @@ public:
     void GameAttack();
     void GameGiveObject();
     void QingLongTask();
-    void findNpcForScreen(QImage image);
+    QPoint findElemntForScreen(QImage image, QRect &rectoffset);//返回鼠标坐标
+    void PessF9();
+    void GetTaskStart();
+
+    void MoveMouseQinglongNPC();
+    QPoint TargetClick;
+    bool MouseNeedMove= false;
+    void CheckMouserOffset();
+    void SetMouserOffset();
+    QPoint findElemntForUI(QImage image, QImage image_UI,QPoint zeroP);
+    QImage GetGamewindowCenterPoint(QPoint &point);
 protected:
     void GetIdleImage();
+
 private:
-    QTimer *timer_orc;
-    //KeyboardSimulator simulator;
+    double MoveScale = 0.7f;
+
 
 signals:
     void getPic(QImage);
@@ -54,6 +67,7 @@ signals:
 
 private slots:
     void GetCharacterlocInfo(); //很准的图文识别接口  2毛一次
+
 };
 
 #endif // EVENT_PTHREAD_H

@@ -63,6 +63,7 @@ RESOURCES += \
     pic.qrc
 
 DISTFILES += \
+    Element/MHJL.png \
     Element/QingLong/CNW.png \
     Element/QingLong/CSCCZ.png \
     Element/QingLong/CYW.png \

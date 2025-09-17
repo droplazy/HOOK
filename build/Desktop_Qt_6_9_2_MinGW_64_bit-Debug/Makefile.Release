@@ -74,7 +74,8 @@ OBJECTS       = release/display_widget.o \
 		release/moc_httpclient.o \
 		release/moc_mainwindow.o
 
-DIST          = Element/QingLong/CNW.png \
+DIST          = Element/MHJL.png \
+		Element/QingLong/CNW.png \
 		Element/QingLong/CSCCZ.png \
 		Element/QingLong/CYW.png \
 		Element/QingLong/Completed.png \
@@ -162,6 +163,10 @@ compiler_rcc_clean:
 	-$(DEL_FILE) release\qrc_pic.cpp release\qrc_qmake_qmake_qm_files.cpp
 release/qrc_pic.cpp: ../../pic.qrc \
 		../../../../qt2025/6.9.2/mingw_64/bin/rcc.exe \
+		../../Element/SETTING.png \
+		../../Element/MHJL.png \
+		../../Element/Mouer_2.png \
+		../../Element/Mouser.png \
 		../../Element/QingLong/WFR.png \
 		../../Element/QingLong/KQH_O.png \
 		../../Element/QingLong/LR_O.png \
@@ -196,8 +201,10 @@ release/qrc_pic.cpp: ../../pic.qrc \
 		../../Element/QingLong/FW_O.png \
 		../../Element/QingLong/LST.png \
 		../../Element/QingLong/XH.png \
+		../../pic/screen.png \
 		../../pic/3.png \
-		../../pic/alignPic.png
+		../../pic/alignPic.png \
+		../../pic/window.png
 	E:\qt2025\6.9.2\mingw_64\bin\rcc.exe -name pic --no-zstd ..\..\pic.qrc -o release\qrc_pic.cpp
 
 release/qrc_qmake_qmake_qm_files.cpp: release/qmake_qmake_qm_files.qrc \
@@ -1032,6 +1039,8 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QIODevice \
 		../../ProDefine.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QPoint \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QKeyEvent \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QCoreApplication \
 		release/moc_predefs.h \
 		../../../../qt2025/6.9.2/mingw_64/bin/moc.exe
 	E:\qt2025\6.9.2\mingw_64\bin\moc.exe $(DEFINES) --include E:/qtpro/HhookYou/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/release/moc_predefs.h -IE:/qt2025/6.9.2/mingw_64/mkspecs/win32-g++ -IE:/qtpro/HhookYou -IE:/OpenCV-4.10.0/build/include -IE:/OpenCV-4.10.0/build/include/opencv -IE:/OpenCV-4.10.0/build/include/opencv2 -IE:/qt2025/6.9.2/mingw_64/include -IE:/qt2025/6.9.2/mingw_64/include/QtWidgets -IE:/qt2025/6.9.2/mingw_64/include/QtGui -IE:/qt2025/6.9.2/mingw_64/include/QtNetwork -IE:/qt2025/6.9.2/mingw_64/include/QtCore -I. -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IE:/qt2025/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\mainwindow.h -o release\moc_mainwindow.cpp
@@ -1644,6 +1653,7 @@ release/event_pthread.o: ../../event_pthread.cpp ../../event_pthread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpainter.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtextoption.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpen.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QMap \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QElapsedTimer
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\event_pthread.o ..\..\event_pthread.cpp
 
@@ -2087,7 +2097,9 @@ release/main.o: ../../main.cpp ../../../../../../qt2025/6.9.2/mingw_64/include/Q
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkreply.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QIODevice \
 		../../ProDefine.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QPoint
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QPoint \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QKeyEvent \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QCoreApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\..\main.cpp
 
 release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
@@ -2341,6 +2353,8 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QIODevice \
 		../../ProDefine.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QPoint \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QKeyEvent \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QCoreApplication \
 		ui_mainwindow.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QApplication \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qapplication.h \
@@ -2491,6 +2505,8 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../display_widget.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QDialog \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qdialog.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QRandomGenerator \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qrandom.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QUrlQuery \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qurlquery.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\..\mainwindow.cpp

@@ -11,13 +11,18 @@ extern QStringList dreamWorldLocations;
 // 枚举类型，表示四种状态
 enum class Task_State
 {
+    MOUSER_OFFSET,
     IDLE,
     QINGLONG, // 青龙
     XUANWU,   // 玄武
     ZHUQUE,   // 朱雀
     SHIMEN    // 石门
 };
-
+enum class QINGLONG_Task
+{
+    IDLE,
+    GetTask
+};
 enum HTTP_TYPE {
     ORCregnize,
     HOT_SEACH_WEIBO,
@@ -53,6 +58,11 @@ struct S_HTTP_RESPONE {
     }*/
 };
 
+// 按下并释放指定键（单键或组合键）
+void releaseKey(const QString& key) ;
+void pressKey(const QString& key) ;
+void moveMouseOnly(int x, int y);
+QPoint  convertCoordinates(const QPoint& canvasOffset, const QPoint& targetCenter);
 QString findMostSimilarLocation(const QString &input, const QStringList &locationList, int maxDistance = 3);
 void moveMouseAndClick(int x, int y,QString L_R) ;
 #endif // PRODEFINE_H

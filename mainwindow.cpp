@@ -110,7 +110,7 @@ void moveMouseAndClick(int x, int y,QString L_R) {
     // 模拟鼠标抬起事件
     mouse_event(MOUSEEVENTF_LEFTUP, x, y, 0, 0);
     }
-    else
+    else if(L_R == "right")
     {
         // 模拟鼠标按下事件
         mouse_event(MOUSEEVENTF_RIGHTDOWN, x, y, 0, 0);
@@ -118,7 +118,19 @@ void moveMouseAndClick(int x, int y,QString L_R) {
         // 模拟鼠标抬起事件
         mouse_event(MOUSEEVENTF_RIGHTUP, x, y, 0, 0);
     }
+    else
+    {
+        qDebug()<< "error click !\n";
+    }
     qDebug() << "Mouse moved and clicked at:" << QPoint(x, y);
+}
+// 自动移动鼠标但不点击
+void moveMouseOnly(int x, int y) {
+    // 设置鼠标位置
+    SetCursorPos(x, y);
+
+    // 打印鼠标移动的位置
+   // qDebug() << "Mouse moved to:" << QPoint(x, y);
 }
 
 void MainWindow::updateWindowInfo()
@@ -136,6 +148,60 @@ void MainWindow::updateWindowInfo()
       QString characterInfo = "地点 : " + p_thread->t_loaction  +"\n "+"坐标:" +p_thread->t_position+"\n ";
       ui->textEdit->setText(characterInfo);
 }
+#include <QRandomGenerator>
+
+void MainWindow::MoveMouserToTarget()
+{
+    if (!p_thread->MouseNeedMove)
+        return;
+
+    // 获取当前鼠标位置
+    POINT currentPos;
+    if (GetCursorPos(&currentPos)) {
+        // 打印当前位置
+       // qDebug() << "\rCurrent mouse position:" << QPoint(currentPos.x, currentPos.y);
+
+        // 获取目标点击位置
+        QPoint target = p_thread->TargetClick;
+
+        // 计算x, y方向上的差距
+        int dx = target.x() - currentPos.x;
+        int dy = target.y() - currentPos.y;
+
+        // 如果目标与当前位置非常接近，直接停止
+        if (abs(dx) < 1 && abs(dy) < 1) {
+            SetCursorPos(target.x(), target.y());  // 确保最后一次设置目标位置
+            p_thread->MouseNeedMove = false;
+         //   qDebug() << "\rMouse reached the target:" << target;
+            //p_thread->MouseNeedMove =true;
+            return;
+        }
+
+        // 计算每次移动的步长
+        int stepX = (dx != 0) ? (dx / abs(dx)) : 0;  // 正负方向
+        int stepY = (dy != 0) ? (dy / abs(dy)) : 0;  // 正负方向
+
+        // 添加随机抖动，模拟不规则的移动
+        QRandomGenerator *rng = QRandomGenerator::global();
+        int jitterX = rng->bounded(-2, 3);  // 范围是 -2 到 2 像素
+        int jitterY = rng->bounded(-2, 3);  // 范围是 -2 到 2 像素
+
+        // 每次移动少量距离（1像素），并加入抖动
+        currentPos.x += stepX + jitterX;
+        currentPos.y += stepY + jitterY;
+
+        // 移动鼠标到新的位置
+        SetCursorPos(currentPos.x, currentPos.y);
+
+        // 打印移动后的鼠标位置
+       // qDebug() << "\rMouse moved to:" << QPoint(currentPos.x, currentPos.y);
+
+        // 在下一次调用时继续移动，直到到达目标
+    }
+    else {
+        qDebug() << "\rFailed to get cursor position!";
+    }
+}
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -145,14 +211,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::updateWindowInfo);
-    timer->start(1); // 每秒更新一次
+    timer->start(10); // 每秒更新一次
+    QTimer *timer_msr = new QTimer(this);
+    connect(timer_msr, &QTimer::timeout, this, &MainWindow::MoveMouserToTarget);
+    timer_msr->start(1); // 每秒更新一次
     installMouseHook();  // 安装鼠标钩子
 
     // 启动定时器，10秒后退出程序
     //  QTimer::singleShot(10000, this, &TransparentWindow::closeApp);
 
     // 自动将鼠标移到指定位置 (例如：屏幕中心)
-    moveMouseAndClick(422, 453,"left");  // 可以根据需要修改目标位置
+  //  moveMouseAndClick(422, 453,"left");  // 可以根据需要修改目标位置
     p_thread = new event_pthread(this);
 
   //  connect(this, SIGNAL(DebugPress(void)), p_opencv, SLOT(testSLot(void)), Qt::AutoConnection);

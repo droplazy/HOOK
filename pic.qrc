@@ -36,5 +36,11 @@
         <file>Element/QingLong/KQH.png</file>
         <file>Element/QingLong/LR.png</file>
         <file>Element/QingLong/SH.png</file>
+        <file>Element/Mouser.png</file>
+        <file>Element/Mouer_2.png</file>
+        <file>Element/MHJL.png</file>
+        <file>Element/SETTING.png</file>
+        <file>pic/screen.png</file>
+        <file>pic/window.png</file>
     </qresource>
 </RCC>

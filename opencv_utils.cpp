@@ -11,7 +11,7 @@
 #include <QBuffer>
 
 QStringList dreamWorldLocations = {
-    "南瞻部洲", "东胜神洲", "西牛贺洲", "北俱芦洲","庭院"
+    "南瞻部洲", "东胜神洲", "西牛贺洲", "北俱芦洲","庭院","帮派仓库"
     "长安城", "傲来国", "长寿村", "朱紫国",
     "凤巢", "龙窟", "地府迷宫", "海底迷宫",
     "凌霄宝殿", "麒麟山"//"战神山", "两界山",
@@ -116,13 +116,13 @@ opencv_utils::opencv_utils()
 
 // }
 
-QImage opencv_utils::captureScreenQimage(const QRect &rect )
+QImage opencv_utils::captureScreenQimage(const QRect &rect)
 {
     // 获取主屏幕截图
     QScreen *screen = QApplication::primaryScreen();
     if (!screen) {
         qWarning() << "无法获取屏幕";
-        //return cv::Mat();  // 返回一个空的cv::Mat
+        return QImage();  // 返回一个空的QImage
     }
 
     // 截取指定区域的截图
@@ -132,9 +132,23 @@ QImage opencv_utils::captureScreenQimage(const QRect &rect )
     QImage image = pixmap.toImage();
     if (image.isNull()) {
         qWarning() << "截图转换为QImage失败";
-
+        return QImage();  // 返回一个空的QImage
     }
- return image;  // 返回一个空的
+
+    // 获取桌面的路径
+    //QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
+    // 设置保存文件的路径和文件名
+    // QString filePath = desktopPath + "/screenshot.png";  // 默认保存为PNG格式
+
+    // // 保存图片到桌面
+    // if (image.save(filePath)) {
+    //     qDebug() << "图片已保存到桌面：" << filePath;
+    // } else {
+    //     qWarning() << "保存图片失败";
+    // }
+
+    return image;  // 返回截图的QImage
 }
 
 
@@ -223,7 +237,7 @@ void opencv_utils::RectHignLight()
 
 // }
 
-QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage)
+QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, QPoint &point, QRect &rectoffset,QPoint ZeroPoint)
 {
     // 检查图像是否为空
     if (targetImage.empty() || templateImage.empty()) {
@@ -249,12 +263,58 @@ QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage)
     cv::Rect matchRect(maxLoc.x, maxLoc.y, templateImage.cols, templateImage.rows);
     cv::rectangle(targetImage, matchRect, cv::Scalar(0, 255, 0), 2); // 用绿色框住匹配区域
 
+    // 将矩形框的坐标和尺寸保存到 rectoffset 中
+    rectoffset = QRect(matchRect.x, matchRect.y, matchRect.width, matchRect.height);
+
+    // 计算矩形的中心点坐标
+    cv::Point center(matchRect.x + matchRect.width / 2, matchRect.y + matchRect.height / 2);
+
+    // 将 center 的值赋给 point
+    point = QPoint(center.x, center.y);  // 把 cv::Point 转换为 QPoint
+
+    // 在中心点画一个圆点
+    cv::circle(targetImage, center, 10, cv::Scalar(255, 0, 0), -1); // 用红色绘制圆点，半径为10
+
+    // 打印左上角和右下角坐标
+    qDebug() << "左上角坐标: (0, 0)" ;
+    qDebug() << "右下角坐标: (" << targetImage.cols - 1 << ", " << targetImage.rows - 1 << ")";
+    qDebug() << "匹配中心坐标: (" << point.x() << ", " << point.y() << ")";
+    qDebug() << "画布坐标: (" << ZeroPoint.x() << ", " << ZeroPoint.y() << ")" ;
+    qDebug() << "绿框坐标: (" << rectoffset.x() << ", " << rectoffset.y() << ")" ;
+    qDebug() << "绿框宽高: (" << rectoffset.width() << ", " << rectoffset.height() << ")" ;
+
+    // 将矩形框的左上角和右下角坐标转换为屏幕坐标
+    QPoint topLeft = convertCoordinates(ZeroPoint, QPoint(rectoffset.x(), rectoffset.y()));
+    QPoint bottomRight = convertCoordinates(ZeroPoint, QPoint(rectoffset.x() + rectoffset.width(), rectoffset.y() + rectoffset.height()));
+    point = convertCoordinates(ZeroPoint, point);
+
+    // 更新 rectoffset 为转换后的屏幕坐标
+    rectoffset = QRect(topLeft, bottomRight);
+
+    // 打印转换后的屏幕坐标
+    qDebug() << "转换后的绿框左上角坐标: (" << topLeft.x() << ", " << topLeft.y() << ")";
+    qDebug() << "转换后的绿框右下角坐标: (" << bottomRight.x() << ", " << bottomRight.y() << ")";
+
+    // 计算匹配点在屏幕上的位置
+
     // 将 OpenCV 的 Mat 图像转换为 QImage
     // OpenCV 默认图像是 BGR 格式，这里将其转换为 RGB 格式
     QImage qImage(targetImage.data, targetImage.cols, targetImage.rows, targetImage.step, QImage::Format_RGB888);
+    // 获取桌面路径
+    QString desktopPath = QDir::homePath() + "/Desktop/";
+    QString filePath = desktopPath + "output_image.png";
+
+    // 保存图片到桌面
+    if (qImage.save(filePath)) {
+        qDebug() << "图片成功保存到桌面：" << filePath;
+    } else {
+        qDebug() << "保存图片失败！";
+    }
 
     return qImage;  // 返回 QImage 对象
 }
+
+
 
 
 cv::Mat opencv_utils::captureScreenAndDisplay(const QRect &rect)
