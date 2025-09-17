@@ -1,4 +1,4 @@
-#include "opencv_thread.h"
+#include "opencv_utils.h"
 #include <QApplication>
 #include <QScreen>
 #include <QStandardPaths>
@@ -7,7 +7,7 @@
 #include <QTextStream>
 #include <cmath>
 #include <algorithm>
-
+#include <ProDefine.h>
 
 
 QStringList dreamWorldLocations = {
@@ -44,10 +44,26 @@ int levenshteinDistance(const QString &str1, const QString &str2) {
     return dp[len1][len2];
 }
 
-// 找到最相似的地名
+#include <QRegularExpression>
+
+QString cleanOCRResult(const QString &input) {
+    QRegularExpression reg("[^\u4e00-\u9fa5]");  // 匹配非汉字的字符
+    QString result = input;  // 创建副本
+    return result.replace(reg, "");  // 在副本上执行 replace
+}
+
+
 QString findMostSimilarLocation(const QString &input, const QStringList &locationList, int maxDistance = 3) {
     // 如果输入为空，直接返回“未知”
     if (input.isEmpty()) {
+        return "未知";
+    }
+
+    // 清理 OCR 识别结果，去除字母等无关部分
+    QString cleanedInput = cleanOCRResult(input);
+
+    // 如果清理后的字符串为空，返回“未知”
+    if (cleanedInput.isEmpty()) {
         return "未知";
     }
 
@@ -55,7 +71,10 @@ QString findMostSimilarLocation(const QString &input, const QStringList &locatio
     int minDistance = std::numeric_limits<int>::max();
 
     for (const QString &location : locationList) {
-        int distance = levenshteinDistance(input, location);
+        // 计算编辑距离（Levenshtein）
+        int distance = levenshteinDistance(cleanedInput, location);
+
+        // 记录最小距离
         if (distance < minDistance) {
             minDistance = distance;
             closestLocation = location;
@@ -71,27 +90,49 @@ QString findMostSimilarLocation(const QString &input, const QStringList &locatio
 }
 
 
-
-opencv_thread::opencv_thread()
+opencv_utils::opencv_utils()
 {
-    ZeroPos.setX(0);
-    ZeroPos.setY(0);
+    // ZeroPos.setX(0);
+    // ZeroPos.setY(0);
 }
 
-void opencv_thread::run()
-{
-    while(1)
-    {
-        if(startDispose)
-        {
-            disposeIMGformessage();
-            usleep(1000*1000);
-        }
+// void opencv_utils::run()
+// {
+//     while(1)
+//     {
+//         if(startDispose)
+//         {
+//             disposeIMGformessage();
+//             usleep(1000*1000);
+//         }
 
+//     }
+
+// }
+
+QImage opencv_utils::captureScreenQimage(const QRect &rect )
+{
+    // 获取主屏幕截图
+    QScreen *screen = QApplication::primaryScreen();
+    if (!screen) {
+        qWarning() << "无法获取屏幕";
+        //return cv::Mat();  // 返回一个空的cv::Mat
     }
 
+    // 截取指定区域的截图
+    QPixmap pixmap = screen->grabWindow(0, rect.x(), rect.y(), rect.width(), rect.height());
+
+    // 将 QPixmap 转换为 QImage
+    QImage image = pixmap.toImage();
+    if (image.isNull()) {
+        qWarning() << "截图转换为QImage失败";
+
+    }
+ return image;  // 返回一个空的
 }
-cv::Mat opencv_thread::captureScreenAndSave(const QRect &rect ,QString path)
+
+
+cv::Mat opencv_utils::captureScreenAndSave(const QRect &rect ,QString path)
 {
     // 获取主屏幕截图
     QScreen *screen = QApplication::primaryScreen();
@@ -114,10 +155,7 @@ cv::Mat opencv_thread::captureScreenAndSave(const QRect &rect ,QString path)
     // QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     // QString filePath = desktopPath + "/1.png";
     // static bool
-    if(startDispose &&path== "STREAMBODY"  )
-    {
-        emit getPic(image);
-    }
+
     else if (path.isEmpty()||!image.save(path) ) {
         //qWarning() << "保存截图失败(或者不需要):" << path;
     } else {
@@ -139,51 +177,51 @@ cv::Mat opencv_thread::captureScreenAndSave(const QRect &rect ,QString path)
     return matBGR;
 }
 
-void opencv_thread::RectHignLight()
+void opencv_utils::RectHignLight()
 {
 
 }
 
-void opencv_thread::GetCharacterPos()
+// void opencv_utils::GetCharacterPos()
+// {
+
+// }
+
+QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage)
 {
-
-}
-
-void opencv_thread::FindPicTarget()
-{
-    // 读取目标图像和模板图像
-    Mat targetImage = imread("C:/Users/KANDAGAWA/Pictures/zm/2.png", IMREAD_COLOR);
-    Mat templateImage = imread("C:/Users/KANDAGAWA/Pictures/zm/1.png", IMREAD_COLOR);
-
+    // 检查图像是否为空
     if (targetImage.empty() || templateImage.empty()) {
         std::cerr << "无法加载图片" << std::endl;
-        return ;
+        return QImage();  // 返回一个空的 QImage 对象
     }
 
     // 转换为灰度图
-    Mat targetGray, templateGray;
-    cvtColor(targetImage, targetGray, COLOR_BGR2GRAY);
-    cvtColor(templateImage, templateGray, COLOR_BGR2GRAY);
+    cv::Mat targetGray, templateGray;
+    cv::cvtColor(targetImage, targetGray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(templateImage, templateGray, cv::COLOR_BGR2GRAY);
 
     // 执行模板匹配
-    Mat result;
-    matchTemplate(targetGray, templateGray, result, TM_CCOEFF_NORMED);
+    cv::Mat result;
+    cv::matchTemplate(targetGray, templateGray, result, cv::TM_CCOEFF_NORMED);
 
     // 找到最匹配的位置
     double minVal, maxVal;
-    Point minLoc, maxLoc;
-    minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc);
+    cv::Point minLoc, maxLoc;
+    cv::minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc);
 
     // 在目标图像上标记匹配区域
-    Rect matchRect(maxLoc.x, maxLoc.y, templateImage.cols, templateImage.rows);
-    rectangle(targetImage, matchRect, Scalar(0, 255, 0), 2); // 用绿色框住匹配区域
+    cv::Rect matchRect(maxLoc.x, maxLoc.y, templateImage.cols, templateImage.rows);
+    cv::rectangle(targetImage, matchRect, cv::Scalar(0, 255, 0), 2); // 用绿色框住匹配区域
 
-    // 显示结果
-    QImage qImage(targetImage.data, targetImage.cols, targetImage.rows, targetImage.step, QImage::Format_BGR888);
-    ImageWindow window(qImage);
+    // 将 OpenCV 的 Mat 图像转换为 QImage
+    // OpenCV 默认图像是 BGR 格式，这里将其转换为 RGB 格式
+    QImage qImage(targetImage.data, targetImage.cols, targetImage.rows, targetImage.step, QImage::Format_RGB888);
+
+    return qImage;  // 返回 QImage 对象
 }
 
-cv::Mat opencv_thread::captureScreenAndDisplay(const QRect &rect)
+
+cv::Mat opencv_utils::captureScreenAndDisplay(const QRect &rect)
 {
     // 获取主屏幕截图
     QScreen *screen = QApplication::primaryScreen();
@@ -219,7 +257,7 @@ cv::Mat opencv_thread::captureScreenAndDisplay(const QRect &rect)
     return matBGR;
 }
 
-cv::Mat opencv_thread::capturePosition()
+cv::Mat opencv_utils::capturePosition()
 {
     QRect rect;
     cv::Mat ret;
@@ -230,16 +268,16 @@ cv::Mat opencv_thread::capturePosition()
    // ret = captureScreenAndDisplay(rect);
     ret = captureScreenAndSave(rect, "");    return ret;
 }
-cv::Mat opencv_thread::capturePositionForRect(QRect pos)
+cv::Mat opencv_utils::capturePositionForRect(QRect pos)
 {
     QRect rect;
     cv::Mat ret;
     rect.setRect(ZeroPos.x()+pos.x(),ZeroPos.y()+pos.y(),pos.width(),pos.height());
 
-    ret = captureScreenAndSave(rect, "E:/qtpro/ScreenCapture/测试/2.png");    return ret;
+    ret = captureScreenAndSave(rect, "");    return ret;
 }
 
-cv::Mat opencv_thread::captureGameWindow()
+cv::Mat opencv_utils::captureGameWindow()
 {
    // QRect rect;
     cv::Mat ret;
@@ -248,7 +286,7 @@ cv::Mat opencv_thread::captureGameWindow()
     QRect captureRect(ZeroPos.x(), ZeroPos.y(),EndPos.x()-ZeroPos.x(),EndPos.y()- ZeroPos.y());  // 设置需要截取的位置和宽高
 
     // 90*SCALE_FLOAT,80*SCALE_FLOAT);
-    ret = captureScreenAndSave(captureRect, "STREAMBODY");    return ret;
+    ret = captureScreenAndSave(captureRect, "");    return ret;
 }
 // QImage image3("E:/qtpro/ScreenCapture/测试/4.png");
 
@@ -260,12 +298,12 @@ cv::Mat opencv_thread::captureGameWindow()
 // }
 
 // 将 QImage 转换为 cv::Mat
-void opencv_thread::disposeIMGformessage()
+void opencv_utils::disposeIMGformessage()
 {
     qDebug() << "ZeroPos: (" << ZeroPos.x() << "," << ZeroPos.y() << ")";
     qDebug() << "EndPos: (" << EndPos.x() << "," << EndPos.y() << ")";
 
-    cv::Mat targetImg = captureGameWindow();
+   // cv::Mat targetImg = captureGameWindow();
   //  cv::Mat templateImg =capturePosition();
 
     qDebug() << "****************************************************";
@@ -282,7 +320,7 @@ void opencv_thread::disposeIMGformessage()
     qDebug() << "****************************************************";
 }
 
-QString opencv_thread::recognizeTextFromMat(const cv::Mat &inputMat ,QString language) {
+QString opencv_utils::recognizeTextFromMat(const cv::Mat &inputMat ,QString language) {
     // 将 cv::Mat 转换为灰度图
     cv::Mat grayMat;
     cv::cvtColor(inputMat, grayMat, cv::COLOR_BGR2GRAY);
@@ -332,8 +370,3 @@ QString opencv_thread::recognizeTextFromMat(const cv::Mat &inputMat ,QString lan
 }
 
 
-void opencv_thread::testSLot()
-{
-    qDebug()<< "123321";
-    disposeIMGformessage();
-}

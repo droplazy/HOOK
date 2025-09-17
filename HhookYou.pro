@@ -10,14 +10,17 @@ CONFIG += c++17
 
 SOURCES += \
     display_widget.cpp \
+    event_pthread.cpp \
     main.cpp \
     mainwindow.cpp \
-    opencv_thread.cpp
+    opencv_utils.cpp
 
 HEADERS += \
+    ProDefine.h \
     display_widget.h \
+    event_pthread.h \
     mainwindow.h \
-    opencv_thread.h
+    opencv_utils.h
 win32 {
         LIBS += -luser32
     }

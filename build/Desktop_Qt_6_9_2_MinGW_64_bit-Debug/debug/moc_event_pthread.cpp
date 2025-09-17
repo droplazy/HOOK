@@ -1,12 +1,12 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'opencv_thread.h'
+** Meta object code from reading C++ file 'event_pthread.h'
 **
 ** Created by: The Qt Meta Object Compiler version 69 (Qt 6.9.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../../opencv_thread.h"
+#include "../../../event_pthread.h"
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>
@@ -16,7 +16,7 @@
 
 #include <QtCore/qxptype_traits.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'opencv_thread.h' doesn't include <QObject>."
+#error "The header file 'event_pthread.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 69
 #error "This file was generated using the moc from 6.9.2. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -31,17 +31,16 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 QT_WARNING_DISABLE_GCC("-Wuseless-cast")
 namespace {
-struct qt_meta_tag_ZN13opencv_threadE_t {};
+struct qt_meta_tag_ZN13event_pthreadE_t {};
 } // unnamed namespace
 
-template <> constexpr inline auto opencv_thread::qt_create_metaobjectdata<qt_meta_tag_ZN13opencv_threadE_t>()
+template <> constexpr inline auto event_pthread::qt_create_metaobjectdata<qt_meta_tag_ZN13event_pthreadE_t>()
 {
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
-        "opencv_thread",
+        "event_pthread",
         "getPic",
-        "",
-        "testSLot"
+        ""
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -49,75 +48,72 @@ template <> constexpr inline auto opencv_thread::qt_create_metaobjectdata<qt_met
         QtMocHelpers::SignalData<void(QImage)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::QImage, 2 },
         }}),
-        // Slot 'testSLot'
-        QtMocHelpers::SlotData<void()>(3, 2, QMC::AccessPublic, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
     QtMocHelpers::UintData qt_enums {
     };
-    return QtMocHelpers::metaObjectData<opencv_thread, qt_meta_tag_ZN13opencv_threadE_t>(QMC::MetaObjectFlag{}, qt_stringData,
+    return QtMocHelpers::metaObjectData<event_pthread, qt_meta_tag_ZN13event_pthreadE_t>(QMC::MetaObjectFlag{}, qt_stringData,
             qt_methods, qt_properties, qt_enums);
 }
-Q_CONSTINIT const QMetaObject opencv_thread::staticMetaObject = { {
+Q_CONSTINIT const QMetaObject event_pthread::staticMetaObject = { {
     QMetaObject::SuperData::link<QThread::staticMetaObject>(),
-    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13opencv_threadE_t>.stringdata,
-    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13opencv_threadE_t>.data,
+    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13event_pthreadE_t>.stringdata,
+    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13event_pthreadE_t>.data,
     qt_static_metacall,
     nullptr,
-    qt_staticMetaObjectRelocatingContent<qt_meta_tag_ZN13opencv_threadE_t>.metaTypes,
+    qt_staticMetaObjectRelocatingContent<qt_meta_tag_ZN13event_pthreadE_t>.metaTypes,
     nullptr
 } };
 
-void opencv_thread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void event_pthread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    auto *_t = static_cast<opencv_thread *>(_o);
+    auto *_t = static_cast<event_pthread *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: _t->getPic((*reinterpret_cast< std::add_pointer_t<QImage>>(_a[1]))); break;
-        case 1: _t->testSLot(); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (opencv_thread::*)(QImage )>(_a, &opencv_thread::getPic, 0))
+        if (QtMocHelpers::indexOfMethod<void (event_pthread::*)(QImage )>(_a, &event_pthread::getPic, 0))
             return;
     }
 }
 
-const QMetaObject *opencv_thread::metaObject() const
+const QMetaObject *event_pthread::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *opencv_thread::qt_metacast(const char *_clname)
+void *event_pthread::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13opencv_threadE_t>.strings))
+    if (!strcmp(_clname, qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13event_pthreadE_t>.strings))
         return static_cast<void*>(this);
     return QThread::qt_metacast(_clname);
 }
 
-int opencv_thread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int event_pthread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QThread::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 1;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 1)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
+        _id -= 1;
     }
     return _id;
 }
 
 // SIGNAL 0
-void opencv_thread::getPic(QImage _t1)
+void event_pthread::getPic(QImage _t1)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1);
 }

@@ -1,0 +1,10 @@
+debug/display_widget.o
+debug/event_pthread.o
+debug/main.o
+debug/mainwindow.o
+debug/opencv_utils.o
+debug/qrc_pic.o
+debug/qrc_qmake_qmake_qm_files.o
+debug/moc_display_widget.o
+debug/moc_event_pthread.o
+debug/moc_mainwindow.o

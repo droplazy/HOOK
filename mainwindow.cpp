@@ -13,9 +13,15 @@
 #include <QDateTime>
 #include <QDir>
 #include <QStandardPaths>
-#include "opencv_thread.h"
+#include "event_pthread.h"
+#include <ProDefine.h>
 #include "display_widget.h"
 
+
+
+
+QPoint ZeroPos(0, 0);
+QPoint EndPos(0, 0);
 
 QPoint mousePos(0, 0);
 QPoint startPos(0, 0);
@@ -137,13 +143,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 自动将鼠标移到指定位置 (例如：屏幕中心)
     moveMouseAndClick(422, 453);  // 可以根据需要修改目标位置
-    p_opencv = new opencv_thread();
+    p_thread = new event_pthread(this);
 
-    connect(this, SIGNAL(DebugPress(void)), p_opencv, SLOT(testSLot(void)), Qt::AutoConnection);
+  //  connect(this, SIGNAL(DebugPress(void)), p_opencv, SLOT(testSLot(void)), Qt::AutoConnection);
 
-    p_opencv ->start();
+    p_thread ->start();
     w_displayTest = new Display_Widget(this);
-    connect(p_opencv, SIGNAL(getPic(QImage)), w_displayTest, SLOT(displayInstace(QImage)), Qt::AutoConnection);//持续推流信号
+    connect(p_thread, SIGNAL(getPic(QImage)), w_displayTest, SLOT(displayInstace(QImage)), Qt::AutoConnection);//持续推流信号
    // connect(w_displayTest, SIGNAL(closeSig(void)), this, SLOT(displayInstace(QImage)), Qt::AutoConnection);//
 
     w_displayTest->show();
@@ -174,32 +180,29 @@ void MainWindow::on_pushButton_capture_clicked()//开始截屏的按钮
 
 void MainWindow::on_pushButton_imgtest_clicked()//显示测试按钮
 {
-    if(streamOn)
+    if(p_thread->streamOn)
     {
         w_displayTest->deleteLater();
-        streamOn =false;
+        p_thread->streamOn =false;
 
     }
     else
     {
 
         w_displayTest = new Display_Widget();
-        connect(p_opencv, SIGNAL(getPic(QImage)), w_displayTest, SLOT(displayInstace(QImage)), Qt::AutoConnection);
+      //  connect(p_opencv, SIGNAL(getPic(QImage)), w_displayTest, SLOT(displayInstace(QImage)), Qt::AutoConnection);
         w_displayTest->show();
-        streamOn= true;
+        p_thread->streamOn= true;
     }
 }
 
 
-void MainWindow::on_pushButton_capture_2_clicked()//截屏测试按钮
+void MainWindow::on_pushButton_capture_2_clicked()//截屏测试按钮 完成
 {
     ui->pushButton_capture->setStyleSheet("background-color: rgb(255, 255, 255);");
-
-
-        p_opencv->ZeroPos = startPos;
-        p_opencv->EndPos = endPos;
-        p_opencv->startDispose = true;
-        streamOn = true;
+    ZeroPos = startPos;
+    EndPos = endPos;
+        p_thread->streamOn = true;
 
 }
 void MainWindow::on_pushButton_START_clicked()
@@ -210,6 +213,6 @@ void MainWindow::on_pushButton_START_clicked()
 
 void MainWindow::ChindWidegtClosed()
 {
-    streamOn = false;
+    p_thread->streamOn = false;
 }
 

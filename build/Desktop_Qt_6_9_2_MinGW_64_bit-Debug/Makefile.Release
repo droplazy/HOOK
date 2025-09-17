@@ -51,22 +51,24 @@ OBJECTS_DIR   = release
 ####### Files
 
 SOURCES       = ..\..\display_widget.cpp \
+		..\..\event_pthread.cpp \
 		..\..\main.cpp \
 		..\..\mainwindow.cpp \
-		..\..\opencv_thread.cpp release\qrc_pic.cpp \
+		..\..\opencv_utils.cpp release\qrc_pic.cpp \
 		release\qrc_qmake_qmake_qm_files.cpp \
 		release\moc_display_widget.cpp \
-		release\moc_mainwindow.cpp \
-		release\moc_opencv_thread.cpp
+		release\moc_event_pthread.cpp \
+		release\moc_mainwindow.cpp
 OBJECTS       = release/display_widget.o \
+		release/event_pthread.o \
 		release/main.o \
 		release/mainwindow.o \
-		release/opencv_thread.o \
+		release/opencv_utils.o \
 		release/qrc_pic.o \
 		release/qrc_qmake_qmake_qm_files.o \
 		release/moc_display_widget.o \
-		release/moc_mainwindow.o \
-		release/moc_opencv_thread.o
+		release/moc_event_pthread.o \
+		release/moc_mainwindow.o
 
 DIST          = Element/QingLong/CNW.png \
 		Element/QingLong/CSCCZ.png \
@@ -95,12 +97,15 @@ DIST          = Element/QingLong/CNW.png \
 		Element/QingLong/YKS.png \
 		Element/QingLong/ZLF.png \
 		Element/QingLong/ZYB.png \
-		Element/QingLong/xsch_o.png ..\..\display_widget.h \
+		Element/QingLong/xsch_o.png ..\..\ProDefine.h \
+		..\..\display_widget.h \
+		..\..\event_pthread.h \
 		..\..\mainwindow.h \
-		..\..\opencv_thread.h ..\..\display_widget.cpp \
+		..\..\opencv_utils.h ..\..\display_widget.cpp \
+		..\..\event_pthread.cpp \
 		..\..\main.cpp \
 		..\..\mainwindow.cpp \
-		..\..\opencv_thread.cpp
+		..\..\opencv_utils.cpp
 QMAKE_TARGET  = HhookYou
 DESTDIR        = release\ #avoid trailing-slash linebreak
 TARGET         = HhookYou.exe
@@ -112,7 +117,7 @@ first: all
 all: Makefile.Release  release/HhookYou.exe
 
 release/HhookYou.exe: E:/qt2025/6.9.2/mingw_64/lib/libQt6Widgets.a E:/qt2025/6.9.2/mingw_64/lib/libQt6Gui.a E:/qt2025/6.9.2/mingw_64/lib/libQt6Core.a E:/qt2025/6.9.2/mingw_64/lib/libQt6EntryPoint.a ui_display_widget.h ui_mainwindow.h $(OBJECTS) 
-	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS) $(LIBS)
+	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) @release\object_script.HhookYou.Release $(LIBS)
 
 qmake: FORCE
 	@$(QMAKE) -o Makefile.Release ..\..\HhookYou.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -120,10 +125,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) HhookYou.zip $(SOURCES) $(DIST) ..\..\..\..\HhookYou.pro ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\spec_pre.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\device_config.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\sanitize.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\gcc-base.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\g++-base.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\win32\windows_vulkan_sdk.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\windows-vulkan.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\g++-win32.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\windows-desktop.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\qconfig.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_ext_freetype.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_ext_libjpeg.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_ext_libpng.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_ext_openxr_loader.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_charts.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_charts_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_chartsqml.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_chartsqml_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_core.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_core_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_dbus.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_dbus_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_designer.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_entrypoint_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_example_icons_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_examples_asset_downloader_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_fb_support_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_ffmpegmediapluginimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_freetype_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_gui.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_harfbuzz_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_help.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_help_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_jpeg_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsanimation.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsanimation_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsplatform.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsplatform_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labssettings.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labssettings_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labssharedimage.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labssharedimage_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_linguist.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimedia.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimedia_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimediaquick_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimediatestlibprivate_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimediawidgets.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_network.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_network_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_opengl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_openglwidgets.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_openglwidgets_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_packetprotocol_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_png_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qdoccatch_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qdoccatchconversions_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qdoccatchgenerators_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qml.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlassetdownloader.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlassetdownloader_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlcompiler.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlcore.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlcore_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmldebug_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmldom_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlformat_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlintegration.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlintegration_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlls_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlmeta.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlmeta_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlmodels.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlmodels_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlnetwork.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlnetwork_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmltoolingsettings_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmltyperegistrar_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3d.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3d_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dassetimport.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dassetimport_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dassetutils.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dassetutils_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3deffects.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3deffects_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dglslparser_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dhelpers.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dhelpers_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dhelpersimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dhelpersimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3diblbaker.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3diblbaker_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dparticleeffects.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dparticleeffects_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dparticles.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dparticles_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3druntimerender.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3druntimerender_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dspatialaudio_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dutils.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dutils_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dxr.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dxr_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2basic.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2basic_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2basicstyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2basicstyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fluentwinui3styleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fluentwinui3styleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fusion.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fusion_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fusionstyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fusionstyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2imagine.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2imagine_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2imaginestyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2imaginestyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2material.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2material_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2materialstyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2materialstyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2universal.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2universal_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2universalstyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2universalstyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2windowsstyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2windowsstyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickeffects.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickeffects_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicklayouts.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicklayouts_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickshapes_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktemplates2.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktimeline.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktimeline_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktimelineblendtrees.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktimelineblendtrees_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickvectorimage.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickvectorimage_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickvectorimagegenerator_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickwidgets.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickwidgets_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_shadertools.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_shadertools_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_spatialaudio.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_spatialaudio_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_sql.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_svg.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_svgwidgets.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_svgwidgets_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_testinternals_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_testlib.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_tools_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_uiplugin.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_uitools.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_widgets.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_xml.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_zlib_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\qt_functions.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\qt_config.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\win32-g++\qmake.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\spec_post.prf .qmake.stash ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\exclusive_builds.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\toolchain.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\default_pre.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\win32\default_pre.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\resolve_config.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\exclusive_builds_post.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\default_post.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\build_pass.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\lrelease.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\qml_debug.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\precompile_header.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\warn_on.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\permissions.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\qt.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\resources_functions.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\resources.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\moc.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\win32\opengl.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\uic.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\qmake_use.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\file_copies.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\win32\windows.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\testcase_targets.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\exceptions.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\yacc.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\lex.prf ..\..\HhookYou.pro ..\..\pic.qrc release\qmake_qmake_qm_files.qrc ..\..\..\..\qt2025\6.9.2\mingw_64\lib\Qt6Widgets.prl ..\..\..\..\qt2025\6.9.2\mingw_64\lib\Qt6Gui.prl ..\..\..\..\qt2025\6.9.2\mingw_64\lib\Qt6Core.prl ..\..\..\..\qt2025\6.9.2\mingw_64\lib\Qt6EntryPoint.prl ..\..\HhookYou_zh_CN.ts ..\..\HhookYou_zh_CN.ts ..\..\HhookYou_zh_CN.ts   ..\..\pic.qrc release\qmake_qmake_qm_files.qrc ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\data\dummy.cpp ..\..\display_widget.h ..\..\mainwindow.h ..\..\opencv_thread.h  ..\..\display_widget.cpp ..\..\main.cpp ..\..\mainwindow.cpp ..\..\opencv_thread.cpp ..\..\display_widget.ui ..\..\mainwindow.ui    
+	$(ZIP) HhookYou.zip $(SOURCES) $(DIST) ..\..\..\..\HhookYou.pro ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\spec_pre.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\device_config.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\sanitize.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\gcc-base.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\g++-base.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\win32\windows_vulkan_sdk.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\windows-vulkan.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\g++-win32.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\common\windows-desktop.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\qconfig.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_ext_freetype.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_ext_libjpeg.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_ext_libpng.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_ext_openxr_loader.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_charts.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_charts_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_chartsqml.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_chartsqml_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_core.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_core_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_dbus.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_dbus_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_designer.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_entrypoint_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_example_icons_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_examples_asset_downloader_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_fb_support_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_ffmpegmediapluginimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_freetype_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_gui.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_harfbuzz_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_help.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_help_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_jpeg_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsanimation.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsanimation_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsplatform.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsplatform_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labssettings.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labssettings_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labssharedimage.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labssharedimage_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_linguist.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimedia.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimedia_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimediaquick_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimediatestlibprivate_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimediawidgets.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_network.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_network_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_opengl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_openglwidgets.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_openglwidgets_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_packetprotocol_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_png_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qdoccatch_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qdoccatchconversions_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qdoccatchgenerators_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qml.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlassetdownloader.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlassetdownloader_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlcompiler.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlcore.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlcore_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmldebug_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmldom_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlformat_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlintegration.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlintegration_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlls_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlmeta.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlmeta_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlmodels.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlmodels_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlnetwork.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlnetwork_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmltoolingsettings_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmltyperegistrar_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3d.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3d_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dassetimport.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dassetimport_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dassetutils.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dassetutils_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3deffects.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3deffects_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dglslparser_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dhelpers.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dhelpers_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dhelpersimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dhelpersimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3diblbaker.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3diblbaker_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dparticleeffects.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dparticleeffects_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dparticles.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dparticles_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3druntimerender.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3druntimerender_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dspatialaudio_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dutils.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dutils_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dxr.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick3dxr_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2basic.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2basic_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2basicstyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2basicstyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fluentwinui3styleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fluentwinui3styleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fusion.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fusion_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fusionstyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2fusionstyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2imagine.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2imagine_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2imaginestyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2imaginestyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2material.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2material_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2materialstyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2materialstyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2universal.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2universal_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2universalstyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2universalstyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2windowsstyleimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrols2windowsstyleimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickeffects.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickeffects_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicklayouts.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicklayouts_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickshapes_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktemplates2.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktimeline.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktimeline_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktimelineblendtrees.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quicktimelineblendtrees_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickvectorimage.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickvectorimage_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickvectorimagegenerator_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickwidgets.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_quickwidgets_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_shadertools.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_shadertools_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_spatialaudio.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_spatialaudio_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_sql.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_svg.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_svgwidgets.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_svgwidgets_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_testinternals_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_testlib.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_tools_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_uiplugin.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_uitools.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_widgets.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_xml.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\modules\qt_lib_zlib_private.pri ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\qt_functions.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\qt_config.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\win32-g++\qmake.conf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\spec_post.prf .qmake.stash ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\exclusive_builds.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\toolchain.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\default_pre.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\win32\default_pre.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\resolve_config.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\exclusive_builds_post.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\default_post.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\build_pass.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\lrelease.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\qml_debug.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\precompile_header.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\warn_on.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\permissions.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\qt.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\resources_functions.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\resources.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\moc.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\win32\opengl.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\uic.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\qmake_use.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\file_copies.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\win32\windows.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\testcase_targets.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\exceptions.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\yacc.prf ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\lex.prf ..\..\HhookYou.pro ..\..\pic.qrc release\qmake_qmake_qm_files.qrc ..\..\..\..\qt2025\6.9.2\mingw_64\lib\Qt6Widgets.prl ..\..\..\..\qt2025\6.9.2\mingw_64\lib\Qt6Gui.prl ..\..\..\..\qt2025\6.9.2\mingw_64\lib\Qt6Core.prl ..\..\..\..\qt2025\6.9.2\mingw_64\lib\Qt6EntryPoint.prl ..\..\HhookYou_zh_CN.ts ..\..\HhookYou_zh_CN.ts ..\..\HhookYou_zh_CN.ts   ..\..\pic.qrc release\qmake_qmake_qm_files.qrc ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\data\dummy.cpp ..\..\ProDefine.h ..\..\display_widget.h ..\..\event_pthread.h ..\..\mainwindow.h ..\..\opencv_utils.h  ..\..\display_widget.cpp ..\..\event_pthread.cpp ..\..\main.cpp ..\..\mainwindow.cpp ..\..\opencv_utils.cpp ..\..\display_widget.ui ..\..\mainwindow.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\display_widget.o release\main.o release\mainwindow.o release\opencv_thread.o release\qrc_pic.o release\qrc_qmake_qmake_qm_files.o release\moc_display_widget.o release\moc_mainwindow.o release\moc_opencv_thread.o
+	-$(DEL_FILE) release\display_widget.o release\event_pthread.o release\main.o release\mainwindow.o release\opencv_utils.o release\qrc_pic.o release\qrc_qmake_qmake_qm_files.o release\moc_display_widget.o release\moc_event_pthread.o release\moc_mainwindow.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -200,9 +205,9 @@ compiler_moc_predefs_clean:
 release/moc_predefs.h: ../../../../qt2025/6.9.2/mingw_64/mkspecs/features/data/dummy.cpp
 	g++ -fno-keep-inline-dllexport -O2 -std=gnu++1z -Wall -Wextra -Wextra -dM -E -o release\moc_predefs.h ..\..\..\..\qt2025\6.9.2\mingw_64\mkspecs\features\data\dummy.cpp
 
-compiler_moc_header_make_all: release/moc_display_widget.cpp release/moc_mainwindow.cpp release/moc_opencv_thread.cpp
+compiler_moc_header_make_all: release/moc_display_widget.cpp release/moc_event_pthread.cpp release/moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) release\moc_display_widget.cpp release\moc_mainwindow.cpp release\moc_opencv_thread.cpp
+	-$(DEL_FILE) release\moc_display_widget.cpp release\moc_event_pthread.cpp release\moc_mainwindow.cpp
 release/moc_display_widget.cpp: ../../display_widget.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QDialog \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qdialog.h \
@@ -405,6 +410,123 @@ release/moc_display_widget.cpp: ../../display_widget.h \
 		release/moc_predefs.h \
 		../../../../qt2025/6.9.2/mingw_64/bin/moc.exe
 	E:\qt2025\6.9.2\mingw_64\bin\moc.exe $(DEFINES) --include E:/qtpro/HhookYou/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/release/moc_predefs.h -IE:/qt2025/6.9.2/mingw_64/mkspecs/win32-g++ -IE:/qtpro/HhookYou -IE:/OpenCV-4.10.0/build/include -IE:/OpenCV-4.10.0/build/include/opencv -IE:/OpenCV-4.10.0/build/include/opencv2 -IE:/qt2025/6.9.2/mingw_64/include -IE:/qt2025/6.9.2/mingw_64/include/QtWidgets -IE:/qt2025/6.9.2/mingw_64/include/QtGui -IE:/qt2025/6.9.2/mingw_64/include/QtCore -I. -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IE:/qt2025/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\display_widget.h -o release\moc_display_widget.cpp
+
+release/moc_event_pthread.cpp: ../../event_pthread.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QObject \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobject.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobjectdefs.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qnamespace.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qglobal.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtcoreglobal.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtversionchecks.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtconfiginclude.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qconfig.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtcore-config.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtconfigmacros.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtdeprecationdefinitions.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompilerdetection.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qprocessordetection.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsystemdetection.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtcoreexports.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtdeprecationmarkers.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtclasshelpermacros.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtpreprocessorsupport.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qassert.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtnoop.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtypes.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtversion.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtypeinfo.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainerfwd.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsysinfo.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlogging.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qflags.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompare_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qatomic.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbasicatomic.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qatomic_cxx11.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qgenericatomic.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qyieldcpu.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qconstructormacros.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdarwinhelpers.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qexceptionhandling.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qforeach.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qttypetraits.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfunctionpointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qglobalstatic.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmalloc.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qminmax.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qnumeric.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qoverload.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qswap.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtenvironmentvariables.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtresource.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qttranslation.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qversiontagging.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompare.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstdlibdetection.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcomparehelpers.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20type_traits.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtmetamacros.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfunctionaltools_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstring.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qchar.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringview.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearray.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qrefcount.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydata.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qpair.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydatapointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydataops.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainertools_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qxptype_traits.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20functional.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20memory.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q17memory.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearrayalgorithms.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearrayview.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringfwd.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringliteral.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringalgorithms.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlatin1stringview.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qanystringview.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qutf8stringview.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringtokenizer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringbuilder.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringconverter.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringconverter_base.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlist.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qhashfunctions.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiterator.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearraylist.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringlist.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qalgorithms.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringmatcher.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcoreevent.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qabstracteventdispatcher.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qeventloop.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdeadlinetimer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qelapsedtimer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmetatype.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdatastream.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qscopedpointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiodevicebase.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfloat16.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmath.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtformat_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiterable.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmetacontainer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainerinfo.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtaggedpointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qscopeguard.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobject_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbindingstorage.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QThread \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qthread.h \
+		release/moc_predefs.h \
+		../../../../qt2025/6.9.2/mingw_64/bin/moc.exe
+	E:\qt2025\6.9.2\mingw_64\bin\moc.exe $(DEFINES) --include E:/qtpro/HhookYou/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/release/moc_predefs.h -IE:/qt2025/6.9.2/mingw_64/mkspecs/win32-g++ -IE:/qtpro/HhookYou -IE:/OpenCV-4.10.0/build/include -IE:/OpenCV-4.10.0/build/include/opencv -IE:/OpenCV-4.10.0/build/include/opencv2 -IE:/qt2025/6.9.2/mingw_64/include -IE:/qt2025/6.9.2/mingw_64/include/QtWidgets -IE:/qt2025/6.9.2/mingw_64/include/QtGui -IE:/qt2025/6.9.2/mingw_64/include/QtCore -I. -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IE:/qt2025/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\event_pthread.h -o release\moc_event_pthread.cpp
 
 release/moc_mainwindow.cpp: ../../mainwindow.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QMainWindow \
@@ -627,342 +749,6 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		release/moc_predefs.h \
 		../../../../qt2025/6.9.2/mingw_64/bin/moc.exe
 	E:\qt2025\6.9.2\mingw_64\bin\moc.exe $(DEFINES) --include E:/qtpro/HhookYou/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/release/moc_predefs.h -IE:/qt2025/6.9.2/mingw_64/mkspecs/win32-g++ -IE:/qtpro/HhookYou -IE:/OpenCV-4.10.0/build/include -IE:/OpenCV-4.10.0/build/include/opencv -IE:/OpenCV-4.10.0/build/include/opencv2 -IE:/qt2025/6.9.2/mingw_64/include -IE:/qt2025/6.9.2/mingw_64/include/QtWidgets -IE:/qt2025/6.9.2/mingw_64/include/QtGui -IE:/qt2025/6.9.2/mingw_64/include/QtCore -I. -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IE:/qt2025/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\mainwindow.h -o release\moc_mainwindow.cpp
-
-release/moc_opencv_thread.cpp: ../../opencv_thread.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QObject \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobject.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobjectdefs.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qnamespace.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qglobal.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtcoreglobal.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtversionchecks.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtconfiginclude.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qconfig.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtcore-config.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtconfigmacros.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtdeprecationdefinitions.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompilerdetection.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qprocessordetection.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsystemdetection.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtcoreexports.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtdeprecationmarkers.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtclasshelpermacros.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtpreprocessorsupport.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qassert.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtnoop.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtypes.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtversion.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtypeinfo.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainerfwd.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsysinfo.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlogging.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qflags.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompare_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qatomic.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbasicatomic.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qatomic_cxx11.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qgenericatomic.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qyieldcpu.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qconstructormacros.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdarwinhelpers.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qexceptionhandling.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qforeach.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qttypetraits.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfunctionpointer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qglobalstatic.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmalloc.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qminmax.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qnumeric.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qoverload.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qswap.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtenvironmentvariables.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtresource.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qttranslation.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qversiontagging.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompare.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstdlibdetection.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcomparehelpers.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20type_traits.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtmetamacros.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstring.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qchar.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringview.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearray.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qrefcount.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydata.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qpair.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydatapointer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydataops.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainertools_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qxptype_traits.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20functional.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20memory.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q17memory.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearrayalgorithms.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearrayview.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringfwd.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringliteral.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringalgorithms.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlatin1stringview.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qanystringview.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qutf8stringview.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringtokenizer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringbuilder.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringconverter.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringconverter_base.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlist.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qhashfunctions.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiterator.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearraylist.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringlist.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qalgorithms.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringmatcher.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcoreevent.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbasictimer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qabstracteventdispatcher.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qeventloop.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdeadlinetimer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qelapsedtimer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmetatype.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdatastream.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qscopedpointer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiodevicebase.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfloat16.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmath.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtformat_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiterable.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmetacontainer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainerinfo.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtaggedpointer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qscopeguard.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobject_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbindingstorage.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QThread \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qthread.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QDebug \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdebug.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtextstream.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontiguouscache.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsharedpointer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qshareddata.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmap.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qshareddata_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qset.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qhash.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qvarlengtharray.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/opencv.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/opencv_modules.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/cvdef.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/version.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/cvconfig.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/hal/interface.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/cv_cpu_dispatch.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/cv_cpu_helper.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/hal/msa_macros.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/fast_math.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/base.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/cvstd.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/cvstd_wrapper.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/neon_utils.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/vsx_utils.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/check.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/traits.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/matx.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/saturate.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/matx.inl.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/types.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/mat.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/bufferpool.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/mat.inl.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/persistence.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/operations.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/cvstd.inl.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/utility.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/utils/instrumentation.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/utils/tls.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/optim.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/ovx.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/calib3d.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/features2d.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/miniflann.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/defines.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/config.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/affine.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/utils/logger.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/utils/logger.defines.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/utils/logtag.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/dnn.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/dnn/dnn.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/async.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/dnn/version.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/dnn/dict.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/dnn/layer.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/dnn/dnn.inl.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/dnn/utils/inference_engine.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/flann_base.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/general.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/matrix.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/params.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/any.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/saving.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/nn_index.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/result_set.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/all_indices.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/kdtree_index.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/dynamic_bitset.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/dist.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/heap.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/allocator.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/random.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/kdtree_single_index.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/kmeans_index.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/logger.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/composite_index.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/linear_index.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/hierarchical_clustering_index.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/lsh_index.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/lsh_table.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/autotuned_index.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/ground_truth.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/index_testing.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/timer.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/flann/sampling.h \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/highgui.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/imgcodecs.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/videoio.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/imgproc.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/imgproc/segmentation.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/ml.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/ml/ml.inl.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/objdetect.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/objdetect/aruco_detector.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/objdetect/aruco_dictionary.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/objdetect/aruco_board.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/objdetect/graphical_code_detector.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/objdetect/detection_based_tracker.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/objdetect/face.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/objdetect/charuco_detector.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/objdetect/barcode.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/photo.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/warpers.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/warpers.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/cuda.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/cuda_types.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/core/cuda.inl.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/warpers_inl.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/matchers.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/motion_estimators.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/util.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/util_inl.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/camera.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/exposure_compensate.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/seam_finders.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/stitching/detail/blenders.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/video.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/tracking.hpp \
-		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/background_segm.hpp \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QImage \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qimage.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtguiglobal.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtgui-config.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtguiexports.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qcolor.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qrgb.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qrgba64.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpaintdevice.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qwindowdefs.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qwindowdefs_win.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qrect.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmargins.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q23utility.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20utility.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsize.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qpoint.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpixelformat.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtransform.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpolygon.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qregion.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qspan.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20iterator.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qline.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QPixmap \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpixmap.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QScreen \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qscreen.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QList \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QRect \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSize \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSizeF \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QTransform \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qnativeinterface.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qscreen_platform.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qguiapplication.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcoreapplication.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcoreapplication_platform.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfuture.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfutureinterface.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmutex.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtsan_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qresultstore.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfuture_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qthreadpool.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qrunnable.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qexception.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qpromise.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qvariant.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qinputmethod.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlocale.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qguiapplication_platform.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QGuiApplication \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QWidget \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qwidget.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qaction.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qkeysequence.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qicon.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpalette.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qbrush.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qfont.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qendian.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qfontmetrics.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qfontinfo.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qfontvariableaxis.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qsizepolicy.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qcursor.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qbitmap.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qevent.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiodevice.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qurl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qeventpoint.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qvector2d.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qvectornd.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpointingdevice.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qinputdevice.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QDateTime \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdatetime.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcalendar.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QDir \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdir.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdirlisting.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfiledevice.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfile.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfileinfo.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtimezone.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QPainter \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpainter.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtextoption.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpen.h \
-		release/moc_predefs.h \
-		../../../../qt2025/6.9.2/mingw_64/bin/moc.exe
-	E:\qt2025\6.9.2\mingw_64\bin\moc.exe $(DEFINES) --include E:/qtpro/HhookYou/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/release/moc_predefs.h -IE:/qt2025/6.9.2/mingw_64/mkspecs/win32-g++ -IE:/qtpro/HhookYou -IE:/OpenCV-4.10.0/build/include -IE:/OpenCV-4.10.0/build/include/opencv -IE:/OpenCV-4.10.0/build/include/opencv2 -IE:/qt2025/6.9.2/mingw_64/include -IE:/qt2025/6.9.2/mingw_64/include/QtWidgets -IE:/qt2025/6.9.2/mingw_64/include/QtGui -IE:/qt2025/6.9.2/mingw_64/include/QtCore -I. -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IE:/qt2025/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\opencv_thread.h -o release\moc_opencv_thread.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1203,6 +989,121 @@ release/display_widget.o: ../../display_widget.cpp ../../display_widget.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qabstractbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\display_widget.o ..\..\display_widget.cpp
+
+release/event_pthread.o: ../../event_pthread.cpp ../../event_pthread.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QObject \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobject.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobjectdefs.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qnamespace.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qglobal.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtcoreglobal.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtversionchecks.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtconfiginclude.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qconfig.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtcore-config.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtconfigmacros.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtdeprecationdefinitions.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompilerdetection.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qprocessordetection.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsystemdetection.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtcoreexports.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtdeprecationmarkers.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtclasshelpermacros.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtpreprocessorsupport.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qassert.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtnoop.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtypes.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtversion.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtypeinfo.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainerfwd.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsysinfo.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlogging.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qflags.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompare_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qatomic.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbasicatomic.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qatomic_cxx11.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qgenericatomic.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qyieldcpu.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qconstructormacros.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdarwinhelpers.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qexceptionhandling.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qforeach.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qttypetraits.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfunctionpointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qglobalstatic.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmalloc.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qminmax.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qnumeric.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qoverload.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qswap.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtenvironmentvariables.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtresource.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qttranslation.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qversiontagging.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompare.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstdlibdetection.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcomparehelpers.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20type_traits.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtmetamacros.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfunctionaltools_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstring.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qchar.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringview.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearray.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qrefcount.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydata.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qpair.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydatapointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydataops.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainertools_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qxptype_traits.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20functional.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20memory.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q17memory.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearrayalgorithms.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearrayview.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringfwd.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringliteral.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringalgorithms.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlatin1stringview.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qanystringview.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qutf8stringview.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringtokenizer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringbuilder.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringconverter.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringconverter_base.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlist.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qhashfunctions.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiterator.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearraylist.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringlist.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qalgorithms.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringmatcher.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcoreevent.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qabstracteventdispatcher.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qeventloop.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdeadlinetimer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qelapsedtimer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmetatype.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdatastream.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qscopedpointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiodevicebase.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfloat16.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmath.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtformat_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiterable.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmetacontainer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainerinfo.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtaggedpointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qscopeguard.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobject_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbindingstorage.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QThread \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qthread.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\event_pthread.o ..\..\event_pthread.cpp
 
 release/main.o: ../../main.cpp ../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QApplication \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qapplication.h \
@@ -1662,11 +1563,16 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qabstractbutton.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QStatusBar \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qstatusbar.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QTextEdit \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qtextedit.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtextoption.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtextcursor.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtextformat.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpen.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QWidget \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QPainter \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpainter.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qtextoption.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpen.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QTimer \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtimer.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QPoint \
@@ -1787,19 +1693,16 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video.hpp \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/tracking.hpp \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/background_segm.hpp \
-		../../opencv_thread.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QThread \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QGuiApplication \
+		../../ProDefine.h \
 		../../display_widget.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QDialog \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\..\mainwindow.cpp
 
-release/opencv_thread.o: ../../opencv_thread.cpp ../../opencv_thread.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QObject \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobject.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobjectdefs.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qnamespace.h \
+release/opencv_utils.o: ../../opencv_utils.cpp ../../opencv_utils.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QDebug \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdebug.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompare.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qglobal.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtcoreglobal.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtversionchecks.h \
@@ -1846,18 +1749,18 @@ release/opencv_thread.o: ../../opencv_thread.cpp ../../opencv_thread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtresource.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qttranslation.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qversiontagging.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcompare.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstdlibdetection.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcomparehelpers.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20type_traits.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtmetamacros.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfunctionaltools_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfloat16.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qhashfunctions.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstring.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qchar.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringview.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearray.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qrefcount.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qnamespace.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtmetamacros.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydata.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qpair.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qarraydatapointer.h \
@@ -1879,42 +1782,31 @@ release/opencv_thread.o: ../../opencv_thread.cpp ../../opencv_thread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringbuilder.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringconverter.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringconverter_base.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlist.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qhashfunctions.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiterator.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearraylist.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringlist.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qalgorithms.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringmatcher.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcoreevent.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbasictimer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qabstracteventdispatcher.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qeventloop.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdeadlinetimer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qelapsedtimer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmetatype.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdatastream.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qscopedpointer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiodevicebase.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfloat16.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmath.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qalgorithms.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtformat_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiterable.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmetacontainer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainerinfo.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtaggedpointer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qscopeguard.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobject_impl.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbindingstorage.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QThread \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qthread.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QDebug \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdebug.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtextstream.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiodevicebase.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontiguouscache.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsharedpointer.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qshareddata.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmetatype.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdatastream.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qscopedpointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiterable.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmetacontainer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontainerinfo.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtaggedpointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobjectdefs.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfunctionaltools_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qscopeguard.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlist.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiterator.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbytearraylist.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringlist.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstringmatcher.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmap.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qshareddata_impl.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qset.h \
@@ -2063,6 +1955,16 @@ release/opencv_thread.o: ../../opencv_thread.cpp ../../opencv_thread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QScreen \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qscreen.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QList \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QObject \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobject.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcoreevent.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qabstracteventdispatcher.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qeventloop.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdeadlinetimer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qelapsedtimer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qobject_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbindingstorage.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QRect \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSize \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSizeF \
@@ -2079,6 +1981,7 @@ release/opencv_thread.o: ../../opencv_thread.cpp ../../opencv_thread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qresultstore.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qfuture_impl.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qthreadpool.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qthread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qrunnable.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qexception.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qpromise.h \
@@ -2130,8 +2033,11 @@ release/opencv_thread.o: ../../opencv_thread.cpp ../../opencv_thread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QApplication \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qapplication.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QStandardPaths \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstandardpaths.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\opencv_thread.o ..\..\opencv_thread.cpp
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qstandardpaths.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QProcess \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qprocess.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QTextStream
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\opencv_utils.o ..\..\opencv_utils.cpp
 
 release/qrc_pic.o: release/qrc_pic.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\qrc_pic.o release\qrc_pic.cpp
@@ -2142,11 +2048,11 @@ release/qrc_qmake_qmake_qm_files.o: release/qrc_qmake_qmake_qm_files.cpp
 release/moc_display_widget.o: release/moc_display_widget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_display_widget.o release\moc_display_widget.cpp
 
+release/moc_event_pthread.o: release/moc_event_pthread.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_event_pthread.o release\moc_event_pthread.cpp
+
 release/moc_mainwindow.o: release/moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_mainwindow.o release\moc_mainwindow.cpp
-
-release/moc_opencv_thread.o: release/moc_opencv_thread.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_opencv_thread.o release\moc_opencv_thread.cpp
 
 ####### Install
 

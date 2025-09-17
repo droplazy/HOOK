@@ -16,7 +16,8 @@ class MainWindow;
 QT_END_NAMESPACE
 
 
-class opencv_thread;
+class event_pthread;
+
 class Display_Widget;
 
 
@@ -34,11 +35,8 @@ signals:
 public slots:
     void updateWindowInfo();
 private slots:
-
     void on_pushButton_capture_clicked();
-
     void on_pushButton_imgtest_clicked();
-
     void on_pushButton_capture_2_clicked();
     void on_pushButton_START_clicked();
     void ChindWidegtClosed();
@@ -46,8 +44,9 @@ protected:
     //void paintEvent(QPaintEvent *event) override;
 private:
     Ui::MainWindow *ui;
-    bool streamOn = false;
-    opencv_thread *p_opencv;
+    //p_thread->streamOn = false;
+    event_pthread *p_thread;
     Display_Widget *w_displayTest;
+
 };
 #endif // MAINWINDOW_H
