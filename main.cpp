@@ -1,4 +1,8 @@
 #include <QApplication>
+#include <QMessageBox>
+#include <Windows.h>
+#include <QString>
+
 #include <QWidget>
 #include "mainwindow.h"
 
@@ -60,6 +64,24 @@ private:
     }
 };
 */
+
+bool isRunningAsAdmin()
+{
+    BOOL isAdmin = FALSE;
+    PSID AdministratorsGroup = NULL;
+    SID_IDENTIFIER_AUTHORITY ntAuthority = SECURITY_NT_AUTHORITY;
+
+    // 创建管理员组的 SID
+    if (AllocateAndInitializeSid(&ntAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &AdministratorsGroup)) {
+        // 检查当前进程是否属于管理员组
+        CheckTokenMembership(NULL, AdministratorsGroup, &isAdmin);
+        FreeSid(AdministratorsGroup);
+    }
+
+    return isAdmin == TRUE;
+}
+
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -67,6 +89,10 @@ int main(int argc, char *argv[])
     // 创建并显示全屏透明窗口
     // TransparentWindow window;
     // window.show();
+    if (!isRunningAsAdmin()) {
+        QMessageBox::warning(nullptr, "权限不足", "程序未以管理员权限运行。");
+        //return -1;  // 不继续运行程序
+    }
 
     MainWindow w;
     w.show();

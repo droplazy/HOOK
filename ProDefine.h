@@ -54,4 +54,5 @@ struct S_HTTP_RESPONE {
 };
 
 QString findMostSimilarLocation(const QString &input, const QStringList &locationList, int maxDistance = 3);
+void moveMouseAndClick(int x, int y,QString L_R) ;
 #endif // PRODEFINE_H

@@ -11,7 +11,7 @@
 #include <QBuffer>
 
 QStringList dreamWorldLocations = {
-    "南瞻部洲", "东胜神洲", "西牛贺洲", "北俱芦洲",
+    "南瞻部洲", "东胜神洲", "西牛贺洲", "北俱芦洲","庭院"
     "长安城", "傲来国", "长寿村", "朱紫国",
     "凤巢", "龙窟", "地府迷宫", "海底迷宫",
     "凌霄宝殿", "麒麟山"//"战神山", "两界山",
@@ -52,7 +52,13 @@ QString cleanOCRResult(const QString &input) {
     return result.replace(reg, "");  // 在副本上执行 replace
 }
 
-
+cv::Mat opencv_utils::QImageToMat(const QImage& image)
+{
+    // 将 QImage 转换为 cv::Mat
+    QImage img = image.convertToFormat(QImage::Format_RGB888);
+    cv::Mat mat(img.height(), img.width(), CV_8UC3, (void*)img.bits(), img.bytesPerLine());
+    return mat.clone();  // 返回一个副本以确保数据不被修改
+}
 QString findMostSimilarLocation(const QString &input, const QStringList &locationList, int maxDistance ) {
     // 如果输入为空，直接返回“未知”
     if (input.isEmpty()) {

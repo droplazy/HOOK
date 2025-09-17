@@ -8,7 +8,7 @@
 #include <httpclient.h>
 #include <QTimer>
 #include <QString>
-
+//#include <iostream>
 
 class event_pthread : public QThread
 {
@@ -17,8 +17,8 @@ class event_pthread : public QThread
 public:
     bool streamOn = false;
     Task_State currentState = Task_State::IDLE;  // 当前的状态
-    QString loaction;
-    QString postion;
+    QString t_loaction;
+    QString t_position;
 
     explicit event_pthread(QObject *parent = nullptr);  // 构造函数，支持传递 parent 对象
     virtual void run() override;  // 重载 run 函数
@@ -34,14 +34,24 @@ public:
     void GetGameScreen();
     void GetCharacterLocation();
     void GetCharacterForTess();
+
+    void GameopenTaskMenu();
+    void GameGroup();
+    void GameOpenInventoryMenu();
+    void GameAttack();
+    void GameGiveObject();
+    void QingLongTask();
+    void findNpcForScreen(QImage image);
 protected:
     void GetIdleImage();
 private:
     QTimer *timer_orc;
+    //KeyboardSimulator simulator;
 
 signals:
     void getPic(QImage);
     void regnize(QString);
+
 private slots:
     void GetCharacterlocInfo(); //很准的图文识别接口  2毛一次
 };

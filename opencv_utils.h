@@ -51,6 +51,7 @@ public:
     static QImage captureScreenQimage(const QRect &rect);
     static QString CaptureTobase64(const QRect &rect);
     static QString recognizeTextFromMatBackBase(const cv::Mat &inputMat);
+    static cv::Mat QImageToMat(const QImage &image);
 };
 using namespace cv;
 

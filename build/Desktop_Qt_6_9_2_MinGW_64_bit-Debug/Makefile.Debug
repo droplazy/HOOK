@@ -557,6 +557,56 @@ debug/moc_event_pthread.cpp: ../../event_pthread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qspan.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20iterator.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qline.h \
+		../../httpclient.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkAccessManager \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetwork-config.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetworkexports.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qhttpheaders.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSharedDataPointer \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QUrl \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qurl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QVariant \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qvariant.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdebug.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtextstream.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontiguouscache.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsharedpointer.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmap.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qshareddata_impl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qset.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qhash.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qvarlengtharray.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q26numeric.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QList \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QSslConfiguration \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslconfiguration.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtcpsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qabstractsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qhostaddress.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiodevice.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslerror.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslcertificate.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcryptographichash.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdatetime.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcalendar.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlocale.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qssl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QFlags \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QMetaType \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkRequest \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkReply \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkreply.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QIODevice \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QTimer \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtimer.h \
 		debug/moc_predefs.h \
 		../../../../qt2025/6.9.2/mingw_64/bin/moc.exe
 	E:\qt2025\6.9.2\mingw_64\bin\moc.exe $(DEFINES) --include E:/qtpro/HhookYou/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/debug/moc_predefs.h -IE:/qt2025/6.9.2/mingw_64/mkspecs/win32-g++ -IE:/qtpro/HhookYou -IE:/OpenCV-4.10.0/build/include -IE:/OpenCV-4.10.0/build/include/opencv -IE:/OpenCV-4.10.0/build/include/opencv2 -IE:/qt2025/6.9.2/mingw_64/include -IE:/qt2025/6.9.2/mingw_64/include/QtWidgets -IE:/qt2025/6.9.2/mingw_64/include/QtGui -IE:/qt2025/6.9.2/mingw_64/include/QtNetwork -IE:/qt2025/6.9.2/mingw_64/include/QtCore -I. -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IE:/qt2025/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\event_pthread.h -o debug\moc_event_pthread.cpp
@@ -949,6 +999,39 @@ debug/moc_mainwindow.cpp: ../../mainwindow.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qlayout.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qlayoutitem.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qgridlayout.h \
+		../../httpclient.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkAccessManager \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetwork-config.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetworkexports.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qhttpheaders.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSharedDataPointer \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QString \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QUrl \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QVariant \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q26numeric.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QSslConfiguration \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslconfiguration.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtcpsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qabstractsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qhostaddress.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslerror.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslcertificate.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcryptographichash.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qssl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QFlags \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QMetaType \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkRequest \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkReply \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkreply.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QIODevice \
+		../../ProDefine.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QPoint \
 		debug/moc_predefs.h \
 		../../../../qt2025/6.9.2/mingw_64/bin/moc.exe
 	E:\qt2025\6.9.2\mingw_64\bin\moc.exe $(DEFINES) --include E:/qtpro/HhookYou/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/debug/moc_predefs.h -IE:/qt2025/6.9.2/mingw_64/mkspecs/win32-g++ -IE:/qtpro/HhookYou -IE:/OpenCV-4.10.0/build/include -IE:/OpenCV-4.10.0/build/include/opencv -IE:/OpenCV-4.10.0/build/include/opencv2 -IE:/qt2025/6.9.2/mingw_64/include -IE:/qt2025/6.9.2/mingw_64/include/QtWidgets -IE:/qt2025/6.9.2/mingw_64/include/QtGui -IE:/qt2025/6.9.2/mingw_64/include/QtNetwork -IE:/qt2025/6.9.2/mingw_64/include/QtCore -I. -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IE:/qt2025/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IE:/qt2025/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\mainwindow.h -o debug\moc_mainwindow.cpp
@@ -1333,19 +1416,58 @@ debug/event_pthread.o: ../../event_pthread.cpp ../../event_pthread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qspan.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q20iterator.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qline.h \
-		../../opencv_utils.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QDebug \
+		../../httpclient.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkAccessManager \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetwork-config.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetworkexports.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qhttpheaders.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSharedDataPointer \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QUrl \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qurl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QVariant \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qvariant.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdebug.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtextstream.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcontiguouscache.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsharedpointer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qshareddata.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qsharedpointer_impl.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qmap.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qshareddata_impl.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qset.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qhash.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qvarlengtharray.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q26numeric.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QList \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QSslConfiguration \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslconfiguration.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtcpsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qabstractsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qhostaddress.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiodevice.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslerror.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslcertificate.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcryptographichash.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdatetime.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcalendar.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlocale.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qssl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QFlags \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QMetaType \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkRequest \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkReply \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkreply.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QIODevice \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QTimer \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtimer.h \
+		../../opencv_utils.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QDebug \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/opencv.hpp \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/opencv_modules.hpp \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/core.hpp \
@@ -1464,7 +1586,6 @@ debug/event_pthread.o: ../../event_pthread.cpp ../../event_pthread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpixmap.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QScreen \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qscreen.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QList \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QRect \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSize \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSizeF \
@@ -1484,9 +1605,7 @@ debug/event_pthread.o: ../../event_pthread.cpp ../../event_pthread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qrunnable.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qexception.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qpromise.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qvariant.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qinputmethod.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlocale.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qguiapplication_platform.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QGuiApplication \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QWidget \
@@ -1508,16 +1627,12 @@ debug/event_pthread.o: ../../event_pthread.cpp ../../event_pthread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qcursor.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qbitmap.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qevent.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qiodevice.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qurl.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qeventpoint.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qvector2d.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qvectornd.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpointingdevice.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qinputdevice.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QDateTime \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdatetime.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcalendar.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QDir \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdir.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qdirlisting.h \
@@ -1885,7 +2000,9 @@ debug/main.o: ../../main.cpp ../../../../../../qt2025/6.9.2/mingw_64/include/QtW
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qinputmethod.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qlocale.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qguiapplication_platform.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QWidget \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QMessageBox \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qmessagebox.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qdialog.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qwidget.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qaction.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qkeysequence.h \
@@ -1914,6 +2031,9 @@ debug/main.o: ../../main.cpp ../../../../../../qt2025/6.9.2/mingw_64/include/QtW
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSizeF \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QTransform \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qscreen_platform.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QString \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QWidget \
 		../../mainwindow.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QMainWindow \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qmainwindow.h \
@@ -1935,7 +2055,39 @@ debug/main.o: ../../main.cpp ../../../../../../qt2025/6.9.2/mingw_64/include/QtW
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qboxlayout.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qlayout.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qlayoutitem.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qgridlayout.h
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qgridlayout.h \
+		../../httpclient.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkAccessManager \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetwork-config.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetworkexports.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qhttpheaders.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSharedDataPointer \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QUrl \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QVariant \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q26numeric.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QSslConfiguration \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslconfiguration.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtcpsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qabstractsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qhostaddress.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslerror.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslcertificate.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcryptographichash.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qssl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QFlags \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QMetaType \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkRequest \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkReply \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkreply.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QIODevice \
+		../../ProDefine.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QPoint
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\..\main.cpp
 
 debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
@@ -2156,8 +2308,40 @@ debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qlayout.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qlayoutitem.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qgridlayout.h \
-		ui_mainwindow.h \
+		../../httpclient.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkAccessManager \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetwork-config.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtnetworkexports.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qhttpheaders.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QSharedDataPointer \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QString \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QUrl \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QVariant \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/q26numeric.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QSslConfiguration \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslconfiguration.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qtcpsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qabstractsocket.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qhostaddress.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslerror.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslcertificate.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qcryptographichash.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qssl.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QFlags \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QMetaType \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkRequest \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/QNetworkReply \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtNetwork/qnetworkreply.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QIODevice \
+		../../ProDefine.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QPoint \
+		ui_mainwindow.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QApplication \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qapplication.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QLabel \
@@ -2185,7 +2369,6 @@ debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/qpainter.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QTimer \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qtimer.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QPoint \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QScreen \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QDebug \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtGui/QPixmap \
@@ -2305,11 +2488,11 @@ debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../OpenCV-4.10.0/build/include/opencv2/video/background_segm.hpp \
 		../../event_pthread.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QThread \
-		../../ProDefine.h \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QString \
 		../../display_widget.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/QDialog \
-		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qdialog.h
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtWidgets/qdialog.h \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QUrlQuery \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qurlquery.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\..\mainwindow.cpp
 
 debug/opencv_utils.o: ../../opencv_utils.cpp ../../opencv_utils.h \
@@ -2653,6 +2836,8 @@ debug/opencv_utils.o: ../../opencv_utils.cpp ../../opencv_utils.h \
 		../../ProDefine.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QPoint \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QString \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QBuffer \
+		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qbuffer.h \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/QRegularExpression \
 		../../../../../../qt2025/6.9.2/mingw_64/include/QtCore/qregularexpression.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\opencv_utils.o ..\..\opencv_utils.cpp

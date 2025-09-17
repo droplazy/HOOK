@@ -27,7 +27,8 @@ win32 {
         LIBS += -luser32
     }
 
-
+QMAKE_EXTRA_COMPILERS += manifest
+MANIFEST = $$PWD/app.manifest
 
 
 INCLUDEPATH +=E:\OpenCV-4.10.0\build\include  \

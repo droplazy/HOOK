@@ -98,16 +98,26 @@ void removeMouseHook()
 }
 
 // 自动移动鼠标并进行点击
-void moveMouseAndClick(int x, int y) {
+void moveMouseAndClick(int x, int y,QString L_R) {
     // 设置鼠标位置
     SetCursorPos(x, y);
 
+    if(L_R == "left")
+    {
     // 模拟鼠标按下事件
     mouse_event(MOUSEEVENTF_LEFTDOWN, x, y, 0, 0);
 
     // 模拟鼠标抬起事件
     mouse_event(MOUSEEVENTF_LEFTUP, x, y, 0, 0);
+    }
+    else
+    {
+        // 模拟鼠标按下事件
+        mouse_event(MOUSEEVENTF_RIGHTDOWN, x, y, 0, 0);
 
+        // 模拟鼠标抬起事件
+        mouse_event(MOUSEEVENTF_RIGHTUP, x, y, 0, 0);
+    }
     qDebug() << "Mouse moved and clicked at:" << QPoint(x, y);
 }
 
@@ -116,15 +126,15 @@ void MainWindow::updateWindowInfo()
 
 
 
-      QString info = QString("Mouse Position: %1 x %2").arg(mousePos.x()).arg(mousePos.y())+\
-                   "    "+QString("start Position: %1 x %2").arg(startPos.x()).arg(startPos.y())+\
-                   "    "+QString("end Position: %1 x %2").arg(endPos.x()).arg(endPos.y());
+      QString info = QString("Mouse : %1 x %2").arg(mousePos.x()).arg(mousePos.y())+\
+                   "    "+QString("start : %1 x %2").arg(startPos.x()).arg(startPos.y())+\
+                   "    "+QString("end : %1 x %2").arg(endPos.x()).arg(endPos.y());
 
 
     //qDebug() <<info;
     ui->label_sysinfor->setText(info);  // 显示在QLabel中
-      //if(streamOn)
-      //ImageStream();
+      QString characterInfo = "地点 : " + p_thread->t_loaction  +"\n "+"坐标:" +p_thread->t_position+"\n ";
+      ui->textEdit->setText(characterInfo);
 }
 
 
@@ -142,7 +152,7 @@ MainWindow::MainWindow(QWidget *parent)
     //  QTimer::singleShot(10000, this, &TransparentWindow::closeApp);
 
     // 自动将鼠标移到指定位置 (例如：屏幕中心)
-    moveMouseAndClick(422, 453);  // 可以根据需要修改目标位置
+    moveMouseAndClick(422, 453,"left");  // 可以根据需要修改目标位置
     p_thread = new event_pthread(this);
 
   //  connect(this, SIGNAL(DebugPress(void)), p_opencv, SLOT(testSLot(void)), Qt::AutoConnection);

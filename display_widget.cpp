@@ -29,7 +29,7 @@ void Display_Widget::displayInstace(QImage img)
         return ;
     }
 
-    qDebug() << "getted one flame !";
+   // qDebug() << "getted one flame !";
 
     // 检查图片大小
     if (img.width() > 5000 || img.height() > 5000) {
