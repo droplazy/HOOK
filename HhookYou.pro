@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     display_widget.cpp \
     event_pthread.cpp \
+    httpclient.cpp \
     main.cpp \
     mainwindow.cpp \
     opencv_utils.cpp
@@ -19,6 +20,7 @@ HEADERS += \
     ProDefine.h \
     display_widget.h \
     event_pthread.h \
+    httpclient.h \
     mainwindow.h \
     opencv_utils.h
 win32 {

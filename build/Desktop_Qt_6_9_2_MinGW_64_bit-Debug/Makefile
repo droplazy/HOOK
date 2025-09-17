@@ -310,6 +310,7 @@ Makefile: ../../HhookYou.pro ../../../../qt2025/6.9.2/mingw_64/mkspecs/win32-g++
 		../../HhookYou.pro \
 		../../../../qt2025/6.9.2/mingw_64/lib/Qt6Widgets.prl \
 		../../../../qt2025/6.9.2/mingw_64/lib/Qt6Gui.prl \
+		../../../../qt2025/6.9.2/mingw_64/lib/Qt6Network.prl \
 		../../../../qt2025/6.9.2/mingw_64/lib/Qt6Core.prl \
 		../../../../qt2025/6.9.2/mingw_64/lib/Qt6EntryPoint.prl \
 		../../../../qt2025/6.9.2/mingw_64/mkspecs/features/build_pass.prf \
@@ -557,6 +558,7 @@ Makefile: ../../HhookYou.pro ../../../../qt2025/6.9.2/mingw_64/mkspecs/win32-g++
 ../../HhookYou.pro:
 ../../../../qt2025/6.9.2/mingw_64/lib/Qt6Widgets.prl:
 ../../../../qt2025/6.9.2/mingw_64/lib/Qt6Gui.prl:
+../../../../qt2025/6.9.2/mingw_64/lib/Qt6Network.prl:
 ../../../../qt2025/6.9.2/mingw_64/lib/Qt6Core.prl:
 ../../../../qt2025/6.9.2/mingw_64/lib/Qt6EntryPoint.prl:
 ../../../../qt2025/6.9.2/mingw_64/mkspecs/features/build_pass.prf:

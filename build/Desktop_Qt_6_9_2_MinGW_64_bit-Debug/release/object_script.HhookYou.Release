@@ -1,5 +1,6 @@
 release/display_widget.o
 release/event_pthread.o
+release/httpclient.o
 release/main.o
 release/mainwindow.o
 release/opencv_utils.o
@@ -7,4 +8,5 @@ release/qrc_pic.o
 release/qrc_qmake_qmake_qm_files.o
 release/moc_display_widget.o
 release/moc_event_pthread.o
+release/moc_httpclient.o
 release/moc_mainwindow.o

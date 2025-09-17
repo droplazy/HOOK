@@ -5,7 +5,7 @@
 #include <QThread>
 #include <ProDefine.h>
 #include <QImage>
-
+#include <httpclient.h>
 
 class event_pthread : public QThread
 {
@@ -24,9 +24,11 @@ public:
 
     // 获取当前状态
     Task_State getState() const;
+    void GetORCRegnizeToNetwork(QString picBase64);
 protected:
     void GetIdleImage();
 private:
+    HttpClient *p_http;
 signals:
     void getPic(QImage);
 };

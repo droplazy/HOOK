@@ -5,6 +5,8 @@
 event_pthread::event_pthread(QObject *parent)
     : QThread(parent), currentState(Task_State::IDLE)  // 默认状态为 IDLE
 {
+        p_http = new HttpClient();
+
 }
 
 void event_pthread::run()
@@ -45,7 +47,7 @@ void event_pthread::run()
 
 void event_pthread::GetIdleImage()
 {
-    opencv_utils::disposeIMGformessage();
+    //opencv_utils::disposeIMGformessage();
 
     //获得IMG 格式的窗口
     QRect captureRect(ZeroPos.x(), ZeroPos.y(),EndPos.x()-ZeroPos.x(),EndPos.y()- ZeroPos.y());  // 设置需要截取的位置和宽高
@@ -55,6 +57,15 @@ void event_pthread::GetIdleImage()
         emit getPic(img.copy());
         qDebug() << "Sending image with dimensions: " << img.width() << "x" << img.height();
     }
+    QRect rect(+53,+207,138,20);
+    cv::Mat posText = opencv_utils::capturePositionForRect(rect);
+    //QString position=recognizeTextFromMat(posText,OCR_ENGLISH);
+   QString base64pic=  opencv_utils::recognizeTextFromMatBackBase(posText);
+    qDebug() << "**************************************\n";
+    qDebug() << base64pic;
+    qDebug() << "**************************************\n";
+
+   // GetORCRegnizeToNetwork(base64pic);
 }
 
 #if 0
@@ -98,4 +109,25 @@ void event_pthread::setState(Task_State state)
 Task_State event_pthread::getState() const
 {
     return currentState;
+}
+
+#include <QUrlQuery>
+
+#define PIC_REGNIZE "http://vip.apihz.cn/api/yiyan/api.php"
+#define API_ID     "10001671"
+#define API_KEY    "HangZhoufogkniteleElectron950905"
+
+void event_pthread::GetORCRegnizeToNetwork(QString picBase64)
+{
+
+    QUrl url(PIC_REGNIZE);
+    QUrlQuery query;
+    query.addQueryItem("id", API_ID);
+    query.addQueryItem("key", API_KEY);
+    query.addQueryItem("type", "2");
+    query.addQueryItem("img", picBase64);
+ //   query.addQueryItem("words", "心灵鸡汤");
+
+    url.setQuery(query); // 设置 URL 的查询部分
+    p_http->sendGetRequest(url);
 }

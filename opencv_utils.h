@@ -49,6 +49,8 @@ public:
     static cv::Mat capturePositionForRect(QRect pos);
     static QString recognizeTextFromMat(const cv::Mat &inputMat, QString language);
     static QImage captureScreenQimage(const QRect &rect);
+    static QString CaptureTobase64(const QRect &rect);
+    static QString recognizeTextFromMatBackBase(const cv::Mat &inputMat);
 };
 using namespace cv;
 

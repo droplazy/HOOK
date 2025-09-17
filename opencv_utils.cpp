@@ -8,13 +8,13 @@
 #include <cmath>
 #include <algorithm>
 #include <ProDefine.h>
-
+#include <QBuffer>
 
 QStringList dreamWorldLocations = {
     "南瞻部洲", "东胜神洲", "西牛贺洲", "北俱芦洲",
     "长安城", "傲来国", "长寿村", "朱紫国",
     "凤巢", "龙窟", "地府迷宫", "海底迷宫",
-    "凌霄宝殿", "战神山", "两界山",
+    "凌霄宝殿", "麒麟山"//"战神山", "两界山",
     "大雁塔", "建邺城", "江南野外", "花果山", "女儿村",
     "龙窟入口", "女娲神迹", "方寸山", "天宫", "无底洞",
     "灵山雷音寺", "宝象国", "西梁女国", "大雪山", "金銮殿",
@@ -175,6 +175,36 @@ cv::Mat opencv_utils::captureScreenAndSave(const QRect &rect ,QString path)
 
     // 返回转换后的 BGR 图像
     return matBGR;
+}
+
+QString  opencv_utils::CaptureTobase64(const QRect &rect)
+{
+    // 获取主屏幕截图
+    QScreen *screen = QApplication::primaryScreen();
+    if (!screen) {
+        qWarning() << "无法获取屏幕";
+        return "ERROR";  // 返回一个空的cv::Mat
+    }
+
+    // 截取指定区域的截图
+    QPixmap pixmap = screen->grabWindow(0, rect.x(), rect.y(), rect.width(), rect.height());
+
+    // 将 QPixmap 转换为 QImage
+    QImage image = pixmap.toImage();
+    if (image.isNull()) {
+        qWarning() << "截图转换为QImage失败";
+        return "ERROR";  // 返回一个空的cv::Mat
+    }
+
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    buffer.open(QIODevice::WriteOnly);
+
+    // 将 QImage 写入 buffer
+    image.save(&buffer, "PNG");  // 或者使用 "JPEG" 格式
+
+    // 将 QByteArray 转为 Base64 字符串
+    return byteArray.toBase64();
 }
 
 void opencv_utils::RectHignLight()
@@ -369,4 +399,31 @@ QString opencv_utils::recognizeTextFromMat(const cv::Mat &inputMat ,QString lang
 
 }
 
+QString opencv_utils::recognizeTextFromMatBackBase(const cv::Mat &inputMat) {
+    // 将 cv::Mat 转换为灰度图
+    cv::Mat grayMat;
+    cv::cvtColor(inputMat, grayMat, cv::COLOR_BGR2GRAY);
 
+    // 使用 Otsu 二值化方法进行二值化处理，自动选择最佳阈值
+    cv::Mat binaryMat;
+    cv::threshold(grayMat, binaryMat, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
+
+    // 反转二值化图像（黑白反转）
+    cv::Mat invertedMat;
+    cv::bitwise_not(binaryMat, invertedMat);
+
+    // 将反转后的二值化图像保存为 QByteArray
+    std::vector<uchar> buf;
+    cv::imencode(".png", invertedMat, buf);  // 可以选择 "jpg" 或 "png" 格式
+    QByteArray byteArray(reinterpret_cast<const char*>(buf.data()), buf.size());
+
+    // 将 QByteArray 转换为 Base64 字符串
+    QString base64String = byteArray.toBase64();
+
+    // 可选：将反转后的图像保存到文件
+    QString tempInvertedImagePath = "C:/Users/KANDAGAWA/Desktop/temp_inverted_image.png";
+    cv::imwrite(tempInvertedImagePath.toStdString(), invertedMat);
+
+    // 返回 Base64 字符串
+    return base64String;
+}
