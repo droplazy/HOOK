@@ -22,8 +22,6 @@ class Ui_Display_Widget
 public:
     QPushButton *pushButton;
     QLabel *label;
-    QLabel *label_2;
-    QLabel *label_aligh;
 
     void setupUi(QDialog *Display_Widget)
     {
@@ -41,16 +39,6 @@ public:
         label->setGeometry(QRect(0, 0, 700, 560));
         label->setStyleSheet(QString::fromUtf8("background-image: url(:/pic/screen.png);"));
         label->setScaledContents(false);
-        label_2 = new QLabel(Display_Widget);
-        label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(160, 110, 381, 371));
-        label_2->setStyleSheet(QString::fromUtf8("background-color: rgba(85, 255, 127, 0.5);\n"
-""));
-        label_aligh = new QLabel(Display_Widget);
-        label_aligh->setObjectName("label_aligh");
-        label_aligh->setGeometry(QRect(160, 270, 91, 141));
-        label_aligh->setStyleSheet(QString::fromUtf8("background-color: rgba(255, 0, 0, 0.3);\n"
-""));
 
         retranslateUi(Display_Widget);
 
@@ -62,8 +50,6 @@ public:
         Display_Widget->setWindowTitle(QCoreApplication::translate("Display_Widget", "Dialog", nullptr));
         pushButton->setText(QCoreApplication::translate("Display_Widget", "\345\201\234\346\255\242", nullptr));
         label->setText(QCoreApplication::translate("Display_Widget", "TextLabel", nullptr));
-        label_2->setText(QString());
-        label_aligh->setText(QString());
     } // retranslateUi
 
 };

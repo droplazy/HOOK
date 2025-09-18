@@ -9,7 +9,7 @@
 
 
 event_pthread::event_pthread(QObject *parent)
-    : QThread(parent), currentState(Task_State::MOUSER_OFFSET)  // 默认状态为 IDLE
+    : QThread(parent), currentState(Task_State::IDLE)  // 默认状态为 IDLE
 {
 #if 1
     QTimer *timer_msr = new QTimer(this);
@@ -26,6 +26,7 @@ int printKeyUsingWindowsAPI( ) {
             return i;
         }
     }
+    return -1 ;
 }
 void event_pthread::run()
 {
@@ -73,7 +74,7 @@ void event_pthread::run()
 
         // QCoreApplication::quit();
 
-        QThread::msleep(350);  // 让线程休眠一秒，防止占用过多CPU资源
+        QThread::msleep(1);  // 让线程休眠一秒，防止占用过多CPU资源
     }
 }
 #include <QElapsedTimer>
@@ -157,6 +158,11 @@ void event_pthread::MoveMouseQinglongNPC()
    // moveMouseAndClick(TargetClick.x(),TargetClick.y(),"left");
 
 }
+// void event_pthread::GettingGameWindow()
+// {
+
+// }
+
 void event_pthread::CheckMouserOffset()
 {
     //pressKey()
@@ -215,7 +221,7 @@ void event_pthread::CheckMouserOffset()
     } else {
         qDebug() << "保存图片失败！";
     }
-        sleep(100);
+        //sleep(100);
     #if 0
     // 创建 QRect 对象 380 450  615 850
     QRect captureRect(ZeroPos.x()+235, ZeroPos.y()+400, 100, 200);

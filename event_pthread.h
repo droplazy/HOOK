@@ -16,7 +16,7 @@ class event_pthread : public QThread
 
 public:
     bool streamOn = false;
-    Task_State currentState = Task_State::MOUSER_OFFSET;  // 当前的状态
+    Task_State currentState = Task_State::IDLE;  // 当前的状态
     QINGLONG_Task QL_State= QINGLONG_Task::IDLE;
 
     QString t_loaction;

@@ -24,9 +24,9 @@ QPoint ZeroPos(0, 0);
 QPoint EndPos(0, 0);
 
 QPoint mousePos(0, 0);
-QPoint startPos(0, 0);
-QPoint endPos(0, 0);
-bool isCpature = false;
+// QPoint startPos(0, 0);
+// QPoint endPos(0, 0);
+//bool isCpature = false;
 // 鼠标钩子
 HHOOK mouseHook;
 std::vector<QPoint> clickPositions; // 存储点击位置
@@ -53,10 +53,10 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam)
             QPoint clickPos(pt.x, pt.y);
             clickPositions.push_back(clickPos);
             //qDebug() << "Left mouse button pressed at:" << clickPos;
-            if(isCpature)
-            {
-                startPos=clickPos;
-            }
+            // if(isCpature)
+            // {
+            //     startPos=clickPos;
+            // }
             // 重绘透明窗口
             if (QWidget* topWindow = QApplication::topLevelWidgets().isEmpty() ? nullptr : QApplication::topLevelWidgets().first()) {
                 topWindow->update(); // 触发重绘
@@ -66,11 +66,11 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam)
         case WM_LBUTTONUP: {
             POINT pt = hookStruct->pt;
             QPoint releasePos(pt.x, pt.y);
-            if(isCpature)
-            {
-                endPos=releasePos;
-                isCpature =false;;
-            }
+            // if(isCpature)
+            // {
+            //     endPos=releasePos;
+            //     isCpature =false;;
+            // }
             qDebug() << "Left mouse button released at:" << releasePos;
             break;
         }
@@ -135,18 +135,15 @@ void moveMouseOnly(int x, int y) {
 
 void MainWindow::updateWindowInfo()
 {
-
-
-
-      QString info = QString("Mouse : %1 x %2").arg(mousePos.x()).arg(mousePos.y())+\
-                   "    "+QString("start : %1 x %2").arg(startPos.x()).arg(startPos.y())+\
-                   "    "+QString("end : %1 x %2").arg(endPos.x()).arg(endPos.y());
+     QString  info = QString("Mouse : %1 x %2").arg(mousePos.x()).arg(mousePos.y())+\
+                   "    "+QString("start : %1 x %2").arg(ZeroPos.x()).arg(ZeroPos.y())+\
+                   "    "+QString("end : %1 x %2").arg(EndPos.x()).arg(EndPos.y());
 
 
     //qDebug() <<info;
     ui->label_sysinfor->setText(info);  // 显示在QLabel中
-      QString characterInfo = "地点 : " + p_thread->t_loaction  +"\n "+"坐标:" +p_thread->t_position+"\n ";
-      ui->textEdit->setText(characterInfo);
+   //   QString characterInfo = "地点 : " + p_thread->t_loaction  +"\n "+"坐标:" +p_thread->t_position+"\n ";
+   //   ui->textEdit->setText(characterInfo);
 }
 #include <QRandomGenerator>
 
@@ -231,7 +228,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(p_thread, SIGNAL(getPic(QImage)), w_displayTest, SLOT(displayInstace(QImage)), Qt::AutoConnection);//持续推流信号
     connect(p_thread, SIGNAL(regnize(QString)), this, SLOT(GetNeedRegnizePic(QString)), Qt::AutoConnection);//持续推流信号
 
-    w_displayTest->show();
+   // w_displayTest->show();
 
     p_http = new HttpClient();
 }
@@ -268,16 +265,62 @@ void MainWindow::GetNeedRegnizePic(QString picBase64)
 {
     GetORCRegnizeToNetwork(picBase64);
 }
+ bool found = false; // 标记是否找到符合条件的窗口
 
-void MainWindow::on_pushButton_capture_clicked()//开始截屏的按钮
+BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
 {
+    // 获取传递的 QTextEdit 指针和查找标志
+    QTextEdit* textEdit = reinterpret_cast<QTextEdit*>(lParam);
 
+    // 检查窗口是否可见
+    if (IsWindowVisible(hwnd)) {
+        // 获取窗口标题
+        char windowTitle[256];
+        if (GetWindowTextA(hwnd, windowTitle, sizeof(windowTitle)) > 0) {
+            // 判断窗口标题是否包含"阿伯茨的"
+            QString title = QString::fromLocal8Bit(windowTitle);
+            if (title.contains("梦幻西游")) {
+                // 获取窗口位置和大小
+                RECT rect;
+                if (GetWindowRect(hwnd, &rect)) {
+                    ZeroPos.setX(rect.left);
+                    ZeroPos.setY(rect.top);
+                    EndPos.setX( rect.right);// - rect.left;
+                     EndPos.setY(rect.bottom);
 
-        isCpature = true;
-        ui->pushButton_capture->setStyleSheet("background-color: rgb(255, 1, 1);");
+                    // 将窗口标题和坐标信息添加到 QTextEdit 中
+                    QString info = QString("Window '%1' found at (%2, %3) with size (%4, %5)")
+                                        .arg(title).arg(ZeroPos.x()).arg(ZeroPos.y()).arg(EndPos.x()- ZeroPos.x()).arg(EndPos.y()- ZeroPos.y());
+                    textEdit->append(info);
 
+                    // 聚焦窗口
+                    SetForegroundWindow(hwnd);
+
+                    // 设置标志为已找到
+                    found = true;
+                }
+            }
+        }
+    }
+    return TRUE; // 继续枚举其他窗口
 }
 
+void MainWindow::on_pushButton_capture_clicked() // 开始截屏的按钮
+{
+    // 清空 textEdit 内容
+    ui->textEdit->clear();
+
+    // 重置找到标志
+    found = false;
+
+    // 调用 EnumWindows 枚举所有窗口
+    EnumWindows(EnumWindowsProc, reinterpret_cast<LPARAM>(ui->textEdit));
+
+    // 如果没有找到符合条件的窗口，则显示提示信息
+    if (!found) {
+        ui->textEdit->append("未找到应用程序！");
+    }
+}
 
 
 
@@ -287,27 +330,29 @@ void MainWindow::on_pushButton_imgtest_clicked()//显示测试按钮
 {
     if(p_thread->streamOn)
     {
-        w_displayTest->deleteLater();
+       // w_displayTest->deleteLater();
         p_thread->streamOn =false;
+        w_displayTest->hide();
 
     }
     else
     {
 
-        w_displayTest = new Display_Widget();
+        //w_displayTest = new Display_Widget();
       //  connect(p_opencv, SIGNAL(getPic(QImage)), w_displayTest, SLOT(displayInstace(QImage)), Qt::AutoConnection);
         w_displayTest->show();
         p_thread->streamOn= true;
     }
 }
-
-
+#if 0
+ui->pushButton_capture->setStyleSheet("background-color: rgb(255, 255, 255);");
+ZeroPos = startPos;
+EndPos = endPos;
+p_thread->streamOn = true;
+#endif
 void MainWindow::on_pushButton_capture_2_clicked()//截屏测试按钮 完成
 {
-    ui->pushButton_capture->setStyleSheet("background-color: rgb(255, 255, 255);");
-    ZeroPos = startPos;
-    EndPos = endPos;
-        p_thread->streamOn = true;
+
 
 }
 void MainWindow::on_pushButton_START_clicked()

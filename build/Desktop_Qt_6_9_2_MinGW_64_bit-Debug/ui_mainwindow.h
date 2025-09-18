@@ -28,7 +28,6 @@ public:
     QPushButton *pushButton_capture;
     QLabel *label_sysinfor;
     QPushButton *pushButton_imgtest;
-    QPushButton *pushButton_capture_2;
     QPushButton *pushButton_START;
     QPushButton *pushButton_START_2;
     QTextEdit *textEdit;
@@ -55,21 +54,16 @@ public:
         label_sysinfor->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         pushButton_imgtest = new QPushButton(centralwidget);
         pushButton_imgtest->setObjectName("pushButton_imgtest");
-        pushButton_imgtest->setGeometry(QRect(200, 10, 80, 24));
+        pushButton_imgtest->setGeometry(QRect(110, 10, 80, 24));
         pushButton_imgtest->setStyleSheet(QString::fromUtf8("\n"
-"background-color: rgb(156, 156, 156);"));
-        pushButton_capture_2 = new QPushButton(centralwidget);
-        pushButton_capture_2->setObjectName("pushButton_capture_2");
-        pushButton_capture_2->setGeometry(QRect(110, 10, 80, 24));
-        pushButton_capture_2->setStyleSheet(QString::fromUtf8("\n"
 "background-color: rgb(156, 156, 156);"));
         pushButton_START = new QPushButton(centralwidget);
         pushButton_START->setObjectName("pushButton_START");
-        pushButton_START->setGeometry(QRect(290, 10, 80, 24));
+        pushButton_START->setGeometry(QRect(200, 10, 80, 24));
         pushButton_START->setStyleSheet(QString::fromUtf8("background-color: rgb(1, 1, 1);"));
         pushButton_START_2 = new QPushButton(centralwidget);
         pushButton_START_2->setObjectName("pushButton_START_2");
-        pushButton_START_2->setGeometry(QRect(380, 10, 80, 24));
+        pushButton_START_2->setGeometry(QRect(290, 10, 80, 24));
         pushButton_START_2->setStyleSheet(QString::fromUtf8("background-color: rgb(1, 1, 1);"));
         textEdit = new QTextEdit(centralwidget);
         textEdit->setObjectName("textEdit");
@@ -94,7 +88,6 @@ public:
         pushButton_capture->setText(QCoreApplication::translate("MainWindow", "\347\252\227\345\217\243\350\216\267\345\217\226", nullptr));
         label_sysinfor->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         pushButton_imgtest->setText(QCoreApplication::translate("MainWindow", "\345\274\200\345\247\213/\345\201\234\346\255\242\346\265\201", nullptr));
-        pushButton_capture_2->setText(QCoreApplication::translate("MainWindow", "\346\210\221\350\216\267\345\217\226\344\272\206", nullptr));
         pushButton_START->setText(QCoreApplication::translate("MainWindow", "KAISHI", nullptr));
         pushButton_START_2->setText(QCoreApplication::translate("MainWindow", "KAISHI", nullptr));
         textEdit->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
