@@ -159,98 +159,101 @@ void event_pthread::MoveMouseQinglongNPC()
 }
 void event_pthread::CheckMouserOffset()
 {
-    QPoint center_point;
-    QImage img= GetGamewindowCenterPoint(center_point);
-    if (streamOn) {
-        // 发送 img 图像
-        emit getPic(img.copy());
-        //  qDebug() << "Sending image with dimensions: " << img.width() << "x" << img.height();
-    }
-    QPoint screnen_point;
-    screnen_point = convertCoordinates(ZeroPos, center_point);
-    qDebug() << "screnen_point" <<screnen_point;
-    TargetClick =  screnen_point;//目标坐标
-    TargetClick.setX(TargetClick.x());
-    TargetClick.setY(TargetClick.y());
-    screnen_point =TargetClick;
-    MouseNeedMove = true;
-    while (MouseNeedMove) {
-        usleep(1000);
-    }
-    qDebug() <<"First Move Compeleted ....";
+    //pressKey()
+    GameSetting();
 
-    int rectSize = 200;
-    int left = screnen_point.x() -250;
-    int top = screnen_point.y() - 0;
-   // int right = center_point.x() + rectSize / 2;
-   // int bottom = center_point.y() + rectSize / 2;
-    QPoint topLeft(left, top);
-    qDebug() << "Top-left corner: " << topLeft;
-    // 创建 QRect 对象
-    QRect captureRect(left, top, 100, 200);
-    QImage img_center =opencv_utils::captureScreenQimage(captureRect);
-    QImage m_Image(":/Element/Mouser.png");
-    QPoint UI_ZeroP (topLeft.x(),topLeft.y());
-    QPoint uiPos =  findElemntForUI(img_center,m_Image,UI_ZeroP);//UI鼠标的坐标
-    qDebug() << "THE NPC POSTION IS :" << TargetClick;
-    qDebug() << "THE offset MOUSER POSTION IS :" << uiPos;
- /*
     QImage qImage(":/Element/MHJL.png");
 
     PessF9();
     QRect matchRect;
 
-    TargetClick =  findElemntForScreen(qImage,matchRect);//目标坐标
+    QPoint point_t =  findElemntForScreen(qImage,matchRect);//目标坐标
+    qDebug() << "The Setting Rect Center is : " << point_t;
+
+    TargetClick = point_t;// findElemntForScreen(qImage,matchRect);//目标坐标
+    MouseNeedMove = true;
+    while (MouseNeedMove) {
+        usleep(1000);
+    }
+      sleep(1);
+    qDebug() <<"First Move Compeleted ....";
+    // matchRect.setX(matchRect.x()-100);
+    // matchRect.setWidth(matchRect.width()+100);
+    // matchRect.setHeight(matchRect.height()+100);
+
+    QImage img_center =opencv_utils::captureScreenQimage(matchRect);
+    QString savePath = "C:/Users/KANDAGAWA/Desktop/DEBUG/output_image_correct000.png";
+    if (img_center.save(savePath)) {
+        qDebug() << "图片成功保存到：" << savePath;
+    } else {
+        qDebug() << "保存图片失败！";
+    }
+
+    QImage m_Image(":/Element/Mouser.png");
+    QPoint UI_ZeroP (matchRect.x(),matchRect.y());//归零点坐标
+    QPoint uiPos =  findElemntForUI(img_center,m_Image,UI_ZeroP);//UI鼠标的坐标
+    qDebug()<<"Device POS:"<< TargetClick<<"UIpos:"<<uiPos;
+    QPoint offset =TargetClick - uiPos;
+    offset.setY(offset.y()+25);
+    offset.setX(offset.x()+15);
+    TargetClick = TargetClick +offset;
+    MouseNeedMove = true;
+    while (MouseNeedMove) {
+        usleep(1000);
+    }
+    sleep(1);
+    uiPos =  findElemntForUI(img_center,m_Image,UI_ZeroP);//UI鼠标的坐标
+    qDebug() <<"Second Move Compeleted ....";
+    qDebug() <<"New UI pos : " << uiPos <<"The Center (Target) Pos:"<< point_t;
+
+
+
+     img_center =opencv_utils::captureScreenQimage(matchRect);
+     savePath = "C:/Users/KANDAGAWA/Desktop/DEBUG/output_image_correct111.png";
+    if (img_center.save(savePath)) {
+        qDebug() << "图片成功保存到：" << savePath;
+    } else {
+        qDebug() << "保存图片失败！";
+    }
+        sleep(100);
+    #if 0
+    // 创建 QRect 对象 380 450  615 850
+    QRect captureRect(ZeroPos.x()+235, ZeroPos.y()+400, 100, 200);
+    QImage img_center =opencv_utils::captureScreenQimage(captureRect);
+   // QString savePath = "C:\Users\KANDAGAWA\Desktop\DEBUG";  // 设置保存路径
+    QString savePath = "C:/Users/KANDAGAWA/Desktop/DEBUG/output_image_correct.png";
+    if (img_center.save(savePath)) {
+        qDebug() << "图片成功保存到：" << savePath;
+    } else {
+        qDebug() << "保存图片失败！";
+    }
+    QPoint center(ZeroPos.x() + 285, ZeroPos.y() + 500);
+    TargetClick = center;// findElemntForScreen(qImage,matchRect);//目标坐标
     MouseNeedMove = true;
     while (MouseNeedMove) {
         usleep(1000);
     }
     qDebug() <<"First Move Compeleted ....";
 
-    QImage tmpPic =  opencv_utils::captureScreenQimage(matchRect);
-    // 将图片保存到 C:\Users\KANDAGAWA\Desktop\DEBUG 文件夹
-    QString savePath = "C:/Users/KANDAGAWA/Desktop/DEBUG/tmpPic.png";  // 设置保存路径
-    if (tmpPic.save(savePath)) {
-        qDebug() << "图片成功保存到：" << savePath;
-    } else {
-        qDebug() << "保存图片失败！";
-    }
-
 
     QImage m_Image(":/Element/Mouser.png");
-    QPoint UI_ZeroP (matchRect.x(),matchRect.y());
-    QPoint uiPos =  findElemntForUI(tmpPic,m_Image,UI_ZeroP);//UI鼠标的坐标
-    qDebug() << "THE NPC POSTION IS :" << TargetClick;
-    qDebug() << "THE offset MOUSER POSTION IS :" << uiPos;
+    QPoint UI_ZeroP (captureRect.x(),captureRect.y());
+    QPoint uiPos =  findElemntForUI(img_center,m_Image,UI_ZeroP);//UI鼠标的坐标
+    qDebug()<<"Device POS:"<< TargetClick<<"UIpos:"<<uiPos;
+    // TargetClick.setX(620+50); //=  (551+50,672+100);//screnen_point;//目标坐标
+    // TargetClick.setX(800+100);
+    // TargetClick.setY(TargetClick.y());
 
-    // 计算偏移量：TargetClick - uiPos
-    QPoint offset = TargetClick - uiPos;
-
-    // 输出偏移量
-    qDebug() << "The offset is: " << offset;
-
-    // 更新 TargetClick，添加偏移量
-    TargetClick += (offset*MoveScale);
-
-    qDebug() << "New TargetClick after applying offset: " << TargetClick;
-    //获得新的目标坐标  并继续移动鼠标
-
-    qDebug() <<"Readt to Move ....";
-    sleep(5);
+    TargetClick =uiPos;
     MouseNeedMove = true;
     while (MouseNeedMove) {
         usleep(1000);
     }
-    qDebug() << "现在看看对了没...";
-    POINT currentPos;
-    qDebug() << "Maybe The mouser IS arrived!";
-    if (GetCursorPos(&currentPos)) {
-        // 打印当前位置
-        qDebug() << "\rCurrent mouse position:" << QPoint(currentPos.x, currentPos.y);
-        qDebug() << "\rTarget mouse position:" << TargetClick;
-    }
+    qDebug() <<"First Move Compeleted ....";
 
-*/
+    qDebug() << "THE NPC POSTION IS :" << TargetClick;
+    qDebug() << "THE offset MOUSER POSTION IS :" << uiPos;
+#endif
 
 }
 void event_pthread::GetTaskStart()
@@ -318,20 +321,11 @@ QPoint event_pthread::findElemntForScreen(QImage image, QRect &rectoffset)
     QPoint getPoint;
     //QRect matchRect;
     QImage img = opencv_utils::FindPicTarget(targetImg, posText,getPoint,rectoffset,ZeroPos);//第一次用整体界面坐标作为归零点
-    //qDebug() << "NPC在屏幕的坐标: (" << getPoint.x() << ", " << getPoint.y() << ")";
-    // qDebug() << "画布坐标: (" << ZeroPos.x() << ", " << ZeroPos.y() << ")" <<"画布大小 :" <<EndPos.x()-ZeroPos.x() <<" X" <<EndPos.y()- ZeroPos.y();
-
-    // 计算耗时
-    //qint64 elapsed = timer.elapsed();  // 获取执行时间（单位：毫秒）
-
-    // 输出耗时
-    //qDebug() << "FindPicTarget executed in" << elapsed << "milliseconds";
-
-    // 检查 streamOn 是否为 true，并发送图像
-    if (streamOn) {
-        // 发送 img 图像
-        emit getPic(img.copy());
-      //  qDebug() << "Sending image with dimensions: " << img.width() << "x" << img.height();
+    QString savePath = "C:/Users/KANDAGAWA/Desktop/DEBUG/output_image_correct_1.png";
+    if (img.save(savePath)) {
+        qDebug() << "图片成功保存到：" << savePath;
+    } else {
+        qDebug() << "保存图片失败！";
     }
     return getPoint;
 }
@@ -352,6 +346,7 @@ QPoint event_pthread::findElemntForUI(QImage image,QImage image_UI,QPoint zeroP)
 
     QImage img = opencv_utils::FindPicTarget(TargetUI, posText, getPoint, matchRect,zeroP);
 
+    //    QPoint center(ZeroPos.x() + 285, ZeroPos.y() + 500);
 
     QString savePath = "C:/Users/KANDAGAWA/Desktop/DEBUG/output_image.png";  // 设置保存路径
     if (img.save(savePath)) {
@@ -427,6 +422,17 @@ void event_pthread::GameAttack()
     pressKey("a");
     QThread::msleep(50);
     releaseKey("a");
+    QThread::msleep(50);
+    releaseKey("alt");
+}
+void event_pthread::GameSetting()
+{
+    //holdKey1();
+    pressKey("alt");
+    QThread::msleep(50);
+    pressKey("s");
+    QThread::msleep(50);
+    releaseKey("s");
     QThread::msleep(50);
     releaseKey("alt");
 }

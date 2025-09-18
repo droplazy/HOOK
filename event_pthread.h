@@ -54,6 +54,7 @@ public:
     void SetMouserOffset();
     QPoint findElemntForUI(QImage image, QImage image_UI,QPoint zeroP);
     QImage GetGamewindowCenterPoint(QPoint &point);
+    void GameSetting();
 protected:
     void GetIdleImage();
 
