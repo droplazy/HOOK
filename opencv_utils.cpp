@@ -237,7 +237,7 @@ void opencv_utils::RectHignLight()
 
 // }
 
-QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, QPoint &point, QRect &rectoffset, QPoint ZeroPoint)
+QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, QPoint &point, QRect &rectoffset, QPoint ZeroPoint , double &Score)
 {
     // 检查图像是否为空
     if (targetImage.empty() || templateImage.empty()) {
@@ -260,43 +260,30 @@ QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, Q
     cv::minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc);
 
     // 打印匹配值
-    qDebug() << "模板匹配最大值: " << maxVal;
-    qDebug() << "模板匹配最小值: " << minVal;
-    /*最大匹配值 (maxVal)：
-
-maxVal 是匹配结果中的最大值，它表示模板与目标图像在某个位置的匹配度。其范围通常是 [0, 1]，其中：
-1 表示完美匹配。
-0 表示没有任何匹配。
-该值越接近 1，表示模板与目标图像在该位置的匹配度越高。
-最小匹配值 (minVal)：
-
-minVal 是匹配结果中的最小值，通常用于检查匹配的差异性。在大多数情况下，minVal 对判断匹配度的影响不如 maxVal 重要，但它可以帮助检查是否存在多重匹配情况。*/
+    // qDebug() << "模板匹配最大值: " << maxVal;
+    // qDebug() << "模板匹配最小值: " << minVal;
+    Score =maxVal;
     // 在目标图像上标记匹配区域
     cv::Rect matchRect(maxLoc.x, maxLoc.y, templateImage.cols, templateImage.rows);
     cv::rectangle(targetImage, matchRect, cv::Scalar(0, 255, 0), 2); // 用绿色框住匹配区域
 
-
     // 将矩形框的坐标和尺寸保存到 rectoffset 中
     rectoffset = QRect(matchRect.x, matchRect.y, matchRect.width, matchRect.height);
 
-
     // 计算矩形的中心点坐标
-    cv::Point center(matchRect.x + matchRect.width / 2, matchRect.y + matchRect.height / 2 );
+    cv::Point center(matchRect.x + matchRect.width / 2, matchRect.y + matchRect.height / 2);
 
     // 将 center 的值赋给 point
     point = QPoint(center.x, center.y);  // 把 cv::Point 转换为 QPoint
 
-    // 在中心点画一个圆点
+    // 在中心点画一个红色圆点
     cv::circle(targetImage, center, 3, cv::Scalar(255, 0, 0), -1); // 用红色绘制圆点，半径为10
-#if 0
-    // 打印左上角和右下角坐标
-    qDebug() << "左上角坐标: (0, 0)";
-    qDebug() << "右下角坐标: (" << targetImage.cols - 1 << ", " << targetImage.rows - 1 << ")";
-    qDebug() << "匹配中心坐标: (" << point.x() << ", " << point.y() << ")";
-    qDebug() << "画布坐标: (" << ZeroPoint.x() << ", " << ZeroPoint.y() << ")";
-    qDebug() << "绿框坐标: (" << rectoffset.x() << ", " << rectoffset.y() << ")";
-    qDebug() << "绿框宽高: (" << rectoffset.width() << ", " << rectoffset.height() << ")";
-#endif
+
+    // 在中心点画 X 字形标记
+    int crossSize = 15; // X 字的尺寸，可以根据需要调整大小
+    cv::line(targetImage, cv::Point(center.x - crossSize, center.y - crossSize), cv::Point(center.x + crossSize, center.y + crossSize), cv::Scalar(255, 0, 0), 2); // 从左上到右下
+    cv::line(targetImage, cv::Point(center.x + crossSize, center.y - crossSize), cv::Point(center.x - crossSize, center.y + crossSize), cv::Scalar(255, 0, 0), 2); // 从右上到左下
+
     // 将矩形框的左上角和右下角坐标转换为屏幕坐标
     QPoint topLeft = convertCoordinates(ZeroPoint, QPoint(rectoffset.x(), rectoffset.y()));
     QPoint bottomRight = convertCoordinates(ZeroPoint, QPoint(rectoffset.x() + rectoffset.width(), rectoffset.y() + rectoffset.height()));
@@ -305,16 +292,9 @@ minVal 是匹配结果中的最小值，通常用于检查匹配的差异性。�
     // 更新 rectoffset 为转换后的屏幕坐标
     rectoffset = QRect(topLeft, bottomRight);
 
-    // 打印转换后的屏幕坐标
-    //    qDebug() << "转换后的绿框左上角坐标: (" << topLeft.x() << ", " << topLeft.y() << ")";
-    //    qDebug() << "转换后的绿框右下角坐标: (" << bottomRight.x() << ", " << bottomRight.y() << ")";
-
-    // 计算匹配点在屏幕上的位置
-
     // 将 OpenCV 的 Mat 图像转换为 QImage
-    // OpenCV 默认图像是 BGR 格式，这里将其转换为 RGB 格式
     QImage qImage(targetImage.data, targetImage.cols, targetImage.rows, targetImage.step, QImage::Format_RGB888);
-
+#if 0
     // 获取桌面路径
     QString desktopPath = QDir::homePath() + "/Desktop/";
     QString filePath = desktopPath + "output_image.png";
@@ -325,11 +305,31 @@ minVal 是匹配结果中的最小值，通常用于检查匹配的差异性。�
     } else {
         qDebug() << "保存图片失败！";
     }
-
+#endif
     return qImage;  // 返回 QImage 对象
 }
 
+QImage  opencv_utils::DrawPointOnPic(cv::Mat templateImage, QPoint ZeroP, QPoint TargetP)
+{
+    // 确保输入的图像是 8 位的 (灰度图像或者彩色图像)，并且是 BGR 格式
+    cv::Mat img = templateImage.clone();  // 克隆一份图像，不影响原图
 
+    // 将 ZeroP 转换为图像的坐标系
+    int x = TargetP.x() - ZeroP.x();  // 计算相对坐标
+    int y = TargetP.y() - ZeroP.y();
+
+    // 使用 OpenCV 绘制一个黄点（BGR: 黄 = 0, 255, 255）
+    cv::circle(img, cv::Point(x, y), 5, cv::Scalar(0, 255, 255), -1);  // 半径 5, -1 表示填充
+
+    // 转换为 QImage 格式（BGR -> RGB）
+    cv::cvtColor(img, img, cv::COLOR_BGR2RGB);  // 将 BGR 转换为 RGB
+
+    // 将 cv::Mat 转换为 QImage
+    QImage qImg((const uchar*)img.data, img.cols, img.rows, img.step, QImage::Format_RGB888);
+
+    return qImg;
+
+}
 
 
 
@@ -472,7 +472,7 @@ QString opencv_utils::recognizeTextFromMat(const cv::Mat &inputMat ,QString lang
         outputFile.close();
 
         // 输出识别的文字
-        qDebug() << "识别的文字： " << recognizedText;
+        //qDebug() << "识别的文字： " << recognizedText;
         return recognizedText;
     } else {
         qDebug() << "无法读取 Tesseract 输出文件!";

@@ -6,6 +6,7 @@
 
 extern QPoint ZeroPos;
 extern QPoint EndPos;
+extern QPoint mousePos;
 extern QStringList dreamWorldLocations;
 
 // 枚举类型，表示四种状态
@@ -16,6 +17,7 @@ enum class Task_State
     QINGLONG, // 青龙
     XUANWU,   // 玄武
     ZHUQUE,   // 朱雀
+    DIANXIU,   //
     SHIMEN    // 石门
 };
 enum class QINGLONG_Task
@@ -65,4 +67,5 @@ void moveMouseOnly(int x, int y);
 QPoint  convertCoordinates(const QPoint& canvasOffset, const QPoint& targetCenter);
 QString findMostSimilarLocation(const QString &input, const QStringList &locationList, int maxDistance = 3);
 void moveMouseAndClick(int x, int y,QString L_R) ;
+void MouseClick(QString L_R);
 #endif // PRODEFINE_H

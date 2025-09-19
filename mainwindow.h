@@ -43,6 +43,10 @@ private slots:
     void on_pushButton_START_clicked();
     void ChindWidegtClosed();
     void MoveMouserToTarget();
+    void on_pushButton_START_2_clicked();
+
+    void on_pushButton_START_3_clicked();
+
 protected:
         void keyPressEvent(QKeyEvent *event) override {
         if (event->key() == Qt::Key_F12) {
@@ -56,6 +60,6 @@ private:
      HttpClient *p_http;
     event_pthread *p_thread;
     Display_Widget *w_displayTest;
-
+    QString  WindowTitleinfo;
 };
 #endif // MAINWINDOW_H

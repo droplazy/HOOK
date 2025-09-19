@@ -96,6 +96,31 @@ void removeMouseHook()
 {
     UnhookWindowsHookEx(mouseHook);
 }
+// 自动移动鼠标并进行点击
+void MouseClick(QString L_R)
+{
+    // 判断左键或右键点击
+    if(L_R == "left")
+    {
+        // 模拟鼠标按下事件
+        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+
+        // 模拟鼠标抬起事件
+        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+    }
+    else if(L_R == "right")
+    {
+        // 模拟鼠标按下事件
+        mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+
+        // 模拟鼠标抬起事件
+        mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+    }
+    else
+    {
+        qDebug() << "Error: Invalid click type!";
+    }
+}
 
 // 自动移动鼠标并进行点击
 void moveMouseAndClick(int x, int y,QString L_R) {
@@ -133,6 +158,7 @@ void moveMouseOnly(int x, int y) {
    // qDebug() << "Mouse moved to:" << QPoint(x, y);
 }
 
+
 void MainWindow::updateWindowInfo()
 {
      QString  info = QString("Mouse : %1 x %2").arg(mousePos.x()).arg(mousePos.y())+\
@@ -142,8 +168,18 @@ void MainWindow::updateWindowInfo()
 
     //qDebug() <<info;
     ui->label_sysinfor->setText(info);  // 显示在QLabel中
-   //   QString characterInfo = "地点 : " + p_thread->t_loaction  +"\n "+"坐标:" +p_thread->t_position+"\n ";
-   //   ui->textEdit->setText(characterInfo);
+    QString characterInfo = "\n地点 : " + p_thread->t_loaction  +"\n坐标:   (" +p_thread->t_position;
+    QString text_all = WindowTitleinfo + characterInfo;
+
+    if(p_thread->getState() == Task_State::MOUSER_OFFSET || !p_thread->t_offset.isNull())
+    {
+        QString offset_value = "鼠标偏移量为: (" + QString::number(p_thread->t_offset.x()) + ", " + QString::number(p_thread->t_offset.y()) + ")";
+        text_all.append(offset_value);
+
+    }
+
+
+    ui->textEdit->setText(text_all );
 }
 #include <QRandomGenerator>
 
@@ -154,49 +190,54 @@ void MainWindow::MoveMouserToTarget()
 
     // 获取当前鼠标位置
     POINT currentPos;
-    if (GetCursorPos(&currentPos)) {
-        // 打印当前位置
-       // qDebug() << "\rCurrent mouse position:" << QPoint(currentPos.x, currentPos.y);
-
-        // 获取目标点击位置
-        QPoint target = p_thread->TargetClick;
-
-        // 计算x, y方向上的差距
-        int dx = target.x() - currentPos.x;
-        int dy = target.y() - currentPos.y;
-
-        // 如果目标与当前位置非常接近，直接停止
-        if (abs(dx) < 1 && abs(dy) < 1) {
-            SetCursorPos(target.x(), target.y());  // 确保最后一次设置目标位置
-            p_thread->MouseNeedMove = false;
-         //   qDebug() << "\rMouse reached the target:" << target;
-            //p_thread->MouseNeedMove =true;
-            return;
-        }
-
-        // 计算每次移动的步长
-        int stepX = (dx != 0) ? (dx / abs(dx)) : 0;  // 正负方向
-        int stepY = (dy != 0) ? (dy / abs(dy)) : 0;  // 正负方向
-
-        // 添加随机抖动，模拟不规则的移动
-        QRandomGenerator *rng = QRandomGenerator::global();
-        int jitterX = rng->bounded(-2, 3);  // 范围是 -2 到 2 像素
-        int jitterY = rng->bounded(-2, 3);  // 范围是 -2 到 2 像素
-
-        // 每次移动少量距离（1像素），并加入抖动
-        currentPos.x += stepX + jitterX;
-        currentPos.y += stepY + jitterY;
-
-        // 移动鼠标到新的位置
-        SetCursorPos(currentPos.x, currentPos.y);
-
-        // 打印移动后的鼠标位置
-       // qDebug() << "\rMouse moved to:" << QPoint(currentPos.x, currentPos.y);
-
-        // 在下一次调用时继续移动，直到到达目标
-    }
-    else {
+    if (!GetCursorPos(&currentPos)) {
         qDebug() << "\rFailed to get cursor position!";
+        return;
+    }
+
+    QPoint target = p_thread->TargetClick;
+
+    // 计算目标距离
+    double dx = target.x() - currentPos.x;
+    double dy = target.y() - currentPos.y;
+    double distance = std::sqrt(dx * dx + dy * dy);
+    qDebug() << "MOUSER MOVEING "<<distance;
+
+    if (distance < 1.5f) {
+        // 已到达目标
+        SetCursorPos(target.x(), target.y());
+        p_thread->MouseNeedMove = false;
+        p_thread->CheckUIMouserPos =true;//移动好后确认鼠标位置
+        p_thread->bZero =true;
+        qDebug() << "MOUSER GETTED !!!!!!!!!!!!!!!!!!!!!";
+        return;
+    }
+
+    // 设定移动总时间 500ms
+    const double totalTime = 500.0; // ms
+    static QElapsedTimer timer;
+    static bool timerStarted = false;
+
+    if (!timerStarted) {
+        timer.start();
+        timerStarted = true;
+    }
+
+    double t = timer.elapsed() / totalTime; // 0~1
+    if (t > 1.0) t = 1.0;
+
+    // ease-in-out 缓动函数 (cosine)
+    double factor = 0.5 - 0.5 * std::cos(t * M_PI);
+
+    int newX = currentPos.x + int(dx * factor);
+    int newY = currentPos.y + int(dy * factor);
+
+    SetCursorPos(newX, newY);
+
+    // 到达目标时重置计时器
+    if (t >= 1.0) {
+        p_thread->MouseNeedMove = false;
+        timerStarted = false;
     }
 }
 
@@ -320,6 +361,8 @@ void MainWindow::on_pushButton_capture_clicked() // 开始截屏的按钮
     if (!found) {
         ui->textEdit->append("未找到应用程序！");
     }
+
+    WindowTitleinfo =ui->textEdit->toPlainText();
 }
 
 
@@ -355,14 +398,43 @@ void MainWindow::on_pushButton_capture_2_clicked()//截屏测试按钮 完成
 
 
 }
-void MainWindow::on_pushButton_START_clicked()
+void MainWindow::on_pushButton_START_clicked()//鼠标校准
 {
+    // 清空 textEdit 内容
+    ui->textEdit->clear();
 
+    // 重置找到标志
+    found = false;
+
+    // 调用 EnumWindows 枚举所有窗口
+    EnumWindows(EnumWindowsProc, reinterpret_cast<LPARAM>(ui->textEdit));
+
+    // 如果没有找到符合条件的窗口，则显示提示信息
+    if (!found) {
+        ui->textEdit->append("未找到应用程序！");
+    }
+
+    WindowTitleinfo =ui->textEdit->toPlainText();
+
+
+    p_thread->setState(Task_State::MOUSER_OFFSET);
 
 }
 
 void MainWindow::ChindWidegtClosed()
 {
     p_thread->streamOn = false;
+}
+
+
+void MainWindow::on_pushButton_START_2_clicked()
+{
+     p_thread->setState(Task_State::QINGLONG);
+}
+
+
+void MainWindow::on_pushButton_START_3_clicked()
+{
+    p_thread->setState(Task_State::DIANXIU);
 }
 

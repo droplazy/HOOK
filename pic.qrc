@@ -37,10 +37,17 @@
         <file>Element/QingLong/LR.png</file>
         <file>Element/QingLong/SH.png</file>
         <file>Element/Mouser.png</file>
-        <file>Element/Mouer_2.png</file>
         <file>Element/MHJL.png</file>
         <file>Element/SETTING.png</file>
         <file>pic/screen.png</file>
         <file>pic/window.png</file>
+        <file>Element/XIULIAN/againstSpell.png</file>
+        <file>Element/XIULIAN/ATTACKSEL.png</file>
+        <file>Element/XIULIAN/ATTACKTRI.png</file>
+        <file>Element/XIULIAN/DEFEND.png</file>
+        <file>Element/XIULIAN/GetNpc.png</file>
+        <file>Element/XIULIAN/NewmodeSelect.png</file>
+        <file>Element/XIULIAN/TriditionalMode.png</file>
+        <file>Element/XIULIAN/wechat_2025-09-19_013352_408.png</file>
     </qresource>
 </RCC>

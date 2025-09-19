@@ -21,6 +21,11 @@ public:
 
     QString t_loaction;
     QString t_position;
+    QPoint t_offset;
+    bool CheckUIMouserPos=false;;
+    bool bZero =false;;
+
+
 
     explicit event_pthread(QObject *parent = nullptr);  // 构造函数，支持传递 parent 对象
     virtual void run() override;  // 重载 run 函数
@@ -52,16 +57,22 @@ public:
     bool MouseNeedMove= false;
     void CheckMouserOffset();
     void SetMouserOffset();
-    QPoint findElemntForUI(QImage image, QImage image_UI,QPoint zeroP);
+    QPoint findElemntForUI(QImage image, QImage image_UI, QPoint zeroP, double &score);
     QImage GetGamewindowCenterPoint(QPoint &point);
     void GameSetting();
+    void MoveMouserToUI(QImage qImage);
+    QPoint FindUIMouserPos(QRect CorrectRect);
+    QPoint ClacUIMouserPostion();
+    void MoveMouseSpeicefImg(QImage qImage);
+    void MovetoXIULIANNpc();
+
 protected:
     void GetIdleImage();
 
 private:
     double MoveScale = 0.7f;
-
-
+    QRect UIImage;//正在对焦的UI
+     double M_score;//识别得分
 signals:
     void getPic(QImage);
     void regnize(QString);

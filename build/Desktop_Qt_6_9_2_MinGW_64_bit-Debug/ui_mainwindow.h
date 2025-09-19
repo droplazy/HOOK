@@ -31,6 +31,7 @@ public:
     QPushButton *pushButton_START;
     QPushButton *pushButton_START_2;
     QTextEdit *textEdit;
+    QPushButton *pushButton_START_3;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -60,14 +61,21 @@ public:
         pushButton_START = new QPushButton(centralwidget);
         pushButton_START->setObjectName("pushButton_START");
         pushButton_START->setGeometry(QRect(200, 10, 80, 24));
-        pushButton_START->setStyleSheet(QString::fromUtf8("background-color: rgb(1, 1, 1);"));
+        pushButton_START->setStyleSheet(QString::fromUtf8("\n"
+"background-color: rgb(156, 156, 156);"));
         pushButton_START_2 = new QPushButton(centralwidget);
         pushButton_START_2->setObjectName("pushButton_START_2");
         pushButton_START_2->setGeometry(QRect(290, 10, 80, 24));
-        pushButton_START_2->setStyleSheet(QString::fromUtf8("background-color: rgb(1, 1, 1);"));
+        pushButton_START_2->setStyleSheet(QString::fromUtf8("\n"
+"background-color: rgb(156, 156, 156);"));
         textEdit = new QTextEdit(centralwidget);
         textEdit->setObjectName("textEdit");
         textEdit->setGeometry(QRect(20, 80, 461, 331));
+        pushButton_START_3 = new QPushButton(centralwidget);
+        pushButton_START_3->setObjectName("pushButton_START_3");
+        pushButton_START_3->setGeometry(QRect(380, 10, 80, 24));
+        pushButton_START_3->setStyleSheet(QString::fromUtf8("\n"
+"background-color: rgb(156, 156, 156);"));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -88,8 +96,8 @@ public:
         pushButton_capture->setText(QCoreApplication::translate("MainWindow", "\347\252\227\345\217\243\350\216\267\345\217\226", nullptr));
         label_sysinfor->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         pushButton_imgtest->setText(QCoreApplication::translate("MainWindow", "\345\274\200\345\247\213/\345\201\234\346\255\242\346\265\201", nullptr));
-        pushButton_START->setText(QCoreApplication::translate("MainWindow", "KAISHI", nullptr));
-        pushButton_START_2->setText(QCoreApplication::translate("MainWindow", "KAISHI", nullptr));
+        pushButton_START->setText(QCoreApplication::translate("MainWindow", "\351\274\240\346\240\207\346\240\241\345\207\206", nullptr));
+        pushButton_START_2->setText(QCoreApplication::translate("MainWindow", "\351\235\222\351\276\231", nullptr));
         textEdit->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -98,6 +106,7 @@ public:
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\347\202\271\345\207\273</p></body></html>", nullptr));
+        pushButton_START_3->setText(QCoreApplication::translate("MainWindow", "\347\202\271\344\277\256", nullptr));
     } // retranslateUi
 
 };

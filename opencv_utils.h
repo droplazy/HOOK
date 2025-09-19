@@ -45,13 +45,14 @@ public:
 
     static void RectHignLight();
     static void GetCharacterPos(cv::Mat targetImage,cv::Mat templateImage);
-    static QImage FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, QPoint &point, QRect &rectoffset,QPoint ZeroPoint);
+    static QImage FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, QPoint &point, QRect &rectoffset,QPoint ZeroPoint,double &Score);
     static cv::Mat capturePositionForRect(QRect pos);
     static QString recognizeTextFromMat(const cv::Mat &inputMat, QString language);
     static QImage captureScreenQimage(const QRect &rect);
     static QString CaptureTobase64(const QRect &rect);
     static QString recognizeTextFromMatBackBase(const cv::Mat &inputMat);
     static cv::Mat QImageToMat(const QImage &image);
+    static QImage DrawPointOnPic(cv::Mat templateImage, QPoint ZeroP, QPoint TargetP);
 };
 using namespace cv;
 

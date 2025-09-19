@@ -165,8 +165,15 @@ debug/qrc_pic.cpp: ../../pic.qrc \
 		../../../../qt2025/6.9.2/mingw_64/bin/rcc.exe \
 		../../Element/SETTING.png \
 		../../Element/MHJL.png \
-		../../Element/Mouer_2.png \
 		../../Element/Mouser.png \
+		../../Element/XIULIAN/againstSpell.png \
+		../../Element/XIULIAN/wechat_2025-09-19_013352_408.png \
+		../../Element/XIULIAN/GetNpc.png \
+		../../Element/XIULIAN/NewmodeSelect.png \
+		../../Element/XIULIAN/TriditionalMode.png \
+		../../Element/XIULIAN/ATTACKTRI.png \
+		../../Element/XIULIAN/ATTACKSEL.png \
+		../../Element/XIULIAN/DEFEND.png \
 		../../Element/QingLong/WFR.png \
 		../../Element/QingLong/KQH_O.png \
 		../../Element/QingLong/LR_O.png \
