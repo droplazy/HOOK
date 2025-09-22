@@ -236,7 +236,6 @@ void opencv_utils::RectHignLight()
 // {
 
 // }
-
 QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, QPoint &point, QRect &rectoffset, QPoint ZeroPoint , double &Score)
 {
     // 检查图像是否为空
@@ -262,7 +261,8 @@ QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, Q
     // 打印匹配值
     // qDebug() << "模板匹配最大值: " << maxVal;
     // qDebug() << "模板匹配最小值: " << minVal;
-    Score =maxVal;
+    Score = maxVal;
+
     // 在目标图像上标记匹配区域
     cv::Rect matchRect(maxLoc.x, maxLoc.y, templateImage.cols, templateImage.rows);
     cv::rectangle(targetImage, matchRect, cv::Scalar(0, 255, 0), 2); // 用绿色框住匹配区域
@@ -276,13 +276,27 @@ QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, Q
     // 将 center 的值赋给 point
     point = QPoint(center.x, center.y);  // 把 cv::Point 转换为 QPoint
 
-    // 在中心点画一个红色圆点
-    cv::circle(targetImage, center, 3, cv::Scalar(255, 0, 0), -1); // 用红色绘制圆点，半径为10
+    // 根据得分来决定标记颜色
+    cv::Scalar crossColor;
+    if (Score > 0.8) {
+        // 得分较高，使用绿色标记
+        crossColor = cv::Scalar(0, 255, 0); // 绿色
+    } else {
+        // 得分较低，使用红色叉叉标记
+        crossColor = cv::Scalar(255, 0, 0); // 红色
+    }
+
+    // 在中心点画一个标记（圆点）
+    cv::circle(targetImage, center, 3, crossColor, -1); // 圆点
 
     // 在中心点画 X 字形标记
     int crossSize = 15; // X 字的尺寸，可以根据需要调整大小
-    cv::line(targetImage, cv::Point(center.x - crossSize, center.y - crossSize), cv::Point(center.x + crossSize, center.y + crossSize), cv::Scalar(255, 0, 0), 2); // 从左上到右下
-    cv::line(targetImage, cv::Point(center.x + crossSize, center.y - crossSize), cv::Point(center.x - crossSize, center.y + crossSize), cv::Scalar(255, 0, 0), 2); // 从右上到左下
+    cv::line(targetImage, cv::Point(center.x - crossSize, center.y - crossSize), cv::Point(center.x + crossSize, center.y + crossSize), crossColor, 2); // 从左上到右下
+    cv::line(targetImage, cv::Point(center.x + crossSize, center.y - crossSize), cv::Point(center.x - crossSize, center.y + crossSize), crossColor, 2); // 从右上到左下
+
+    // 显示得分率在图像上
+    std::string scoreText = "Score: " + std::to_string(Score);
+    cv::putText(targetImage, scoreText, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 2, cv::LINE_AA);
 
     // 将矩形框的左上角和右下角坐标转换为屏幕坐标
     QPoint topLeft = convertCoordinates(ZeroPoint, QPoint(rectoffset.x(), rectoffset.y()));
@@ -294,20 +308,94 @@ QImage opencv_utils::FindPicTarget(cv::Mat targetImage, cv::Mat templateImage, Q
 
     // 将 OpenCV 的 Mat 图像转换为 QImage
     QImage qImage(targetImage.data, targetImage.cols, targetImage.rows, targetImage.step, QImage::Format_RGB888);
-#if 0
-    // 获取桌面路径
-    QString desktopPath = QDir::homePath() + "/Desktop/";
-    QString filePath = desktopPath + "output_image.png";
 
-    // 保存图片到桌面
-    if (qImage.save(filePath)) {
-        qDebug() << "图片成功保存到桌面：" << filePath;
-    } else {
-        qDebug() << "保存图片失败！";
-    }
-#endif
     return qImage;  // 返回 QImage 对象
 }
+QImage opencv_utils::FindPicTargetForMask(cv::Mat targetImage, cv::Mat templateImage, QPoint &point, QRect &rectoffset, QPoint ZeroPoint, double &Score)
+{
+    // 检查图像是否为空
+    if (targetImage.empty() || templateImage.empty()) {
+        qDebug()<< "无法加载图片" ;
+        return QImage();  // 返回一个空的 QImage 对象
+    }
+
+    // 加载掩膜图像
+    cv::Mat mask = cv::imread("E:/qtpro/HhookYou/Element/UIM_BL.png", cv::IMREAD_GRAYSCALE);
+    if (mask.empty()) {
+        qDebug() << "掩膜加载失败！";
+        return QImage();  // 返回一个空的 QImage 对象
+    }
+    // 如果掩膜图像的尺寸不与模板图像相同，则调整其大小
+    if (mask.size() != templateImage.size()) {
+        cv::resize(mask, mask, templateImage.size());
+    }
+
+    // 转换为灰度图
+    cv::Mat targetGray, templateGray;
+    cv::cvtColor(targetImage, targetGray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(templateImage, templateGray, cv::COLOR_BGR2GRAY);
+
+    // 执行模板匹配（结合掩膜）
+    cv::Mat result;
+    cv::matchTemplate(targetGray, templateGray, result, cv::TM_CCOEFF_NORMED, mask);
+
+    // 找到最匹配的位置
+    double minVal, maxVal;
+    cv::Point minLoc, maxLoc;
+    cv::minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc);
+
+    // 打印匹配值
+    Score = maxVal;
+
+    // 在目标图像上标记匹配区域
+    cv::Rect matchRect(maxLoc.x, maxLoc.y, templateImage.cols, templateImage.rows);
+    cv::rectangle(targetImage, matchRect, cv::Scalar(0, 255, 0), 2); // 用绿色框住匹配区域
+
+    // 将矩形框的坐标和尺寸保存到 rectoffset 中
+    rectoffset = QRect(matchRect.x, matchRect.y, matchRect.width, matchRect.height);
+
+    // 计算矩形的中心点坐标
+    cv::Point center(matchRect.x + matchRect.width / 2, matchRect.y + matchRect.height / 2);
+
+    // 将 center 的值赋给 point
+    point = QPoint(center.x, center.y);  // 把 cv::Point 转换为 QPoint
+
+    // 根据得分来决定标记颜色
+    cv::Scalar crossColor;
+    if (Score > 0.8) {
+        // 得分较高，使用绿色标记
+        crossColor = cv::Scalar(0, 255, 0); // 绿色
+    } else {
+        // 得分较低，使用红色叉叉标记
+        crossColor = cv::Scalar(255, 0, 0); // 红色
+    }
+
+    // 在中心点画一个标记（圆点）
+    cv::circle(targetImage, center, 3, crossColor, -1); // 圆点
+
+    // 在中心点画 X 字形标记
+    int crossSize = 15; // X 字的尺寸，可以根据需要调整大小
+    cv::line(targetImage, cv::Point(center.x - crossSize, center.y - crossSize), cv::Point(center.x + crossSize, center.y + crossSize), crossColor, 2); // 从左上到右下
+    cv::line(targetImage, cv::Point(center.x + crossSize, center.y - crossSize), cv::Point(center.x - crossSize, center.y + crossSize), crossColor, 2); // 从右上到左下
+
+    // 显示得分率在图像上
+    std::string scoreText = "Score: " + std::to_string(Score);
+    cv::putText(targetImage, scoreText, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 2, cv::LINE_AA);
+
+    // 将矩形框的左上角和右下角坐标转换为屏幕坐标
+    QPoint topLeft = convertCoordinates(ZeroPoint, QPoint(rectoffset.x(), rectoffset.y()));
+    QPoint bottomRight = convertCoordinates(ZeroPoint, QPoint(rectoffset.x() + rectoffset.width(), rectoffset.y() + rectoffset.height()));
+    point = convertCoordinates(ZeroPoint, point);
+
+    // 更新 rectoffset 为转换后的屏幕坐标
+    rectoffset = QRect(topLeft, bottomRight);
+
+    // 将 OpenCV 的 Mat 图像转换为 QImage
+    QImage qImage(targetImage.data, targetImage.cols, targetImage.rows, targetImage.step, QImage::Format_RGB888);
+
+    return qImage;  // 返回 QImage 对象
+}
+
 
 QImage  opencv_utils::DrawPointOnPic(cv::Mat templateImage, QPoint ZeroP, QPoint TargetP)
 {

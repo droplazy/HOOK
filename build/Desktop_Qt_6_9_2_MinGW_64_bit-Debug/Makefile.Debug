@@ -165,6 +165,8 @@ debug/qrc_pic.cpp: ../../pic.qrc \
 		../../../../qt2025/6.9.2/mingw_64/bin/rcc.exe \
 		../../Element/SETTING.png \
 		../../Element/MHJL.png \
+		../../Element/UIM.png \
+		../../Element/UIM_BL.png \
 		../../Element/Mouser.png \
 		../../Element/XIULIAN/againstSpell.png \
 		../../Element/XIULIAN/wechat_2025-09-19_013352_408.png \

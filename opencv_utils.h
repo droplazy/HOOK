@@ -53,6 +53,7 @@ public:
     static QString recognizeTextFromMatBackBase(const cv::Mat &inputMat);
     static cv::Mat QImageToMat(const QImage &image);
     static QImage DrawPointOnPic(cv::Mat templateImage, QPoint ZeroP, QPoint TargetP);
+    static QImage FindPicTargetForMask(cv::Mat targetImage, cv::Mat templateImage, QPoint &point, QRect &rectoffset, QPoint ZeroPoint, double &Score);
 };
 using namespace cv;
 

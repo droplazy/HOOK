@@ -83,14 +83,14 @@ void event_pthread::run()
                 if(M_score >=0.71)// 已经得到光标位置    将光标移动到图片点上
                 {
                     qDebug() << "Ready to second Move for offset ....";
-                    sleep(1);
+                /*    sleep(1);
 
                     CheckUIMouserPos= false;
                     TargetClick =TargetClick+ (TargetClick-uiPos);
                     TargetClick.setX(TargetClick.x() +5);
                     TargetClick.setY(TargetClick.y() +5);
 
-                    MouseNeedMove = true;
+                    MouseNeedMove = true;*/
                 }
                 else// 不能正确得到光标
                 {
@@ -311,7 +311,7 @@ QPoint event_pthread::FindUIMouserPos(QRect CorrectRect)
 
     QPoint UI_ZeroP(SearchRect.x(), SearchRect.y()); // 归零点坐标
 
-    QImage m_Image(":/Element/Mouser.png");
+    QImage m_Image(":/Element/UIM.png");
     double score;
     QPoint uiPos = findElemntForUI(img_center, m_Image, UI_ZeroP, score); // UI鼠标的坐标
     t_score +=score;
@@ -492,7 +492,7 @@ QPoint event_pthread::findElemntForUI(QImage image, QImage image_UI, QPoint zero
 
 
      //;
-    QImage img = opencv_utils::FindPicTarget(TargetUI, posText, getPoint, matchRect,zeroP,score);
+    QImage img = opencv_utils::FindPicTargetForMask(TargetUI, posText, getPoint, matchRect,zeroP,score);
 
     //    QPoint center(ZeroPos.x() + 285, ZeroPos.y() + 500);
     if (streamOn) {

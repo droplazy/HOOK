@@ -49,5 +49,7 @@
         <file>Element/XIULIAN/NewmodeSelect.png</file>
         <file>Element/XIULIAN/TriditionalMode.png</file>
         <file>Element/XIULIAN/wechat_2025-09-19_013352_408.png</file>
+        <file>Element/UIM.png</file>
+        <file>Element/UIM_BL.png</file>
     </qresource>
 </RCC>
